@@ -10,6 +10,11 @@
             50% { text-shadow: 0 0 10px #ff4500, 0 0 20px #ff6600, 0 0 30px #ff8c00; }
             100% { text-shadow: 0 0 5px #ff4500, 0 0 10px #ff6600, 0 0 15px #ff8c00; }
         }
+        @keyframes fireGlow {
+            0% { box-shadow: 0 0 5px #ff4500, 0 0 10px #ff6600; }
+            50% { box-shadow: 0 0 15px #ff4500, 0 0 25px #ff6600; }
+            100% { box-shadow: 0 0 5px #ff4500, 0 0 10px #ff6600; }
+        }
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -27,21 +32,33 @@
             border-radius: 10px;
             box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            will-change: transform, box-shadow;
         }
         .container:hover {
-            transform: scale(1.03);
+            transform: scale(1.02);
             box-shadow: 0px 15px 50px rgba(255, 69, 0, 0.5);
         }
-        img {
+        .image-container {
             width: 100%;
+            position: relative;
+            height: auto;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .image-container img {
+            max-width: 100%;
+            max-height: 400px;
+            object-fit: contain;
             border-radius: 10px;
             box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
-            transition: transform 0.5s ease-out;
-            will-change: transform;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
         }
-        img:hover {
-            transform: scale(1.03) translateY(-5px);
+        .image-container img.active {
+            opacity: 1;
+            position: relative;
         }
         h1 {
             font-size: 2em;
@@ -50,31 +67,44 @@
         a {
             display: inline-block;
             margin: 10px;
-            padding: 12px 20px;
+            padding: 10px 15px;
             color: white;
             text-decoration: none;
             background: linear-gradient(90deg, #ff4500, #ff6600);
-            border-radius: 8px;
+            border-radius: 5px;
             box-shadow: 0px 5px 10px rgba(255, 69, 0, 0.3);
-            transition: all 0.3s ease-in-out;
-            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
         a:hover {
-            transform: scale(1.08);
-            box-shadow: 0px 10px 20px rgba(255, 69, 0, 0.5);
+            transform: scale(1.1);
+            animation: fireGlow 1s infinite alternate;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>$Varian – Trump’s Private Guardian 🔥💀</h1>
-        <img src="varian.webp" alt="$Varian">
+        <div class="image-container">
+            <img src="varian.webp" class="active">
+            <img src="varian1.webp">
+            <img src="varian2.webp">
+            <img src="varian3.webp">
+        </div>
         <p>A shadow in the chaos, a force of unstoppable precision—$Varian is the ultimate protector. As Donald Trump’s private bodyguard, he is more than just security; he is a weapon forged for one purpose—eliminate threats before they strike.</p>
         <p>With a cold, calculating gaze and a rifle always ready, $Varian is a nightmare to enemies and a ghost to those who seek him. They say he never sleeps, never hesitates, and never misses.</p>
         <p>💀 Stand down… or be taken down. 💀</p>
         <a href="https://x.com/Varian_Coin" target="_blank">Official_X</a>
         <br><br>
-        <a href="">Buy $VARIAN NOW!</a>
+        <a href="">Buy $VARIAN</a>
     </div>
+    <script>
+        let images = document.querySelectorAll('.image-container img');
+        let index = 0;
+        setInterval(() => {
+            images[index].classList.remove('active');
+            index = (index + 1) % images.length;
+            images[index].classList.add('active');
+        }, 3000);
+    </script>
 </body>
 </html>
