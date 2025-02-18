@@ -3,108 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$Varian - Trump's Guardian</title>
+    <title>$Pongo / Solana Fighter</title>
     <style>
         @keyframes neonGlow {
-            0% { text-shadow: 0 0 5px #ff4500, 0 0 10px #ff6600, 0 0 15px #ff8c00; }
-            50% { text-shadow: 0 0 10px #ff4500, 0 0 20px #ff6600, 0 0 30px #ff8c00; }
-            100% { text-shadow: 0 0 5px #ff4500, 0 0 10px #ff6600, 0 0 15px #ff8c00; }
-        }
-        @keyframes fireGlow {
-            0% { box-shadow: 0 0 5px #ff4500, 0 0 10px #ff6600; }
-            50% { box-shadow: 0 0 15px #ff4500, 0 0 25px #ff6600; }
-            100% { box-shadow: 0 0 5px #ff4500, 0 0 10px #ff6600; }
+            0% { text-shadow: 0 0 5px #00ff00, 0 0 10px #00cc00; }
+            50% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00cc00; }
+            100% { text-shadow: 0 0 5px #00ff00, 0 0 10px #00cc00; }
         }
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            background: linear-gradient(135deg, #001a00, #003300);
             color: white;
-            perspective: 1000px;
+            margin: 0;
+            padding: 0;
             overflow-x: hidden;
         }
+
+        /* ניווט עליון */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 255, 0, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0px 5px 15px rgba(0, 255, 0, 0.5);
+            z-index: 1000;
+        }
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links li {
+            display: inline;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #00ff00;
+            font-size: 1.2em;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .nav-links a:hover {
+            background: rgba(0, 255, 0, 0.3);
+            box-shadow: 0px 0px 10px #00ff00;
+        }
+
+        /* תוכן עמוד */
         .container {
             max-width: 800px;
-            margin: 20px auto;
+            margin: 100px auto 20px auto;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 255, 0, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 10px;
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0px 10px 30px rgba(0, 255, 0, 0.3);
         }
-        .container:hover {
-            transform: scale(1.02);
-            box-shadow: 0px 15px 50px rgba(255, 69, 0, 0.5);
-        }
+
+        /* קונטיינר תמונות */
         .image-container {
             width: 100%;
+            height: 400px;
             position: relative;
-            height: auto;
-            margin: 20px auto;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
         }
+
+        /* תמונות */
         .image-container img {
-            max-width: 100%;
-            max-height: 400px;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
-            border-radius: 10px;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
             position: absolute;
             opacity: 0;
-            transition: opacity 1s ease-in-out;
+            transform: scale(1);
+            transition: opacity 1s ease-in-out, transform 1.5s ease-in-out;
         }
         .image-container img.active {
             opacity: 1;
-            position: relative;
+            transform: scale(1.05);
+            z-index: 2;
         }
+
         h1 {
             font-size: 2em;
             animation: neonGlow 1.5s infinite alternate;
+            margin-top: 20px;
         }
-        a {
-            display: inline-block;
-            margin: 10px;
-            padding: 10px 15px;
-            color: white;
-            text-decoration: none;
-            background: linear-gradient(90deg, #ff4500, #ff6600);
-            border-radius: 5px;
-            box-shadow: 0px 5px 10px rgba(255, 69, 0, 0.3);
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+        .glow-text {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #00ff00;
+            text-shadow: 0px 0px 10px #00ff00;
         }
-        a:hover {
-            transform: scale(1.1);
-            animation: fireGlow 1s infinite alternate;
+
+        video {
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0px 5px 15px rgba(0, 255, 0, 0.5);
         }
     </style>
 </head>
 <body>
+
+    <!-- תפריט ניווט עליון -->
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="">Buy $PONGO</a></li>
+            <li><a href="https://x.com/Varian_Coin" target="_blank">X</a></li>
+            <li><a href="https://t.me/Pongo_SolanaFighter" target="_blank">Telegram</a></li>
+        </ul>
+    </nav>
+
     <div class="container">
-        <h1>$Varian – Trump’s Private Guardian 🔥💀</h1>
+        <h1>$PONGO - Solana Fighter</h1>
+
+        <!-- קונטיינר תמונות עם אפקט מעבר פשוט -->
         <div class="image-container">
-            <img src="varian.webp" class="active">
-            <img src="varian1.webp">
-            <img src="varian2.webp">
-            <img src="varian3.webp">
+            <img src="pongo7.png" class="active">
+            <img src="pongo3.png">
+            <img src="pongo4.png">
+            <img src="pongo5.png">
+            <img src="pongo6.png">
         </div>
-        <p>A shadow in the chaos, a force of unstoppable precision—$Varian is the ultimate protector. As Donald Trump’s private bodyguard, he is more than just security; he is a weapon forged for one purpose—eliminate threats before they strike.</p>
-        <p>With a cold, calculating gaze and a rifle always ready, $Varian is a nightmare to enemies and a ghost to those who seek him. They say he never sleeps, never hesitates, and never misses.</p>
-        <p>💀 Stand down… or be taken down. 💀</p>
-        <a href="https://x.com/Varian_Coin" target="_blank">Official_X</a>
-        <br><br>
-        <a href="https://dexscreener.com/solana/6bqum4lqtzdgycybaeudn9wfwsbxqcgptub7yodacmgs">Buy $VARIAN</a>
+
+        <video width="100%" height="auto" autoplay muted loop>
+            <source src="pongo1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p class="glow-text">
+Meet $PONGO, the commando warrior 🎖💥! Amid Solana's decline, he emerges as the hero to lead the resurgence. With a rich history of battlefield victories and unmatched skills, $PONGO is set to revitalize Solana. Behind the scenes, he's orchestrating a strategic deal with Trump, leveraging alliances to fortify his campaign. Watch as he employs his legendary prowess to overcome market challenges and spearhead a heroic comeback. Join $PONGO for an epic revival where humor and heroism ensure a victorious future! 🚀🌟        </p>
     </div>
+
     <script>
         let images = document.querySelectorAll('.image-container img');
         let index = 0;
-        setInterval(() => {
-            images[index].classList.remove('active');
-            index = (index + 1) % images.length;
-            images[index].classList.add('active');
-        }, 3000);
+
+        function changeImage() {
+            let current = images[index];
+            let nextIndex = (index + 1) % images.length;
+            let next = images[nextIndex];
+
+            // הפעלת האנימציה בצורה חלקה
+            current.classList.remove('active');
+            next.classList.add('active');
+
+            index = nextIndex;
+        }
+
+        setInterval(changeImage, 4000); // שינוי כל 4 שניות
     </script>
+
 </body>
 </html>
