@@ -3,170 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$Sogo - Solana Fighter</title>
+    <title>Sogo Solana Fighter</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-        @keyframes neonGlow {
-            0% { text-shadow: 0 0 5px #00ff00, 0 0 10px #00cc00; }
-            50% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00cc00; }
-            100% { text-shadow: 0 0 5px #00ff00, 0 0 10px #00cc00; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Orbitron', sans-serif;
+            color: #00ff00;
             text-align: center;
-            background: linear-gradient(135deg, #001a00, #003300);
-            color: white;
-            margin: 0;
-            padding: 0;
             overflow-x: hidden;
         }
-
-        /* ניווט עליון */
-        .navbar {
+        .video-background {
             position: fixed;
             top: 0;
-            width: 100%;
-            background: rgba(0, 255, 0, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 10px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0px 5px 15px rgba(0, 255, 0, 0.5);
-            z-index: 1000;
-        }
-        .nav-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            gap: 20px;
-        }
-        .nav-links li {
-            display: inline;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #00ff00;
-            font-size: 1.2em;
-            font-weight: bold;
-            padding: 10px 15px;
-            border-radius: 5px;
-            transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        }
-        .nav-links a:hover {
-            background: rgba(0, 255, 0, 0.3);
-            box-shadow: 0px 0px 10px #00ff00;
-        }
-
-        /* תוכן עמוד */
-        .container {
-            max-width: 800px;
-            margin: 100px auto 20px auto;
-            padding: 20px;
-            background: rgba(0, 255, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 10px;
-            box-shadow: 0px 10px 30px rgba(0, 255, 0, 0.3);
-        }
-
-        /* קונטיינר תמונות */
-        .image-container {
-            width: 100%;
-            height: 400px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* תמונות */
-        .image-container img {
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            position: absolute;
-            opacity: 0;
-            transform: scale(1);
-            transition: opacity 1s ease-in-out, transform 1.5s ease-in-out;
+            z-index: -1;
+            object-fit: cover;
         }
-        .image-container img.active {
-            opacity: 1;
-            transform: scale(1.05);
-            z-index: 2;
+        header {
+            background: rgba(0, 255, 0, 0.2);
+            padding: 20px;
+            box-shadow: 0px 0px 15px #00ff00;
         }
-
-        h1 {
-            font-size: 2em;
-            animation: neonGlow 1.5s infinite alternate;
-            margin-top: 20px;
+        nav ul {
+            list-style: none;
+            padding: 0;
         }
-
-        .glow-text {
+        nav ul li {
+			color: black;
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            background-color: black;
+            color: green;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 100px;
             font-size: 1.5em;
             font-weight: bold;
-            color: #00ff00;
-            text-shadow: 0px 0px 10px #00ff00;
+            text-shadow: 100px 100px 100px green;
+            box-shadow: 0px 10px 15px red;
+            transition: 0.3s;
         }
-
-        video {
-            border-radius: 10px;
-            margin-top: 20px;
-            box-shadow: 0px 5px 15px rgba(0, 255, 0, 0.5);
+		nav ul li a:hover {
+            transform: translateY(-5px) scale(1.05);
+			text-shadow: 4px 4px 0px green, 8px 8px 0px #00ff00, 12px 12px 10px rgba(0, 255, 0, 0.8);
+            box-shadow: 0px 0px 20px limegreen, 0px 0px 30px rgba(0, 255, 0, 0.5);
+        }
+        section {
+            padding: 60px;
+            font-size: 1.8em;
+            text-shadow: 0px 0px 10px #00ff00;
+            background: rgba(0, 0, 0, 0.7);
+            margin: 20px;
+            border-radius: 15px;
+        }
+        .cta-button {
+            background-color: black;
+            color: green;
+            padding: 20px 40px;
+            text-decoration: none;
+            border-radius: 100px;
+            font-size: 1.5em;
+            font-weight: bold;
+            text-shadow: 100px 100px 100px green;
+            box-shadow: 0px 10px 15px red;
+            transition: 0.3s;
+        }
+        .cta-button:hover {
+			transform: translateY(-5px) scale(1.05);
+			text-shadow: 4px 4px 0px green, 8px 8px 0px #00ff00, 0px 0px 50px rgba(0, 0, 0, 0.8);
+            box-shadow: 0px 0px 20px limegreen, 0px 0px 30px rgba(0, 255, 0, 0.5);
+        }
+        footer {
+            background: rgba(0, 255, 0, 0.2);
+            padding: 20px;
+            box-shadow: 0px 0px 15px #00ff00;
         }
     </style>
 </head>
 <body>
+    <video class="video-background" autoplay loop muted>
+        <source src="pongo1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
-    <!-- תפריט ניווט עליון -->
-    <nav class="navbar">
-        <ul class="nav-links">
-            <li><a href="">BUY</a></li>
-            <li><a href="">Screener</a></li>
-            <li><a href="">Tools</a></li>
-            <li><a href="https://x.com/Pongo_Fighter" target="_blank">X</a></li>
-            <li><a href="https://t.me/Pongo_SolanaFighter" target="_blank">Telegram</a></li>
-        </ul>
-    </nav>
-
-    <div class="container">
-        <h1>$Sogo - Solana Fighter</h1>
-
-        <!-- קונטיינר תמונות עם אפקט מעבר פשוט -->
-        <div class="image-container">
-            <img src="pongo7.png" class="active">
-            <img src="pongo3.png">
-            <img src="pongo4.png">
-            <img src="pongo5.png">
-            <img src="pongo6.png">
-        </div>
-
-        <video width="100%" height="auto" autoplay muted loop>
-            <source src="pongo1.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <p class="glow-text">
-Meet $Sogo, the commando warrior 🎖💥! Amid Solana's decline, he emerges as the hero to lead the resurgence. With a rich history of battlefield victories and unmatched skills, $Sogo is set to revitalize Solana. Behind the scenes, he's orchestrating a strategic deal with Trump, leveraging alliances to fortify his campaign. Watch as he employs his legendary prowess to overcome market challenges and spearhead a heroic comeback. Join $Sogo for an epic revival where humor and heroism ensure a victorious future! 🚀🌟        </p>
-    </div>
-
-    <script>
-        let images = document.querySelectorAll('.image-container img');
-        let index = 0;
-
-        function changeImage() {
-            let current = images[index];
-            let nextIndex = (index + 1) % images.length;
-            let next = images[nextIndex];
-
-            // הפעלת האנימציה בצורה חלקה
-            current.classList.remove('active');
-            next.classList.add('active');
-
-            index = nextIndex;
-        }
-
-        setInterval(changeImage, 4000); // שינוי כל 4 שניות
-    </script>
-
+    <header>
+        <h1>Sogo Will Make Sol Great Again</h1>
+		<br>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="https://t.me/SOGO_SOLANA_FIGHTER">Telegram</a></li>
+                <li><a href="https://x.com/SOGO_Fighter">X</a></li>
+            </ul>
+        </nav>
+    </header>
+	<section id="hero">
+	<h2>The Future of Memecoins on Solana</h2>
+	<p>Join the movement and make Solana great again!</p>
+	</section>
+			
+    <section id="hero">
+        <a href="#buy" class="cta-button">Buy Now</a>
+    </section>
+    
+    <section id="about">
+        <h2>About</h2>
+        <p>Meet $SOGO, the commando warrior 🎖💥! Amid Solana's decline, he emerges as the hero to lead the resurgence. With a rich history of battlefield victories and unmatched skills, $SOGO is set to revitalize Solana. Behind the scenes, he's orchestrating a strategic deal with Trump, leveraging alliances to fortify his campaign. Watch as he employs his legendary prowess to overcome market challenges and spearhead a heroic comeback. Join $SOGO for an epic revival where humor and heroism ensure a victorious future! 🚀🌟</p>
+    </section>
+    
+    <section id="buy">
+        <h2>How to Buy</h2>
+        <p>Purchase $SOGO on your favorite decentralized exchange.</p>
+    </section>
+    
+    <section id="community">
+        <h2>Join the Community</h2>
+        <p>Connect with us on Twitter And Telegram</p>
+    </section>
+    
+    <footer>
+        <p>&copy; 2025 Sogo Will Make Sol Great Again. All rights reserved.</p>
+    </footer>
 </body>
 </html>
