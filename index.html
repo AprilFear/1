@@ -186,27 +186,37 @@
         const sessionTimeout = 5 * 60 * 1000; // 5 דקות
 
         function checkPassword() {
-            authRef.set({ lastLogin: Date.now() })
-                .then(() => {
-                    document.getElementById("loginScreen").style.display = "none";
-                    document.getElementById("mainContent").style.display = "block";
-                    renderTransactions();
-                });
-        }
+    		const deviceID = generateDeviceID();
+    		authRef.child(deviceID).set({ lastLogin: Date.now() })
+        		.then(() => {
+            		document.getElementById("loginScreen").style.display = "none";
+            		document.getElementById("mainContent").style.display = "block";
+           		 renderTransactions();
+        		});
+		}
+	    
+	function generateDeviceID() {
+    		let deviceID = localStorage.getItem("deviceID");
+    		if (!deviceID) {
+        		deviceID = 'device_' + Math.random().toString(36).substr(2, 9);
+        		localStorage.setItem("deviceID", deviceID);
+    		}
+    		return deviceID;
+		}
 
         function checkAutoLogin() {
-            authRef.once("value", snapshot => {
-                const data = snapshot.val();
-                if (data && data.lastLogin) {
-                    const lastLogin = data.lastLogin;
-                    if ((Date.now() - lastLogin) < sessionTimeout) {
-                        document.getElementById("loginScreen").style.display = "none";
-                        document.getElementById("mainContent").style.display = "block";
-                        renderTransactions();
-                    }
-                }
-            });
-        }
+    		const deviceID = generateDeviceID();
+    		authRef.child(deviceID).once("value", snapshot => {
+        		const data = snapshot.val();
+        		if (data && data.lastLogin) {
+            		if ((Date.now() - data.lastLogin) < sessionTimeout) {
+                		document.getElementById("loginScreen").style.display = "none";
+                		document.getElementById("mainContent").style.display = "block";
+                		renderTransactions();
+            		}
+        		}
+    		});
+		}
 
          function addTransaction() {
         const desc = document.getElementById('desc').value.trim();
@@ -263,12 +273,13 @@
 
     document.addEventListener("DOMContentLoaded", renderTransactions);
 
-        function logout() {
-            authRef.set({ lastLogin: 0 }).then(() => {
-                document.getElementById("loginScreen").style.display = "block";
-                document.getElementById("mainContent").style.display = "none";
-            });
-        }
+       function logout() {
+    		const deviceID = generateDeviceID();
+    		authRef.child(deviceID).set({ lastLogin: 0 }).then(() => {
+        		document.getElementById("loginScreen").style.display = "block";
+        		document.getElementById("mainContent").style.display = "none";
+    		});
+		}
 
         document.addEventListener("DOMContentLoaded", checkAutoLogin);
 		 // משפטים מתחלפים בראש הדף
