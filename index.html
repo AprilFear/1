@@ -42,16 +42,25 @@
         document.getElementById('amount').value = "";
     }
 
-    function renderTransactions() {
+   function renderTransactions() {
     const tbody = document.getElementById('transactions');
     tbody.innerHTML = '';
     let totalIncome = 0;
     let totalExpense = 0;
 
-    db.ref("transactions").on("value", function(snapshot) {  // 🔄 מאזין לכל שינוי בזמן אמת!
-        tbody.innerHTML = ''; // מנקה את הרשימה לפני עדכון חדש
+    db.ref("transactions").on("value", function(snapshot) {  
+        console.log("📥 נתונים שהתקבלו מ-Firebase:", snapshot.val());  // ✅ בדיקה בקונסולה
+
+        tbody.innerHTML = ''; 
+        if (!snapshot.exists()) {
+            console.log("❌ אין נתונים במסד הנתונים");
+            return;
+        }
+
         snapshot.forEach(function(childSnapshot) {
             const t = childSnapshot.val();
+            console.log("📌 טרנזקציה:", t); // ✅ בדיקה
+
             const row = `<tr>
                 <td>${t.date}</td>
                 <td>${t.desc}</td>
@@ -68,6 +77,8 @@
         document.getElementById('totalIncome').innerText = totalIncome;
         document.getElementById('totalExpense').innerText = totalExpense;
         document.getElementById('balance').innerText = totalIncome - totalExpense;
+    }, function(error) {
+        console.error("❌ שגיאה בטעינת הנתונים:", error);
     });
 }
 
