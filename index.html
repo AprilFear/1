@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="he">
 <head>
+	
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+
 <script>
     // הגדרות Firebase (החלף את המידע בקובץ ההגדרות של Firebase)
     const firebaseConfig = {
-        apiKey: "AIzaSyBEE68VfoeGOBom73gErbiPrPlrZG06FCM",
-          authDomain: "financemanage-2ab06.firebaseapp.com",
-          databaseURL: "https://financemanage-2ab06-default-rtdb.firebaseio.com",
-          projectId: "financemanage-2ab06",
-          storageBucket: "financemanage-2ab06.firebasestorage.app",
-          messagingSenderId: "352587843222",
-          appId: "1:352587843222:web:0789386ef1d474a66a64b7",
-          measurementId: "G-CJMSYBW9ND"
-    };
+    	apiKey: "AIzaSyBEE68VfoeGOBom73gErbiPrPlrZG06FCM",
+    	authDomain: "financemanage-2ab06.firebaseapp.com",
+    	databaseURL: "https://financemanage-2ab06-default-rtdb.firebaseio.com",
+    	projectId: "financemanage-2ab06",
+    	storageBucket: "financemanage-2ab06.appspot.com",  // ✅ מתוקן!
+    	messagingSenderId: "352587843222",
+    	appId: "1:352587843222:web:0789386ef1d474a66a64b7",
+    	measurementId: "G-CJMSYBW9ND"
+	};
 
     // אתחול Firebase
     firebase.initializeApp(firebaseConfig);
@@ -39,32 +43,33 @@
     }
 
     function renderTransactions() {
-        const tbody = document.getElementById('transactions');
-        tbody.innerHTML = '';
-        let totalIncome = 0;
-        let totalExpense = 0;
+    const tbody = document.getElementById('transactions');
+    tbody.innerHTML = '';
+    let totalIncome = 0;
+    let totalExpense = 0;
 
-        db.ref("transactions").once("value", function(snapshot) {
-            snapshot.forEach(function(childSnapshot) {
-                const t = childSnapshot.val();
-                const row = `<tr>
-                    <td>${t.date}</td>
-                    <td>${t.desc}</td>
-                    <td>${t.amount} ש"ח</td>
-                    <td>${t.type === 'income' ? 'הכנסה' : 'הוצאה'}</td>
-                    <td><button onclick="deleteTransaction('${childSnapshot.key}')">מחק</button></td>
-                </tr>`;
-                tbody.innerHTML += row;
+    db.ref("transactions").on("value", function(snapshot) {  // 🔄 מאזין לכל שינוי בזמן אמת!
+        tbody.innerHTML = ''; // מנקה את הרשימה לפני עדכון חדש
+        snapshot.forEach(function(childSnapshot) {
+            const t = childSnapshot.val();
+            const row = `<tr>
+                <td>${t.date}</td>
+                <td>${t.desc}</td>
+                <td>${t.amount} ש"ח</td>
+                <td>${t.type === 'income' ? 'הכנסה' : 'הוצאה'}</td>
+                <td><button onclick="deleteTransaction('${childSnapshot.key}')">מחק</button></td>
+            </tr>`;
+            tbody.innerHTML += row;
 
-                if (t.type === 'income') totalIncome += t.amount;
-                else totalExpense += t.amount;
-            });
-
-            document.getElementById('totalIncome').innerText = totalIncome;
-            document.getElementById('totalExpense').innerText = totalExpense;
-            document.getElementById('balance').innerText = totalIncome - totalExpense;
+            if (t.type === 'income') totalIncome += t.amount;
+            else totalExpense += t.amount;
         });
-    }
+
+        document.getElementById('totalIncome').innerText = totalIncome;
+        document.getElementById('totalExpense').innerText = totalExpense;
+        document.getElementById('balance').innerText = totalIncome - totalExpense;
+    });
+}
 
     function deleteTransaction(id) {
         db.ref("transactions/" + id).remove().then(() => {
@@ -188,16 +193,16 @@
     <script>
         const correctPassword = "211517396";
         
-        function checkPassword() {
-            const inputPassword = document.getElementById("passwordInput").value;
-            if (inputPassword === correctPassword) {
-                document.getElementById("loginScreen").style.display = "none";
-                document.getElementById("mainContent").style.display = "block";
-                loadTransactions();
-            } else {
-                alert("סיסמה שגויה");
-            }
-        }
+       function checkPassword() {
+    	const inputPassword = document.getElementById("passwordInput").value;
+  	  	if (inputPassword === correctPassword) {
+        		document.getElementById("loginScreen").style.display = "none";
+        		document.getElementById("mainContent").style.display = "block";
+        		renderTransactions();  // ✅ טוען נתונים מיד לאחר הכניסה
+   		 } else {
+        		alert("סיסמה שגויה");
+    			}
+		}
         
         let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
         let totalIncome = 0;
