@@ -37,14 +37,14 @@
 
     console.log("📤 שולח ל-Firebase:", transaction); // ✅ בדיקה בקונסולה
 
-    db.ref("transactions").push(transaction)
+    db.ref("/transactions").push(transaction)
     .then(() => console.log("✅ הנתונים נשמרו בהצלחה ב-Firebase"))
     .catch((error) => console.error("❌ שגיאה בשמירת נתונים:", error));
 
     document.getElementById('desc').value = "";
     document.getElementById('amount').value = "";
 }
-	
+
    function renderTransactions() {
     const tbody = document.getElementById('transactions');
     tbody.innerHTML = '';
