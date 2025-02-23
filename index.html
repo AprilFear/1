@@ -23,25 +23,28 @@
     const db = firebase.database();
 
     function addTransaction() {
-        const desc = document.getElementById('desc').value;
-        const amount = parseFloat(document.getElementById('amount').value);
-        const type = document.getElementById('type').value;
-        const date = new Date().toLocaleDateString('he-IL');
+    const desc = document.getElementById('desc').value;
+    const amount = parseFloat(document.getElementById('amount').value);
+    const type = document.getElementById('type').value;
+    const date = new Date().toLocaleDateString('he-IL');
 
-        if (!desc || isNaN(amount)) {
-            alert('יש למלא את כל השדות כראוי');
-            return;
-        }
-
-        const transaction = { date, desc, amount, type };
-
-        // שמירת הנתונים ב-Firebase
-        db.ref("transactions").push(transaction);
-
-        document.getElementById('desc').value = "";
-        document.getElementById('amount').value = "";
+    if (!desc || isNaN(amount)) {
+        alert('יש למלא את כל השדות כראוי');
+        return;
     }
 
+    const transaction = { date, desc, amount, type };
+
+    console.log("📤 שולח ל-Firebase:", transaction); // ✅ בדיקה בקונסולה
+
+    db.ref("transactions").push(transaction)
+    .then(() => console.log("✅ הנתונים נשמרו בהצלחה ב-Firebase"))
+    .catch((error) => console.error("❌ שגיאה בשמירת נתונים:", error));
+
+    document.getElementById('desc').value = "";
+    document.getElementById('amount').value = "";
+}
+	
    function renderTransactions() {
     const tbody = document.getElementById('transactions');
     tbody.innerHTML = '';
