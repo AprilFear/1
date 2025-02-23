@@ -7,7 +7,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ניהול פיננסי</title>
     <style>
-        /* עיצוב נשאר ללא שינוי */
+        /* עיצוב כללי - רקע תלת-ממדי */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            direction: rtl;
+            background: linear-gradient(135deg, #dbeafe, #93c5fd);
+            color: #333;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* כפתורים - אפקט תלת-ממדי (Neumorphism) */
+        button {
+            background: #e0e0e0;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.2), 
+                        -6px -6px 10px rgba(255, 255, 255, 0.7);
+            transition: all 0.2s ease-in-out;
+        }
+
+        button:hover {
+            background: #f0f0f0;
+        }
+
+        button:active {
+            box-shadow: inset 4px 4px 6px rgba(0, 0, 0, 0.2), 
+                        inset -4px -4px 6px rgba(255, 255, 255, 0.7);
+        }
+
+        /* טופס הוספת טרנזקציה */
+        input, select {
+            width: 220px;
+            padding: 12px;
+            margin: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background: #f8f9fa;
+            box-shadow: inset 4px 4px 6px rgba(0, 0, 0, 0.2), 
+                        inset -4px -4px 6px rgba(255, 255, 255, 0.7);
+        }
+
+        /* טבלת הנתונים - עיצוב תלת-ממדי */
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2), 
+                        -8px -8px 15px rgba(255, 255, 255, 0.7);
+            overflow: hidden;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: center;
+        }
+
+        th {
+            background: #60a5fa;
+            color: white;
+            font-size: 18px;
+        }
+
+        /* קופסה מסכמת - אפקט תלת-ממדי */
+        .summary {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            width: 50%;
+            box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.2), 
+                        -6px -6px 15px rgba(255, 255, 255, 0.7);
+        }
+
+        .summary p {
+            font-size: 18px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -60,92 +147,49 @@
             appId: "1:352587843222:web:0789386ef1d474a66a64b7"
         };
 
-        // אתחול Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
-        const transactionsRef = db.ref('/transactions'); // יצירת רפרנס למסד נתונים
-
-        const correctPassword = "211517396";
+        const transactionsRef = db.ref('/transactions');
 
         function checkPassword() {
-            const inputPassword = document.getElementById("passwordInput").value;
-            if (inputPassword === correctPassword) {
-                document.getElementById("loginScreen").style.display = "none";
-                document.getElementById("mainContent").style.display = "block";
-                renderTransactions(); // טען נתונים לאחר ההתחברות
-            } else {
-                alert("סיסמה שגויה");
-            }
+            document.getElementById("loginScreen").style.display = "none";
+            document.getElementById("mainContent").style.display = "block";
+            renderTransactions();
         }
 
         function addTransaction() {
-            const desc = document.getElementById('desc').value;
-            const amount = parseFloat(document.getElementById('amount').value);
-            const type = document.getElementById('type').value;
-            const date = new Date().toLocaleDateString('he-IL');
+            const transaction = {
+                date: new Date().toLocaleDateString('he-IL'),
+                desc: document.getElementById('desc').value,
+                amount: parseFloat(document.getElementById('amount').value),
+                type: document.getElementById('type').value
+            };
 
-            if (!desc || isNaN(amount)) {
-                alert('יש למלא את כל השדות כראוי');
-                return;
-            }
-
-            const transaction = { date, desc, amount, type };
-
-            transactionsRef.push(transaction)
-                .then(() => {
-                    console.log("✅ הנתונים נשמרו בהצלחה ב-Firebase");
-                    document.getElementById('desc').value = "";
-                    document.getElementById('amount').value = "";
-                })
-                .catch((error) => console.error("❌ שגיאה בשמירת נתונים:", error));
+            transactionsRef.push(transaction).then(renderTransactions);
         }
 
         function deleteTransaction(id) {
-            transactionsRef.child(id).remove()
-                .then(() => console.log("✅ טרנזקציה נמחקה בהצלחה"))
-                .catch((error) => console.error("❌ שגיאה במחיקת טרנזקציה:", error));
+            transactionsRef.child(id).remove().then(renderTransactions);
         }
 
         function renderTransactions() {
-            const tbody = document.getElementById('transactions');
-            tbody.innerHTML = '';
-            let totalIncome = 0;
-            let totalExpense = 0;
-
             transactionsRef.on("value", (snapshot) => {
-                tbody.innerHTML = '';
-                if (!snapshot.exists()) {
-                    console.log("❌ אין נתונים במסד הנתונים");
-                    return;
-                }
-
+                document.getElementById('transactions').innerHTML = '';
                 snapshot.forEach((childSnapshot) => {
                     const t = childSnapshot.val();
-                    const row = `<tr>
+                    document.getElementById('transactions').innerHTML += `<tr>
                         <td>${t.date}</td>
                         <td>${t.desc}</td>
                         <td>${t.amount} ש"ח</td>
                         <td>${t.type === 'income' ? 'הכנסה' : 'הוצאה'}</td>
                         <td><button onclick="deleteTransaction('${childSnapshot.key}')">מחק</button></td>
                     </tr>`;
-                    tbody.innerHTML += row;
-
-                    if (t.type === 'income') totalIncome += t.amount;
-                    else totalExpense += t.amount;
                 });
-
-                document.getElementById('totalIncome').innerText = totalIncome;
-                document.getElementById('totalExpense').innerText = totalExpense;
-                document.getElementById('balance').innerText = totalIncome - totalExpense;
-            }, (error) => {
-                console.error("❌ שגיאה בטעינת הנתונים:", error);
             });
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            console.log("🔥 Firebase נטען בהצלחה");
-        });
-
+        document.addEventListener("DOMContentLoaded", renderTransactions);
     </script>
 </body>
 </html>
+
