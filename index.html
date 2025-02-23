@@ -93,6 +93,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>תאריך</th>
                     <th>תיאור</th>
                     <th>סכום</th>
                     <th>סוג</th>
@@ -111,7 +112,7 @@
     </div>
     
     <script>
-        const correctPassword = "211517396"; // שנה לסיסמה שתרצה
+        const correctPassword = "1234"; 
         
         function checkPassword() {
             const inputPassword = document.getElementById("passwordInput").value;
@@ -122,7 +123,57 @@
                 alert("סיסמה שגויה");
             }
         }
+        
+        let totalIncome = 0;
+        let totalExpense = 0;
+
+        function addTransaction() {
+            const desc = document.getElementById('desc').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const type = document.getElementById('type').value;
+            const date = new Date().toLocaleDateString('he-IL');
+            
+            if (!desc || isNaN(amount)) {
+                alert('יש למלא את כל השדות כראוי');
+                return;
+            }
+            
+            const transactionRow = `<tr>
+                <td>${date}</td>
+                <td>${desc}</td>
+                <td>${amount} ש"ח</td>
+                <td>${type === 'income' ? 'הכנסה' : 'הוצאה'}</td>
+                <td><button onclick="deleteTransaction(this, ${amount}, '${type}')">מחק</button></td>
+            </tr>`;
+            
+            document.getElementById('transactions').innerHTML += transactionRow;
+            
+            if (type === 'income') {
+                totalIncome += amount;
+            } else {
+                totalExpense += amount;
+            }
+            
+            updateSummary();
+        }
+
+        function deleteTransaction(element, amount, type) {
+            element.parentElement.parentElement.remove();
+            
+            if (type === 'income') {
+                totalIncome -= amount;
+            } else {
+                totalExpense -= amount;
+            }
+            
+            updateSummary();
+        }
+
+        function updateSummary() {
+            document.getElementById('totalIncome').innerText = totalIncome;
+            document.getElementById('totalExpense').innerText = totalExpense;
+            document.getElementById('balance').innerText = totalIncome - totalExpense;
+        }
     </script>
 </body>
 </html>
-
