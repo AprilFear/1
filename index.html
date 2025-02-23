@@ -1,139 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sogo Solana Fighter</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>ניהול פיננסי</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
         body {
-            font-family: 'Orbitron', sans-serif;
-            color: #00ff00;
+            font-family: Arial, sans-serif;
             text-align: center;
-            overflow-x: hidden;
-        }
-        .video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            object-fit: cover;
-        }
-        header {
-            background: rgba(0, 255, 0, 0.2);
+            direction: rtl;
+            background: linear-gradient(135deg, #dbeafe, #93c5fd);
+            color: #333;
             padding: 20px;
-            box-shadow: 0px 0px 15px #00ff00;
         }
-        nav ul {
-            list-style: none;
-            padding: 0;
+        h1, h2 {
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
         }
-        nav ul li {
-			color: black;
-            display: inline;
-            margin: 0 15px;
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
         }
-        nav ul li a {
-            background-color: black;
-            color: green;
-            padding: 5px 10px;
-            text-decoration: none;
-            border-radius: 100px;
-            font-size: 1.5em;
-            font-weight: bold;
-            text-shadow: 100px 100px 100px green;
-            box-shadow: 0px 10px 15px red;
+        th, td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: center;
+        }
+        th {
+            background-color: #60a5fa;
+            color: white;
+            font-size: 18px;
+        }
+        input, select, button {
+            margin: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+        input, select {
+            width: 200px;
+        }
+        button {
+            background-color: #3b82f6;
+            color: white;
+            cursor: pointer;
             transition: 0.3s;
         }
-		nav ul li a:hover {
-            transform: translateY(-5px) scale(1.05);
-			text-shadow: 4px 4px 0px green, 8px 8px 0px #00ff00, 12px 12px 10px rgba(0, 255, 0, 0.8);
-            box-shadow: 0px 0px 20px limegreen, 0px 0px 30px rgba(0, 255, 0, 0.5);
+        button:hover {
+            background-color: #2563eb;
         }
-        section {
-            padding: 60px;
-            font-size: 1.8em;
-            text-shadow: 0px 0px 10px #00ff00;
-            background: rgba(0, 0, 0, 0.7);
-            margin: 20px;
-            border-radius: 15px;
-        }
-        .cta-button {
-            background-color: black;
-            color: green;
-            padding: 20px 40px;
-            text-decoration: none;
-            border-radius: 100px;
-            font-size: 1.5em;
-            font-weight: bold;
-            text-shadow: 100px 100px 100px green;
-            box-shadow: 0px 10px 15px red;
-            transition: 0.3s;
-        }
-        .cta-button:hover {
-			transform: translateY(-5px) scale(1.05);
-			text-shadow: 4px 4px 0px green, 8px 8px 0px #00ff00, 0px 0px 50px rgba(0, 0, 0, 0.8);
-            box-shadow: 0px 0px 20px limegreen, 0px 0px 30px rgba(0, 255, 0, 0.5);
-        }
-        footer {
-            background: rgba(0, 255, 0, 0.2);
+        .summary {
+            background: white;
+            border-radius: 10px;
             padding: 20px;
-            box-shadow: 0px 0px 15px #00ff00;
+            margin: 20px auto;
+            width: 50%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .summary p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        #mainContent {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <video class="video-background" autoplay loop muted>
-        <source src="pongo1.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-
-    <header>
-        <h1>Sogo Will Make Sol Great Again</h1>
-		<br>
-        <nav>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="https://t.me/SOGO_SOLANA_FIGHTER">Telegram</a></li>
-                <li><a href="https://x.com/SOGO_Fighter">X</a></li>
-            </ul>
-        </nav>
-    </header>
-	<section id="hero">
-	<h2>The Future of Memecoins on Solana</h2>
-	<p>Join the movement and make Solana great again!</p>
-	</section>
-			
-    <section id="hero">
-        <a href="https://jup.ag/swap/SOL-9LutMPPhVKPDH6Qyi2r7rgzrqsYiwozT2ddM9p7R1uki" class="cta-button">Buy Now</a>
-    </section>
+    <div id="loginScreen">
+        <h2>הכנס סיסמה</h2>
+        <input type="password" id="passwordInput" placeholder="סיסמה">
+        <button onclick="checkPassword()">כניסה</button>
+    </div>
     
-    <section id="about">
-        <h2>About</h2>
-        <p>Meet $SOGO, the commando warrior 🎖💥! Amid Solana's decline, he emerges as the hero to lead the resurgence. With a rich history of battlefield victories and unmatched skills, $SOGO is set to revitalize Solana. Behind the scenes, he's orchestrating a strategic deal with Trump, leveraging alliances to fortify his campaign. Watch as he employs his legendary prowess to overcome market challenges and spearhead a heroic comeback. Join $SOGO for an epic revival where humor and heroism ensure a victorious future! 🚀🌟</p>
-    </section>
+    <div id="mainContent">
+        <h1>ניהול הכנסות והוצאות</h1>
+        <input type="text" id="desc" placeholder="תיאור">
+        <input type="number" id="amount" placeholder="סכום">
+        <select id="type">
+            <option value="income">הכנסה</option>
+            <option value="expense">הוצאה</option>
+        </select>
+        <button onclick="addTransaction()">הוסף</button>
+        
+        <h2>רשימת תנועות</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>תיאור</th>
+                    <th>סכום</th>
+                    <th>סוג</th>
+                    <th>פעולות</th>
+                </tr>
+            </thead>
+            <tbody id="transactions"></tbody>
+        </table>
+        
+        <div class="summary">
+            <h2>סיכום</h2>
+            <p>סה"כ הכנסות: <span id="totalIncome">0</span> ש"ח</p>
+            <p>סה"כ הוצאות: <span id="totalExpense">0</span> ש"ח</p>
+            <p>יתרה כוללת: <span id="balance">0</span> ש"ח</p>
+        </div>
+    </div>
     
-    <section id="buy">
-        <h2>How to Buy</h2>
-        <p>Purchase $SOGO on your favorite decentralized exchange.</p>
-    </section>
-    
-    <section id="community">
-        <h2>Join the Community</h2>
-        <p>Connect with us on Twitter And Telegram</p>
-    </section>
-    
-    <footer>
-        <p>&copy; 2025 Sogo Will Make Sol Great Again. All rights reserved.</p>
-    </footer>
+    <script>
+        const correctPassword = "211517396"; // שנה לסיסמה שתרצה
+        
+        function checkPassword() {
+            const inputPassword = document.getElementById("passwordInput").value;
+            if (inputPassword === correctPassword) {
+                document.getElementById("loginScreen").style.display = "none";
+                document.getElementById("mainContent").style.display = "block";
+            } else {
+                alert("סיסמה שגויה");
+            }
+        }
+    </script>
 </body>
 </html>
+
