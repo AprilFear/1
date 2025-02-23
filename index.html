@@ -112,18 +112,20 @@
     </div>
     
     <script>
-        const correctPassword = "211517396"; 
+        const correctPassword = "211517396";
         
         function checkPassword() {
             const inputPassword = document.getElementById("passwordInput").value;
             if (inputPassword === correctPassword) {
                 document.getElementById("loginScreen").style.display = "none";
                 document.getElementById("mainContent").style.display = "block";
+                loadTransactions();
             } else {
                 alert("סיסמה שגויה");
             }
         }
         
+        let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
         let totalIncome = 0;
         let totalExpense = 0;
 
@@ -138,41 +140,45 @@
                 return;
             }
             
-            const transactionRow = `<tr>
-                <td>${date}</td>
-                <td>${desc}</td>
-                <td>${amount} ש"ח</td>
-                <td>${type === 'income' ? 'הכנסה' : 'הוצאה'}</td>
-                <td><button onclick="deleteTransaction(this, ${amount}, '${type}')">מחק</button></td>
-            </tr>`;
-            
-            document.getElementById('transactions').innerHTML += transactionRow;
-            
-            if (type === 'income') {
-                totalIncome += amount;
-            } else {
-                totalExpense += amount;
-            }
-            
-            updateSummary();
+            const transaction = { date, desc, amount, type };
+            transactions.push(transaction);
+            localStorage.setItem("transactions", JSON.stringify(transactions));
+            renderTransactions();
         }
 
-        function deleteTransaction(element, amount, type) {
-            element.parentElement.parentElement.remove();
-            
-            if (type === 'income') {
-                totalIncome -= amount;
-            } else {
-                totalExpense -= amount;
-            }
-            
-            updateSummary();
+        function deleteTransaction(index) {
+            transactions.splice(index, 1);
+            localStorage.setItem("transactions", JSON.stringify(transactions));
+            renderTransactions();
         }
 
-        function updateSummary() {
+        function renderTransactions() {
+            const tbody = document.getElementById('transactions');
+            tbody.innerHTML = '';
+            totalIncome = 0;
+            totalExpense = 0;
+            
+            transactions.forEach((t, index) => {
+                const row = `<tr>
+                    <td>${t.date}</td>
+                    <td>${t.desc}</td>
+                    <td>${t.amount} ש"ח</td>
+                    <td>${t.type === 'income' ? 'הכנסה' : 'הוצאה'}</td>
+                    <td><button onclick="deleteTransaction(${index})">מחק</button></td>
+                </tr>`;
+                tbody.innerHTML += row;
+                
+                if (t.type === 'income') totalIncome += t.amount;
+                else totalExpense += t.amount;
+            });
+            
             document.getElementById('totalIncome').innerText = totalIncome;
             document.getElementById('totalExpense').innerText = totalExpense;
             document.getElementById('balance').innerText = totalIncome - totalExpense;
+        }
+
+        function loadTransactions() {
+            renderTransactions();
         }
     </script>
 </body>
