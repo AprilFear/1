@@ -1,319 +1,163 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="en">
 <head>
-     <link rel="manifest" href="manifest.json">
-		<script>
-		if ('serviceWorker' in navigator) {
-    		navigator.serviceWorker.register('/service-worker.js')
-        		.then(() => console.log("Service Worker Registered!"))
-        		.catch(err => console.error("Service Worker failed", err));
-		}
-		</script>		
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ניהול פיננסי</title>
+    <title>XELON Pre-Order</title>
     <style>
-	            /* התאמה לסמארטפון */
-        @media screen and (max-width: 768px) {
-            body {
-                font-size: 14px;
-                padding-top: 90px;
-            }
-
-            #quoteBar {
-                font-size: 14px;
-                padding: 8px;
-            }
-
-            table {
-                width: 100%;
-                font-size: 14px;
-            }
-
-            th, td {
-                padding: 10px;
-            }
-
-            button, input, select {
-                width: 90%;
-                padding: 10px;
-                font-size: 14px;
-            }
-
-            .summary {
-                width: 90%;
-                padding: 15px;
-            }
-        }
-
-        /* פס עליון עם משפטים מתחלפים */
-        #quoteBar {
-            background: linear-gradient(90deg, #60a5fa, #3b82f6);
-            color: white;
-            padding: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            transition: opacity 1s ease-in-out;
-        }
-
-        /* התאמה לעיצוב האתר */
+        /* עיצוב כללי */
         body {
             font-family: Arial, sans-serif;
+            background: #0a0f1e;
+            color: #00eaff;
             text-align: center;
-            direction: rtl;
-            background: linear-gradient(135deg, #dbeafe, #93c5fd);
-            color: #333;
-            padding-top: 70px;
+            margin: 0;
+            padding: 0;
         }
 
-        #mainContent {
-            display: none;
+        .container {
+            margin-top: 100px;
         }
 
-        /* עיצוב תלת ממדי */
-        button, input, select {
-            background: #e0e0e0;
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 12px;
-            cursor: pointer;
-            box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.2), 
-                        -6px -6px 10px rgba(255, 255, 255, 0.7);
-            transition: all 0.2s ease-in-out;
+        h1 {
+            font-size: 3em;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px #00eaff, 0 0 20px #00eaff;
         }
 
-        button:hover, input:hover, select:hover {
-            background: #f0f0f0;
+        p {
+            font-size: 1.2em;
+            color: #a0f0ff;
         }
 
-        /* טבלת הנתונים */
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
+        /* עיצוב הטיימר */
+        #countdown {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 20px 0;
+            background: rgba(0, 234, 255, 0.1);
             padding: 15px;
-            text-align: center;
-        }
-
-        th {
-            background: #60a5fa;
-            color: white;
-            font-size: 18px;
-        }
-
-        /* סיכום כולל */
-        .summary {
-            background: white;
             border-radius: 10px;
-            padding: 20px;
-            margin: 20px auto;
-            width: 50%;
-            box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.2), 
-                        -6px -6px 15px rgba(255, 255, 255, 0.7);
+            display: inline-block;
+            box-shadow: 0 0 20px #00eaff;
+        }
+
+        /* עיצוב כפתורים */
+        .notify-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            color: #000;
+            background: #00eaff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0px 0px 15px #00eaff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .notify-btn:hover {
+            background: #00ccff;
+            box-shadow: 0px 0px 25px #00ccff;
+        }
+
+        /* עיצוב טופס ההרשמה */
+        #waitlist-form {
+            margin-top: 30px;
+        }
+
+        input {
+            width: 300px;
+            padding: 12px;
+            margin: 10px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            background: #06172b;
+            color: #00eaff;
+            text-align: center;
+            box-shadow: 0px 0px 10px #00eaff;
+        }
+
+        input::placeholder {
+            color: #00aacc;
+        }
+
+        /* הודעת אישור */
+        #confirmation {
+            font-size: 1.2em;
+            color: #00ff99;
+            font-weight: bold;
+            display: none;
+            margin-top: 20px;
+            background: rgba(0, 255, 153, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #00ff99;
         }
     </style>
 </head>
 <body>
 
-    <!-- פס משפטים מתחלפים -->
-    <div id="quoteBar">טוען משפטים...</div>
+    <div class="container">
+        <h1> XELON – The Future is Coming</h1>
+        <p>Pre-orders will open soon. Stay ahead of the future.</p>
+        
+        <div id="countdown"></div>
 
-    <div id="loginScreen">
-        <h2>הכנס סיסמה</h2>
-        <input type="password" id="passwordInput" placeholder="סיסמה">
-        <button onclick="checkPassword()">כניסה</button>
-    </div>
+        <!-- טופס הרשמה -->
+        <form id="waitlist-form">
+            <input type="text" id="name" placeholder="Your Name" required>
+            <input type="email" id="email" placeholder="Your Email" required>
+            <button type="submit" class="notify-btn">Join the Waitlist</button>
+        </form>
 
-    <div id="mainContent">
-        <h1>ניהול הכנסות והוצאות</h1>
-		<h2>אליהו ומוריה סויסה</h2>
-        <button onclick="logout()">התנתק</button>
-
-        <input type="text" id="desc" placeholder="תיאור">
-        <input type="number" id="amount" placeholder="סכום">
-        <select id="type">
-            <option value="income">הכנסה</option>
-            <option value="expense">הוצאה</option>
-        </select>
-        <button onclick="addTransaction()">הוסף</button>
-
-        <h2>רשימת תנועות</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>תאריך</th>
-                    <th>תיאור</th>
-                    <th>סכום</th>
-                    <th>סוג</th>
-                    <th>פעולות</th>
-                </tr>
-            </thead>
-            <tbody id="transactions"></tbody>
-        </table>
-
-        <div class="summary">
-            <h2>סיכום</h2>
-            <p>סה"כ הכנסות: <span id="totalIncome">0</span> ש"ח</p>
-            <p>סה"כ הוצאות: <span id="totalExpense">0</span> ש"ח</p>
-            <p>יתרה כוללת: <span id="balance">0</span> ש"ח</p>
-        </div>
+        <!-- הודעת אישור -->
+        <p id="confirmation">✅ You’re on the waitlist! More details coming soon.</p>
     </div>
 
     <script>
-	const correctPassword = "116677";
-        const firebaseConfig = {
-            apiKey: "AIzaSyBEE68VfoeGOBom73gErbiPrPlrZG06FCM",
-            authDomain: "financemanage-2ab06.firebaseapp.com",
-            databaseURL: "https://financemanage-2ab06-default-rtdb.firebaseio.com",
-            projectId: "financemanage-2ab06",
-            storageBucket: "financemanage-2ab06.appspot.com",
-            messagingSenderId: "352587843222",
-            appId: "1:352587843222:web:0789386ef1d474a66a64b7"
-        };
+        // ⏳ ספירה לאחור להזמנה מוקדמת
+        let deadline = new Date();
+        deadline.setDate(deadline.getDate() + 14);
 
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-        const authRef = db.ref('/auth');
-        const transactionsRef = db.ref('/transactions');
-        const sessionTimeout = 5 * 60 * 1000; // 5 דקות
+        function updateCountdown() {
+            let now = new Date().getTime();
+            let diff = deadline - now;
 
-        function checkPassword() {
-    		const deviceID = generateDeviceID();
-    		authRef.child(deviceID).set({ lastLogin: Date.now() })
-        		.then(() => {
-            		document.getElementById("loginScreen").style.display = "none";
-            		document.getElementById("mainContent").style.display = "block";
-           		 renderTransactions();
-        		});
-		}
-	    
-	function generateDeviceID() {
-    		let deviceID = localStorage.getItem("deviceID");
-    		if (!deviceID) {
-        		deviceID = 'device_' + Math.random().toString(36).substr(2, 9);
-        		localStorage.setItem("deviceID", deviceID);
-    		}
-    		return deviceID;
-		}
+            let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-        function checkAutoLogin() {
-    		const deviceID = generateDeviceID();
-    		authRef.child(deviceID).once("value", snapshot => {
-        		const data = snapshot.val();
-        		if (data && data.lastLogin) {
-            		if ((Date.now() - data.lastLogin) < sessionTimeout) {
-                		document.getElementById("loginScreen").style.display = "none";
-                		document.getElementById("mainContent").style.display = "block";
-                		renderTransactions();
-            		}
-        		}
-    		});
-		}
+            document.getElementById("countdown").innerHTML = 
+                `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
-         function addTransaction() {
-        const desc = document.getElementById('desc').value.trim();
-        const amount = parseFloat(document.getElementById('amount').value);
-        const type = document.getElementById('type').value;
-        const date = new Date().toLocaleDateString('he-IL');
-
-        if (!desc || isNaN(amount) || amount <= 0) {
-            alert("נא למלא את כל השדות כראוי.");
-            return;
+            if (diff < 0) {
+                document.getElementById("countdown").innerHTML = "🚀 Pre-orders are now open!";
+            }
         }
+        setInterval(updateCountdown, 1000);
 
-        const transaction = { date, desc, amount, type };
+        // 📩 פונקציה לרישום לרשימת ההמתנה
+        document.getElementById("waitlist-form").addEventListener("submit", function(event) {
+            event.preventDefault();
 
-        transactionsRef.push(transaction)
-            .then(() => {
-                document.getElementById('desc').value = "";
-                document.getElementById('amount').value = "";
-                renderTransactions();  // טוען מחדש את הנתונים לאחר ההוספה
-            })
-            .catch(error => {
-                console.error("❌ שגיאה בהוספת נתונים:", error);
-            });
-    }
+            // קבלת ערכים מהשדות
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
 
-    function renderTransactions() {
-        transactionsRef.on("value", snapshot => {
-            let totalIncome = 0, totalExpense = 0;
-            const transactionsTable = document.getElementById('transactions');
-            transactionsTable.innerHTML = '';
+            // ניקוי השדות
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
 
-            snapshot.forEach(childSnapshot => {
-                const t = childSnapshot.val();
-                if (t.type === 'income') totalIncome += t.amount;
-                else totalExpense += t.amount;
-
-                transactionsTable.innerHTML += `
-                    <tr>
-                        <td>${t.date}</td>
-                        <td>${t.desc}</td>
-                        <td>${t.amount} ש"ח</td>
-                        <td>${t.type === 'income' ? 'הכנסה' : 'הוצאה'}</td>
-                        <td><button onclick="deleteTransaction('${childSnapshot.key}')">מחק</button></td>
-                    </tr>`;
-            });
-
-            document.getElementById("totalIncome").innerText = totalIncome;
-            document.getElementById("totalExpense").innerText = totalExpense;
-            document.getElementById("balance").innerText = totalIncome - totalExpense;
-        }, error => {
-            console.error("❌ שגיאה בטעינת הנתונים:", error);
+            // הצגת הודעת אישור
+            document.getElementById("confirmation").style.display = "block";
         });
-    }
-
-    document.addEventListener("DOMContentLoaded", renderTransactions);
-
-       function logout() {
-    		const deviceID = generateDeviceID();
-    		authRef.child(deviceID).set({ lastLogin: 0 }).then(() => {
-        		document.getElementById("loginScreen").style.display = "block";
-        		document.getElementById("mainContent").style.display = "none";
-    		});
-		}
-
-        document.addEventListener("DOMContentLoaded", checkAutoLogin);
-		 // משפטים מתחלפים בראש הדף
-    const quotes = [
-        "💰 תחסוך אגורה ליום השחור, אבל מה עם היום הלבן?",
-        "📉 כסף לא גדל על עצים, אבל עמלות בנק כן!",
-        "🤑 כשהכסף מדבר, כל השאר שותקים... גם חשבון הבנק שלך!",
-        "💳 כרטיס האשראי שלך בוכה... תן לו חופשה!",
-        "🧐 תקציב הוא מה שמונע ממך לקנות מה שאתה לא צריך בכסף שאין לך.",
-        "😎 תכננת לחסוך החודש? גם אני, עד שראיתי מבצע!",
-        "🛒 אל תדאג, זה לא בזבוז אם קנית בהנחה!",
-        "🏦 חשבון הבנק שלי והמשכורת משחקים מחבואים... והמשכורת תמיד מנצחת!",
-        "🍔 אוכל בבית יותר זול... אבל פיצה יותר טעימה!",
-        "💸 כל שקל שחוסכים הוא שקל שמישהו אחר הוציא!"
-    ];
-
-    let quoteIndex = 0;
-
-    function changeQuote() {
-        document.getElementById("quoteBar").innerText = quotes[quoteIndex];
-        quoteIndex = (quoteIndex + 1) % quotes.length;
-    }
-
-    setInterval(changeQuote, 5000);
-    changeQuote();
     </script>
+
 </body>
 </html>
