@@ -3,161 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XELON Pre-Order</title>
+    <title>QuantumX ($QTX) - The Future of Computing</title>
     <style>
-        /* עיצוב כללי */
         body {
             font-family: Arial, sans-serif;
-            background: #0a0f1e;
-            color: #00eaff;
+            background: linear-gradient(to bottom, #0A0A0A, #1A1A2E);
+            color: #FFFFFF;
             text-align: center;
             margin: 0;
             padding: 0;
+            perspective: 1000px;
         }
-
+        header {
+            background: linear-gradient(90deg, #001f3f, #0074D9);
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+            transform: rotateX(10deg);
+        }
         .container {
-            margin-top: 100px;
-        }
-
-        h1 {
-            font-size: 3em;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px #00eaff, 0 0 20px #00eaff;
-        }
-
-        p {
-            font-size: 1.2em;
-            color: #a0f0ff;
-        }
-
-        /* עיצוב הטיימר */
-        #countdown {
-            font-size: 2em;
-            font-weight: bold;
-            margin: 20px 0;
-            background: rgba(0, 234, 255, 0.1);
-            padding: 15px;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            display: inline-block;
-            box-shadow: 0 0 20px #00eaff;
+            box-shadow: 0px 4px 20px rgba(0, 0, 255, 0.5);
+            transform: rotateY(5deg) translateZ(20px);
         }
-
-        /* עיצוב כפתורים */
-        .notify-btn {
+        .btn {
             display: inline-block;
-            padding: 15px 30px;
-            font-size: 1.2em;
-            color: #000;
-            background: #00eaff;
+            background: linear-gradient(90deg, #0074D9, #00CFFD);
+            color: #FFFFFF;
+            padding: 10px 20px;
             text-decoration: none;
-            border-radius: 10px;
-            font-weight: bold;
-            transition: 0.3s;
-            box-shadow: 0px 0px 15px #00eaff;
-            border: none;
-            cursor: pointer;
-        }
-
-        .notify-btn:hover {
-            background: #00ccff;
-            box-shadow: 0px 0px 25px #00ccff;
-        }
-
-        /* עיצוב טופס ההרשמה */
-        #waitlist-form {
-            margin-top: 30px;
-        }
-
-        input {
-            width: 300px;
-            padding: 12px;
-            margin: 10px;
-            font-size: 1em;
-            border: none;
+            font-size: 18px;
             border-radius: 5px;
-            outline: none;
-            background: #06172b;
-            color: #00eaff;
-            text-align: center;
-            box-shadow: 0px 0px 10px #00eaff;
-        }
-
-        input::placeholder {
-            color: #00aacc;
-        }
-
-        /* הודעת אישור */
-        #confirmation {
-            font-size: 1.2em;
-            color: #00ff99;
-            font-weight: bold;
-            display: none;
             margin-top: 20px;
-            background: rgba(0, 255, 153, 0.1);
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px #00ff99;
+            transition: transform 0.3s ease-in-out;
+        }
+        .btn:hover {
+            background: linear-gradient(90deg, #0056A3, #008CFF);
+            transform: scale(1.1);
+        }
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            background: #001f3f;
+            box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
 <body>
-
+    <header>
+        <h1>QuantumX ($QTX)</h1>
+        <p>The Future of Quantum Computing</p>
+    </header>
     <div class="container">
-        <h1> XELON – The Future is Coming</h1>
-        <p>Pre-orders will open soon. Stay ahead of the future.</p>
-        
-        <div id="countdown"></div>
-
-        <!-- טופס הרשמה -->
-        <form id="waitlist-form">
-            <input type="text" id="name" placeholder="Your Name" required>
-            <input type="email" id="email" placeholder="Your Email" required>
-            <button type="submit" class="notify-btn">Join the Waitlist</button>
-        </form>
-
-        <!-- הודעת אישור -->
-        <p id="confirmation">✅ You’re on the waitlist! More details coming soon.</p>
+        <h2>Introducing the World's Most Advanced Quantum Computer</h2>
+        <p>QuantumX is a revolutionary technology company developing a quantum computer capable of solving any problem in the universe.</p>
+        <p>Although no one has seen it working, our scientists assure that it will change the world forever.</p>
+        <a href="countdown.html" class="btn">Try the Quantum Computer</a>
     </div>
-
-    <script>
-        // ⏳ ספירה לאחור להזמנה מוקדמת
-        let deadline = new Date();
-        deadline.setDate(deadline.getDate() + 14);
-
-        function updateCountdown() {
-            let now = new Date().getTime();
-            let diff = deadline - now;
-
-            let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            let seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-            document.getElementById("countdown").innerHTML = 
-                `${days}d ${hours}h ${minutes}m ${seconds}s`;
-
-            if (diff < 0) {
-                document.getElementById("countdown").innerHTML = "🚀 Pre-orders are now open!";
-            }
-        }
-        setInterval(updateCountdown, 1000);
-
-        // 📩 פונקציה לרישום לרשימת ההמתנה
-        document.getElementById("waitlist-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            // קבלת ערכים מהשדות
-            let name = document.getElementById("name").value;
-            let email = document.getElementById("email").value;
-
-            // ניקוי השדות
-            document.getElementById("name").value = "";
-            document.getElementById("email").value = "";
-
-            // הצגת הודעת אישור
-            document.getElementById("confirmation").style.display = "block";
-        });
-    </script>
-
+    <footer>
+        <p>&copy; 2025 QuantumX. All Rights Reserved.</p>
+    </footer>
 </body>
 </html>
