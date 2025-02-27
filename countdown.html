@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumX - Countdown</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #0A0A0A, #1A1A2E);
+            color: #FFFFFF;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 255, 0.5);
+        }
+        h1 {
+            font-size: 28px;
+        }
+        #countdown {
+            font-size: 36px;
+            margin: 20px 0;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+        button {
+            background: linear-gradient(90deg, #0074D9, #00CFFD);
+            color: #FFFFFF;
+            cursor: pointer;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #0056A3, #008CFF);
+        }
+        .error {
+            color: red;
+            display: none;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0px 4px 20px rgba(255, 0, 255, 0.7);
+        }
+        .exit-btn, .buy-btn {
+            margin-top: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .exit-btn {
+            background: red;
+            color: white;
+        }
+        .buy-btn {
+            background: limegreen;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>The QuantumX Experience Begins Soon</h1>
+        <p>The future of quantum computing is almost here. Be among the first to witness the breakthrough.</p>
+        <div id="countdown"></div>
+        <input type="text" id="name" placeholder="Your Name">
+        <input type="email" id="email" placeholder="Your Email">
+        <p class="error" id="error-message">Please enter a valid name and email.</p>
+        <button onclick="joinWaitlist()">Join the Waitlist</button>
+    </div>
+    
+    <div class="modal" id="confirmation-modal">
+        <div class="modal-content">
+            <p>You have been added to the waitlist! Expect an update soon.</p>
+            <button class="exit-btn" onclick="closeModal()">EXIT</button>
+            <button class="buy-btn" onclick="buyToken()">BUY $QTX</button>
+        </div>
+    </div>
+    
+    <script>
+        function countdown() {
+            const targetDate = new Date();
+            targetDate.setDate(targetDate.getDate() + 14);
+            setInterval(() => {
+                const now = new Date();
+                const timeLeft = targetDate - now;
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                document.getElementById("countdown").innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }, 1000);
+        }
+        
+        function joinWaitlist() {
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let errorMessage = document.getElementById("error-message");
+            let modal = document.getElementById("confirmation-modal");
+            
+            if (name === "" || !email.includes("@")) {
+                errorMessage.style.display = "block";
+                return;
+            }
+            errorMessage.style.display = "none";
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            modal.style.display = "flex";
+        }
+        
+        function closeModal() {
+            document.getElementById("confirmation-modal").style.display = "none";
+            window.location.href = "index.html";
+        }
+        
+        function buyToken() {
+            window.location.href = 'https://your-buy-link.com';
+        }
+        
+        countdown();
+    </script>
+</body>
+</html>
+
