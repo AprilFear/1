@@ -3,72 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuantumX ($QTX) - The Future of Computing</title>
+    <title>$ILLU - The Secret Crypto Cartel</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #0A0A0A, #1A1A2E);
-            color: #FFFFFF;
+            background: linear-gradient(135deg, #1a1a1a, #3d3d3d);
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
             text-align: center;
-            margin: 0;
-            padding: 0;
-            perspective: 1000px;
         }
         header {
-            background: linear-gradient(90deg, #001f3f, #0074D9);
-            padding: 20px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            padding: 50px;
+            background: rgba(255, 0, 0, 0.2);
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.5);
         }
-        header h1 {
-            margin: 0;
-            font-size: 36px;
-            transform: rotateX(10deg);
+        button {
+            background: #ff0000;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5);
         }
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
+        button:hover {
+            background: #cc0000;
+        }
+        #mystery {
+            margin: 50px;
             padding: 20px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            box-shadow: 0px 4px 20px rgba(0, 0, 255, 0.5);
-            transform: rotateY(5deg) translateZ(20px);
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
         }
-        .btn {
-            display: inline-block;
-            background: linear-gradient(90deg, #0074D9, #00CFFD);
-            color: #FFFFFF;
-            padding: 10px 20px;
-            text-decoration: none;
-            font-size: 18px;
-            border-radius: 5px;
-            margin-top: 20px;
-            transition: transform 0.3s ease-in-out;
-        }
-        .btn:hover {
-            background: linear-gradient(90deg, #0056A3, #008CFF);
-            transform: scale(1.1);
-        }
-        footer {
-            margin-top: 50px;
-            padding: 20px;
-            background: #001f3f;
-            box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.5);
+        #secretMessage {
+            font-size: 20px;
+            margin-top: 10px;
+            color: #00ff00;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>QuantumX ($QTX)</h1>
-        <p>The Future of Quantum Computing</p>
+        <h1>$ILLU - The Secret Crypto Cartel 🔺</h1>
+        <p>They see everything. They control everything. But do they exist? 👁️</p>
+        <button onclick="joinTheUnknown()">Join the Unknown</button>
     </header>
-    <div class="container">
-        <h2>Introducing the World's Most Advanced Quantum Computer</h2>
-        <p>QuantumX is a revolutionary technology company developing a quantum computer capable of solving any problem in the universe.</p>
-        <p>Although no one has seen it working, our scientists assure that it will change the world forever.</p>
-        <a href="countdown.html" class="btn">Try the Quantum Computer</a>
-    </div>
+    
+    <section id="about">
+        <h2>What is $ILLU?</h2>
+        <p>$ILLU is more than a meme coin – it's a mystery, a legend, a conspiracy waiting to be uncovered. A hidden crypto cartel that allegedly controls the market. Are you in?</p>
+    </section>
+    
+    <section id="features">
+        <h2>Why $ILLU?</h2>
+        <ul>
+            <li>🔺1,000,000,000 Total Supply</li>
+            <li>🔥 6.66% Transaction Fee - Half burned, half sent to the secret treasury</li>
+            <li>👀 Liquidity Burned – Or is it? 🤫</li>
+            <li>🔓 Hidden Messages, Encrypted NFTs & A VIP Group That May Not Exist</li>
+        </ul>
+    </section>
+    
+    <section id="mystery">
+        <h2>Decode the Secrets</h2>
+        <p>We have hidden messages across the blockchain. Find them and unlock access to the exclusive $ILLU inner circle.</p>
+        <input type="text" id="secretInput" placeholder="Enter secret code...">
+        <button onclick="checkSecret()">Submit</button>
+        <p id="secretMessage"></p>
+    </section>
+    
+    <section id="buy">
+        <h2>How to Buy</h2>
+        <p>Don't be left behind. Follow the trail and acquire $ILLU before it's too late.</p>
+        <button onclick="buyILLU()">Buy $ILLU Now</button>
+    </section>
+    
     <footer>
-        <p>&copy; 2025 QuantumX. All Rights Reserved.</p>
+        <p>&copy; 2025 $ILLU. We see everything. 🔺</p>
     </footer>
+    
+    <script>
+        function checkSecret() {
+            const input = document.getElementById("secretInput").value.toLowerCase();
+            const message = document.getElementById("secretMessage");
+            
+            if (input === "illuminati") {
+                message.innerHTML = "🔺 You've unlocked a hidden message: 'Power is an illusion, control is real.'";
+            } else if (input === "hidden") {
+                message.innerHTML = "👁️ The cartel is watching. Be careful what you seek.";
+            } else {
+                message.innerHTML = "❌ Access Denied. The secrets remain hidden... for now.";
+            }
+        }
+		        function joinTheUnknown() {
+            window.location.href = "https://t.me/ILLU_TheSecretCryptoCartel";
+        }
+        
+        function buyILLU() {
+            window.location.href = "YOUR_DEX_LINK_HERE";
+        }
+    </script>
+    </script>
 </body>
 </html>
+
+
