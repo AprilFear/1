@@ -3,111 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$ILLU - The Secret Crypto Cartel</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+    <title>NEOETH - The Future of Ethereum</title>
     <style>
-        body {
-            background: linear-gradient(135deg, #1a1a1a, #3d3d3d);
-            color: #ffffff;
-            font-family: 'Arial', sans-serif;
-            text-align: center;
+        @keyframes fireEffect {
+            0% { box-shadow: 0px 0px 30px rgba(255, 100, 0, 0.8); }
+            50% { box-shadow: 0px 0px 50px rgba(255, 165, 0, 1); }
+            100% { box-shadow: 0px 0px 30px rgba(255, 100, 0, 0.8); }
         }
-        header {
-            padding: 50px;
-            background: rgba(255, 0, 0, 0.2);
-            border-radius: 15px;
-            box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.5);
+        
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .background-container {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: -1;
+        }
+        .background-image {
+            width: 25%;
+            height: 100%;
+            background-image: url('LLOGO.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+            width: 50%;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 20px;
+            box-shadow: 0px 0px 20px rgba(0, 255, 204, 0.8);
+            transform: perspective(1000px) scale(1);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+        .content:hover {
+            transform: perspective(1000px) scale(1.05);
+            animation: fireEffect 0.8s infinite alternate;
+        }
+        h1, p {
+            text-shadow: 0px 0px 10px rgba(0, 255, 204, 0.8);
+        }
+        .countdown-container {
+            font-size: 2rem;
+            margin-top: 20px;
+            text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
+        }
+        .input-container {
+            margin-top: 20px;
+        }
+        input {
+            padding: 12px;
+            width: 250px;
+            margin: 10px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            text-align: center;
+            font-size: 1rem;
         }
         button {
-            background: #ff0000;
-            color: white;
-            padding: 15px 30px;
+            padding: 12px 25px;
+            background-color: #00ffcc;
             border: none;
-            border-radius: 10px;
-            font-size: 18px;
             cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.5);
+            font-size: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
         }
         button:hover {
-            background: #cc0000;
+            background-color: #00ffaa;
+            transform: scale(1.1);
+            box-shadow: 0px 0px 15px rgba(0, 255, 204, 0.8);
         }
-        #mystery {
-            margin: 50px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+        .social-buttons {
+            margin-top: 20px;
         }
-        #secretMessage {
-            font-size: 20px;
-            margin-top: 10px;
-            color: #00ff00;
+        .social-buttons a {
+            margin: 10px;
+            color: #00ffcc;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        .social-buttons a:hover {
+            color: #00ffaa;
+            transform: scale(1.2);
+            text-shadow: 0px 0px 10px rgba(0, 255, 204, 1);
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: gray;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>$ILLU - The Secret Crypto Cartel 🔺</h1>
-        <p>They see everything. They control everything. But do they exist? 👁️</p>
-        <button onclick="joinTheUnknown()">Join the Unknown</button>
-    </header>
-    
-    <section id="about">
-        <h2>What is $ILLU?</h2>
-        <p>$ILLU is more than a meme coin – it's a mystery, a legend, a conspiracy waiting to be uncovered. A hidden crypto cartel that allegedly controls the market. Are you in?</p>
-    </section>
-    
-    <section id="features">
-        <h2>Why $ILLU?</h2>
-        <ul>
-            <li>🔺1,000,000,000 Total Supply</li>
-            <li>🔥 6.66% Transaction Fee - Half burned, half sent to the secret treasury</li>
-            <li>👀 Liquidity Burned – Or is it? 🤫</li>
-            <li>🔓 Hidden Messages, Encrypted NFTs & A VIP Group That May Not Exist</li>
-        </ul>
-    </section>
-    
-    <section id="mystery">
-        <h2>Decode the Secrets</h2>
-        <p>We have hidden messages across the blockchain. Find them and unlock access to the exclusive $ILLU inner circle.</p>
-        <input type="text" id="secretInput" placeholder="Enter secret code...">
-        <button onclick="checkSecret()">Submit</button>
-        <p id="secretMessage"></p>
-    </section>
-    
-    <section id="buy">
-        <h2>How to Buy</h2>
-        <p>Don't be left behind. Follow the trail and acquire $ILLU before it's too late.</p>
-        <button onclick="buyILLU()">Buy $ILLU Now</button>
-    </section>
-    
-    <footer>
-        <p>&copy; 2025 $ILLU. We see everything. 🔺</p>
-    </footer>
+    <div class="background-container">
+        <div class="background-image"></div>
+        <div class="background-image"></div>
+    </div>
+    <div class="content">
+        <h1>Welcome to NEOETH - The Future of Ethereum</h1>
+        <p>Ultra-fast transactions. Near-zero fees. AI-powered smart contracts.</p>
+        
+        <div class="countdown-container">
+            <p>Presale Starts In:</p>
+            <div id="countdown"></div>
+        </div>
+        
+        <div class="input-container">
+            <input type="text" id="name" placeholder="Enter your name">
+            <input type="email" id="email" placeholder="Enter your email">
+            <button onclick="joinWaitlist()">Join Waitlist</button>
+        </div>
+        <p id="error-message" class="error-message">Please enter a valid name and email.</p>
+        <p id="confirmation" style="display:none; color: lime;">You have successfully joined the waitlist!</p>
+        <button id="nextButton" style="display:none;" onclick="window.location.href='YOUR_LINK_HERE'">NEXT</button>
+        
+        <div class="social-buttons">
+            <a href="https://x.com/NEOETH_Coin" target="_blank">🔹 Twitter (X)</a>
+            <a href="https://t.me/NEOETH_Coin" target="_blank">🔹 Telegram</a>
+        </div>
+        
+        <div class="footer">&copy; 2025 NEOETH. All Rights Reserved.</div>
+    </div>
     
     <script>
-        function checkSecret() {
-            const input = document.getElementById("secretInput").value.toLowerCase();
-            const message = document.getElementById("secretMessage");
-            
-            if (input === "illuminati") {
-                message.innerHTML = "🔺 You've unlocked a hidden message: 'Power is an illusion, control is real.'";
-            } else if (input === "hidden") {
-                message.innerHTML = "👁️ The cartel is watching. Be careful what you seek.";
+        function joinWaitlist() {
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let errorMessage = document.getElementById("error-message");
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (name === "" || !emailPattern.test(email)) {
+                errorMessage.style.display = "block";
             } else {
-                message.innerHTML = "❌ Access Denied. The secrets remain hidden... for now.";
+                errorMessage.style.display = "none";
+                document.getElementById("confirmation").style.display = "block";
+                document.getElementById("nextButton").style.display = "block";
             }
         }
-		        function joinTheUnknown() {
-            window.location.href = "https://t.me/ILLU_TheSecretCryptoCartel";
+        
+        function startCountdown() {
+            let countdownDate = new Date();
+            countdownDate.setDate(countdownDate.getDate() + 12);
+            
+            let x = setInterval(function() {
+                let now = new Date().getTime();
+                let distance = countdownDate - now;
+                
+                let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+                
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("countdown").innerHTML = "Presale has started!";
+                }
+            }, 1000);
         }
         
-        function buyILLU() {
-            window.location.href = "https://x.com/Official_ILLU_";
-        }
-    </script>
+        startCountdown();
     </script>
 </body>
 </html>
