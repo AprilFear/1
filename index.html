@@ -3,192 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$SOLPRIME - The Prime Era of Solana</title>
+    <title>$SUBSCRIBE - The Coin You Can’t Ignore!</title>
     <style>
-	  @keyframes glow {
-            0% {  box-shadow: 0 0 5px #00FFD1 inset; }
-            50% {  box-shadow: 0 0 5px #7B61FF inset; }
-            100% {  box-shadow: 0 0 5px #00FFD1 inset; }
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
         body {
-			background: url('L2.JPG');
-			background-size: cover;
-            
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-        }
-         .box {
-            background-color: #1a1a1a;
-            padding: 20px;
-            border-radius: 10px;
-            animation: glow 2s infinite alternate;
-            flex: 1 1 calc(45% - 10px);
-            min-width: 250px;
-            text-align: center;
-        }
-		.title-box {
-            flex-basis: 100%;
-        }
-        .title {
-            font-size: 2.5rem;
-            color: #7B61FF;
-            text-shadow: 0 0 20px #7B61FF;
-        }
-        .text {
-            font-size: 1.2rem;
-            color: #ccc;
-        }
-        .contract-box {
-            padding: 15px;
-            border-radius: 10px;
-            background-color: #252525;
-            animation: glow 2s infinite alternate;
-            position: relative;
-            display: inline-block;
-        }
-        .contract {
-            font-size: 1rem;
-            color: #00FFD1;
-            cursor: pointer;
-            user-select: all;
-        }
-        .buy-button {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 15px 30px;
-            font-size: 1.5rem;
-            color: #fff;
-            background: linear-gradient(90deg, #7B61FF, #00FFD1);
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            box-shadow: 0 0 20px #7B61FF;
-            transition: transform 0.2s;
-        }
-        .buy-button:hover {
-            transform: scale(1.1);
-        }
-		.contract:hover {
-            transform: scale(1.1);
-        }
-		.box:hover {
-            transform: scale(1.1);
-        }
-		 .footer-container {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #111;
+            color: white;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 20px;
-            margin-top: 40px;
-            flex-wrap: wrap;
-        }
-        .footer-box {
-            background-color: #1a1a1a;
-            padding: 30px;
-            border-radius: 15px;
-            flex: 1 1 50%;
             text-align: center;
-            box-shadow: 0 0 15px #00FFD1;
+            animation: backgroundGlow 1.5s infinite alternate;
         }
-        .footer-image {
-            flex: 1 1 40%;
+
+        @keyframes backgroundGlow {
+            0% { background-color: #111; }
+            50% { background-color: #220000; }
+            100% { background-color: #111; }
         }
-        .footer-image img {
-            width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 0 15px #00FFD1;
-        }
-		.box1 {
-            background-color: #1a1a1a;
+
+        .container {
+            max-width: 900px;
             padding: 20px;
-            border-radius: 10px;
-            flex: 1 1 calc(45% - 10px);
-            min-width: 250px;
-            text-align: center;
         }
-		 .copy-message {
-            position: absolute;
-            top: 50%;
-            right: -120px;
-            transform: translateY(-50%);
-            background-color: #00ff00;
-            color: #000;
-            padding: 5px 10px;
-            border-radius: 5px;
-            display: none;
-            font-size: 0.9rem;
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            text-shadow: 3px 3px 10px red;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0px 0px 15px rgba(255, 0, 0, 0.5); }
+            50% { box-shadow: 0px 0px 25px rgba(255, 50, 50, 0.8); }
+            100% { box-shadow: 0px 0px 15px rgba(255, 0, 0, 0.5); }
+        }
+
+        .box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            animation: glow 1.5s infinite alternate;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .box:hover {
+            transform: scale(1.05);
+        }
+
+        .subscribe-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: red;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            border-radius: 50px;
+            box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.7);
+            text-decoration: none;
+            transition: 0.3s ease-in-out;
+        }
+
+        .subscribe-button:hover {
+            background: #ff4444;
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="box">
-            <h1 class="title"> $SOLPRIME – This is Solana in Its Prime! </h1>
-        </div>
-        
-        <div class="box">
-            <p class="text">🔹 The golden era of Solana is here again! ⚡️🔹</p>
-           
-        </div>
-		<div class="box">
-            
-            <p class="text">🔹 Blazing-fast transactions ⚡ | Ultra-low fees 💰 | Pure decentralization 👥🔹</p>
-            
-        </div><div class="box">
-            
-            <p class="text">🔹 Stronger, faster, and ready to dominate! 🔹</p>
-        </div>
-        <div class="box">
-            <p class="text">💎 This is Solana at its PRIME.💎</p>
-        </div>
-			
-        <div class="contract-box">
-		<h1 class="box1"> CA </h1>
-		
-        <p class="contract" onclick="copyToClipboard()">7i3HtJayAYmLHuesWNygxCVh5gjy46t6dwTEtsTzpump</p>
-        <span class="copy-message" id="copyMessage">Copied!</span>
-		
-    </div>
-        
-        
-    </div>
-	<button class="buy-button" onclick="buyToken()">Buy Now</button>
-	<div class="footer-container">
-        <div class="footer-box">
-            <h2>$SOLPRIME – The Ultimate Evolution of Solana!</h2>
-            <p>The next generation of Solana is here – faster, stronger, and more advanced than ever before!</p>
-            <p>🔹 Lightning-Fast Transactions ⚡ – Say goodbye to slow speeds! $SOLPRIME pushes Solana’s power to the next level.</p>
-            <p>🔹 Ultra-Low Fees 💰 – Near-zero transaction costs, making DeFi smoother than ever.</p>
-            <p>🔹 Community-Driven 👥 – No whales, no centralized control. Only pure decentralization!</p>
-            <p>🔹 The PRIME Era of Solana 🌟 – $SOLPRIME is the key to the strongest Solana era ever!</p>
-            <p>💎 Max speed. Minimal fees. Absolute power. 💎</p>
-            <p>👉 Join the revolution. $SOLPRIME is here to redefine Solana!</p>
-        </div>
-        <div class="footer-image">
-            <img src="1.jpeg" alt="Solana Prime Image">
-        </div>
-    </div>
-    <script>
-        function copyToClipboard() {
-            const contractText = document.querySelector(".contract").innerText;
-            navigator.clipboard.writeText(contractText).then(() => {
-                const copyMessage = document.getElementById("copyMessage");
-                copyMessage.style.display = "inline-block";
-                setTimeout(() => {
-                    copyMessage.style.display = "none";
-                }, 2000);
-            });
-        }
 
-        function buyToken() {
-            window.location.href = "https://dexscreener.com/solana/6bmov8rgwyjrcccd3mg5qbp9bbnymr3xs8zvdcq1iaii";
-        }
-    </script>
+    <div class="container">
+        <h1 class="title"> $SUBSCRIBE – The Coin You Can’t Ignore! 📢</h1>
+
+        <div class="box">
+            <p>Welcome to <strong>$SUBSCRIBE</strong>, the first crypto that demands your attention! 🎬🔔 <br>
+            You subscribe to YouTubers, Twitch streamers, and OnlyFans models… but have you ever subscribed to a coin? <br>
+            Well, now you <strong>must!</strong> 😎</p>
+        </div>
+
+        <div class="box">
+            <h2>Why $SUBSCRIBE?</h2>
+            <p>✔️ <strong>No Ads, Just Gains</strong> – Unlike YouTube, we won’t interrupt you with cringe ads. Just HODL and enjoy the ride! 🚀📈</p>
+            <p>✔️ <strong>Passive Income? More Like Passive Clout!</strong> – Every transaction rewards holders. The more you HODL, the more subs you flex! 💸🔥</p>
+            <p>✔️ <strong>The More Subs, The More Power</strong> – Our community is like a viral channel. The bigger it gets, the harder we pump! 📊📢</p>
+            <p>✔️ <strong>No Unsubbing Allowed!</strong> – Once you're in, you’re part of the coolest crypto fanbase ever. No rage quits! 😤💀</p>
+            <p>✔️ <strong>Backed by the Meme Gods</strong> – You can’t fight the algorithm, and you can’t fight the memes. 🤡📡</p>
+        </div>
+
+        <div class="box">
+            <h2>How It Works?</h2>
+            <p>🔹 <strong>Step 1:</strong> Buy $SUBSCRIBE 📈</p>
+            <p>🔹 <strong>Step 2:</strong> HODL like you hold onto your childhood dreams ✨</p>
+            <p>🔹 <strong>Step 3:</strong> Shill it everywhere, tell your grandma, tell your ex, tell your dog! 🗣️🐕</p>
+            <p>🔹 <strong>Step 4:</strong> Watch it moon while normies FOMO in 🚀🌕</p>
+        </div>
+
+        <div class="box">
+            <h2>The Future of Subscriptions is Here!</h2>
+            <p>Forget monthly payments! No PayPal, no credit card needed! <br>
+            Just <strong>BUY & HODL</strong> and be part of the most exclusive subscriber club in crypto history! 🏆🏆🏆</p>
+        </div>
+
+        <a href="#" class="subscribe-button">🔴 SUBSCRIBE NOW!</a>
+
+    </div>
+
 </body>
 </html>
