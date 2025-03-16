@@ -3,205 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Urgent Crypto Donation Appeal: Save Syrian Minority Communities</title>
+    <title>$SOLPRIME - The Prime Era of Solana</title>
     <style>
+	  @keyframes glow {
+            0% {  box-shadow: 0 0 5px #00FFD1 inset; }
+            50% {  box-shadow: 0 0 5px #7B61FF inset; }
+            100% {  box-shadow: 0 0 5px #00FFD1 inset; }
+        }
         body {
-            margin: 0;
-            padding: 0;
+			background: url('L2.JPG');
+			background-size: cover;
+            
+            color: #ffffff;
             font-family: Arial, sans-serif;
-            background: url('S5.png') no-repeat center center fixed;
-            background-size: cover;
-            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+         .box {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            animation: glow 2s infinite alternate;
+            flex: 1 1 calc(45% - 10px);
+            min-width: 250px;
             text-align: center;
         }
-
-        .container {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 40px;
+		.title-box {
+            flex-basis: 100%;
+        }
+        .title {
+            font-size: 2.5rem;
+            color: #7B61FF;
+            text-shadow: 0 0 20px #7B61FF;
+        }
+        .text {
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+        .contract-box {
+            padding: 15px;
             border-radius: 10px;
-            width: 80%;
-            max-width: 900px;
-            margin: 50px auto;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-        }
-
-        h1 {
-            font-size: 2.5em;
-            color: #ffcc00;
-            text-shadow: 2px 2px 10px rgba(255, 255, 0, 0.8);
-        }
-
-        p {
-            font-size: 1.2em;
-            line-height: 1.6;
-        }
-
-        .donate-btn {
+            background-color: #252525;
+            animation: glow 2s infinite alternate;
+            position: relative;
             display: inline-block;
-            background: red;
-            color: white;
-            padding: 15px 25px;
-            font-size: 1.5em;
-            text-decoration: none;
-            border-radius: 5px;
-            margin: 20px 0;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.5);
         }
-
-        .donate-btn:hover {
-            background: darkred;
+        .contract {
+            font-size: 1rem;
+            color: #00FFD1;
+            cursor: pointer;
+            user-select: all;
+        }
+        .buy-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            color: #fff;
+            background: linear-gradient(90deg, #7B61FF, #00FFD1);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 0 20px #7B61FF;
+            transition: transform 0.2s;
+        }
+        .buy-button:hover {
             transform: scale(1.1);
         }
-
-        .images {
+		.contract:hover {
+            transform: scale(1.1);
+        }
+		.box:hover {
+            transform: scale(1.1);
+        }
+		 .footer-container {
             display: flex;
+            align-items: center;
             justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
             flex-wrap: wrap;
-            margin-top: 20px;
         }
-
-        .images img {
-            width: 90%;
-            max-width: 500px;
-            margin: 10px;
+        .footer-box {
+            background-color: #1a1a1a;
+            padding: 30px;
+            border-radius: 15px;
+            flex: 1 1 50%;
+            text-align: center;
+            box-shadow: 0 0 15px #00FFD1;
+        }
+        .footer-image {
+            flex: 1 1 40%;
+        }
+        .footer-image img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 0 15px #00FFD1;
+        }
+		.box1 {
+            background-color: #1a1a1a;
+            padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            flex: 1 1 calc(45% - 10px);
+            min-width: 250px;
+            text-align: center;
         }
-
-        footer {
-            margin-top: 30px;
-            font-size: 0.9em;
-        }
-		.floating-btn {
-		position: fixed;
-		bottom: 20px;
-		width: 60px;
-		height: 60px;
-		border-radius: 50%;
-		box-shadow: 0 5px 15px rgba(0, 140, 186, 0.5);
-		transition: transform 0.5s ease-in-out;
-		
-}
-
-        .floating-btn:hover {
-            transform: rotate(360deg) scale(1.1);
-        }
-		   /* כפתור טלגרם - צד שמאל למטה */
-        .telegram-btn {
-            left: 20px;
-            background: url('S03.png') no-repeat center center;
-			background-size: contain; /* מבטיח שהתמונה תתאים לגודל הכפתור */
-			background-position: center;
-			background-repeat: no-repeat;
-        }
-
-        /* כפתור X (טוויטר) - צד שמאל למעלה מהטלגרם */
-        .twitter-btn {
-            left: 20px;
-            bottom: 90px;
-            background: url('S02.png') no-repeat center center;
-			background-size: contain; /* מבטיח שהתמונה תתאים לגודל הכפתור */
-			background-position: center;
-			background-repeat: no-repeat;
-        }
-		.dex-btn {
-            left: 20px;
-            bottom: 160px;
-            background: url('S04.png') no-repeat center center;
-			background-size: contain; /* מבטיח שהתמונה תתאים לגודל הכפתור */
-			background-position: center;
-			background-repeat: no-repeat;
-        }
-		  @media (max-width: 600px) {
-            h1 {
-                font-size: 1.5em;
-            }
-
-            .container {
-                width: 95%;
-                padding: 20px;
-            }
-
-            .donate-btn {
-                font-size: 1em;
-                padding: 10px;
-            }
-
-            .home-btn {
-                font-size: 1em;
-                padding: 10px 20px;
-            }
-
-            .popup {
-                width: 80%;
-                bottom: 80px;
-            }
-
-            .popup-btn {
-                width: 80px;
-                height: 80px;
-            }
-
-            .donors table {
-                font-size: 0.9em;
-            }
+		 .copy-message {
+            position: absolute;
+            top: 50%;
+            right: -120px;
+            transform: translateY(-50%);
+            background-color: #00ff00;
+            color: #000;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: none;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <h1>🚨 Urgent Crypto Donation Appeal: Save Syrian Minority Communities! 🚨</h1>
-        
-		 <div class="images">
-		   <img src="S1.png" alt="Syrian Family">
-		 </div> 
-        <p>The humanitarian crisis in <strong>Syria</strong> is worsening under the oppressive rule of <strong>Abu Mohammad al-Jolani</strong> and <strong>Hay'at Tahrir al-Sham</strong>. Thousands of <strong>minority families</strong> are facing brutal persecution, starvation, and forced displacement—while the world remains silent.</p>
-        
-        <p>🩸 <strong>Women and children are disappearing overnight.</strong></p>
-        <p>🥖 <strong>Families are starving, left with nothing.</strong></p>
-        <p>💰 <strong>Those who refuse to pay ransom are simply erased.</strong></p>
-
-        <p>We cannot stand by and watch. We must take action now!</p>
-
-        <h2>🌍 Why Crypto Donations?</h2>
-        <p>Traditional financial aid is slow and often blocked by bureaucratic hurdles. <strong>With crypto, we can send funds instantly and securely, directly to those in need.</strong></p>
-
-        <p>Every contribution will go <strong>directly</strong> to:</p>
-        <ul>
-            <li>✅ Providing emergency food and medical supplies to families</li>
-            <li>✅ Helping at-risk individuals escape to safety</li>
-            <li>✅ Supporting orphaned children who have no one left to care for them</li>
-        </ul>
-
-        <div class="images">
-			<img src="S3.png" alt="Refugee Children">
+        <div class="box">
+            <h1 class="title"> $SOLPRIME – This is Solana in Its Prime! </h1>
         </div>
-
-        <h2>💰 Donate </h2>
-        <p>You can send your crypto donation by choosing your preferred network:</p>
-
-        <a href="donation_methods.html" class="donate-btn">For Donations</a>
+        
+        <div class="box">
+            <p class="text">🔹 The golden era of Solana is here again! ⚡️🔹</p>
+           
+        </div>
+		<div class="box">
+            
+            <p class="text">🔹 Blazing-fast transactions ⚡ | Ultra-low fees 💰 | Pure decentralization 👥🔹</p>
+            
+        </div><div class="box">
+            
+            <p class="text">🔹 Stronger, faster, and ready to dominate! 🔹</p>
+        </div>
+        <div class="box">
+            <p class="text">💎 This is Solana at its PRIME.💎</p>
+        </div>
+			
+        <div class="contract-box">
+		<h1 class="box1"> CA </h1>
 		
-        <h2>📢 Spread the Word!</h2>
-        <p>If you cannot donate, you can still help by sharing this page. The more people who see this, the more lives we can save.</p>
-        <p>📣 Share on <strong>Twitter, Reddit, Discord, and other platforms!</strong></p>
-        <p>📣 Tag influencers and organizations who can amplify this cause!</p>
-
-        <p>⏳ <strong>They need us now. Let’s not let them suffer in silence.</strong></p>
-
-        <footer>
-            <p>Thank you for your support. Together, we can make a real difference. 🙏</p>
-        </footer>
+        <p class="contract" onclick="copyToClipboard()">0x123456789ABCDEF...</p>
+        <span class="copy-message" id="copyMessage">Copied!</span>
+		
     </div>
-	
-    <!-- כפתור צף לטלגרם -->
-    <a href="https://x.com/SYRIA_Coin" class="floating-btn telegram-btn"></a>
+        
+        
+    </div>
+	<button class="buy-button" onclick="buyToken()">Buy Now</button>
+	<div class="footer-container">
+        <div class="footer-box">
+            <h2>$SOLPRIME – The Ultimate Evolution of Solana!</h2>
+            <p>The next generation of Solana is here – faster, stronger, and more advanced than ever before!</p>
+            <p>🔹 Lightning-Fast Transactions ⚡ – Say goodbye to slow speeds! $SOLPRIME pushes Solana’s power to the next level.</p>
+            <p>🔹 Ultra-Low Fees 💰 – Near-zero transaction costs, making DeFi smoother than ever.</p>
+            <p>🔹 Community-Driven 👥 – No whales, no centralized control. Only pure decentralization!</p>
+            <p>🔹 The PRIME Era of Solana 🌟 – $SOLPRIME is the key to the strongest Solana era ever!</p>
+            <p>💎 Max speed. Minimal fees. Absolute power. 💎</p>
+            <p>👉 Join the revolution. $SOLPRIME is here to redefine Solana!</p>
+        </div>
+        <div class="footer-image">
+            <img src="1.jpeg" alt="Solana Prime Image">
+        </div>
+    </div>
+    <script>
+        function copyToClipboard() {
+            const contractText = document.querySelector(".contract").innerText;
+            navigator.clipboard.writeText(contractText).then(() => {
+                const copyMessage = document.getElementById("copyMessage");
+                copyMessage.style.display = "inline-block";
+                setTimeout(() => {
+                    copyMessage.style.display = "none";
+                }, 2000);
+            });
+        }
 
-    <!-- כפתור צף ל-X -->
-    <a href="https://t.me/SYRIAOfficialCoin" class="floating-btn twitter-btn"></a>
-	
-	<a href="https://dexscreener.com/solana/8aq2iwjrmn3kosejssqzb8ybhvdpzhiatndyyorbmoon" class="floating-btn dex-btn"></a>
+        function buyToken() {
+            window.location.href = "https://raydium.io/swap/?inputCurrency=SOL&outputCurrency=0x123456789ABCDEF";
+        }
+    </script>
 </body>
 </html>
