@@ -3,116 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$SUBSCRIBE - The Coin You Can’t Ignore!</title>
+    <title>OPTIMUS2.0 - The Future of AI</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
         body {
-            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background: #111;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            font-family: Arial, sans-serif;
+            background: url('O1_upscaled.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
             text-align: center;
-            animation: backgroundGlow 1.5s infinite alternate;
+            overflow: hidden;
+            animation: fadeIn 2s ease-in-out;
         }
-
-        @keyframes backgroundGlow {
-            0% { background-color: #111; }
-            50% { background-color: #220000; }
-            100% { background-color: #111; }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-
-        .container {
-            max-width: 900px;
+        .countdown-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
             padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
         }
-
-        .title {
-            font-size: 2.5rem;
-            font-weight: 600;
-            text-shadow: 3px 3px 10px red;
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
         }
-
-        @keyframes glow {
-            0% { box-shadow: 0px 0px 15px rgba(255, 0, 0, 0.5); }
-            50% { box-shadow: 0px 0px 25px rgba(255, 50, 50, 0.8); }
-            100% { box-shadow: 0px 0px 15px rgba(255, 0, 0, 0.5); }
-        }
-
-        .box {
-            background: rgba(255, 255, 255, 0.1);
+        .countdown div {
+            background: rgba(0, 255, 255, 0.2);
             padding: 20px;
-            margin: 15px 0;
             border-radius: 10px;
-            animation: glow 1.5s infinite alternate;
+            box-shadow: 0 0 15px cyan;
+            transform: scale(1);
             transition: transform 0.3s ease-in-out;
         }
-
-        .box:hover {
-            transform: scale(1.05);
-        }
-
-        .subscribe-button {
-            display: inline-block;
-            padding: 15px 30px;
-            background: red;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 600;
-            border-radius: 50px;
-            box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.7);
-            text-decoration: none;
-            transition: 0.3s ease-in-out;
-        }
-
-        .subscribe-button:hover {
-            background: #ff4444;
+        .countdown div:hover {
             transform: scale(1.1);
+        }
+        .title {
+            font-size: 4rem;
+            margin-top: 20px;
+            text-shadow: 0 0 20px cyan;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { text-shadow: 0 0 20px cyan; }
+            50% { text-shadow: 0 0 30px cyan; }
+            100% { text-shadow: 0 0 20px cyan; }
+      }
+	  .form-container {
+            margin-top: 50px;
+        }
+        input {
+            padding: 10px;
+            margin: 10px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 1.5rem;
+            background: cyan;
+            color: black;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 0 15px cyan;
+            margin-top: 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px cyan;
         }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <h1 class="title"> $SUBSCRIBE – The Coin You Can’t Ignore! 📢</h1>
-
-        <div class="box">
-            <p>Welcome to <strong>$SUBSCRIBE</strong>, the first crypto that demands your attention! 🎬🔔 <br>
-            You subscribe to YouTubers, Twitch streamers, and OnlyFans models… but have you ever subscribed to a coin? <br>
-            Well, now you <strong>must!</strong> 😎</p>
+  <h1 class="title">OPTIMUS2.0 - The Future is Coming</h1>
+    <div class="countdown-container">
+        <div class="countdown" id="countdown">
+            <div><span id="days">12</span> Days</div>
+            <div><span id="hours">00</span> Hours</div>
+            <div><span id="minutes">00</span> Minutes</div>
+            <div><span id="seconds">00</span> Seconds</div>
         </div>
-
-        <div class="box">
-            <h2>Why $SUBSCRIBE?</h2>
-            <p>✔️ <strong>No Ads, Just Gains</strong> – Unlike YouTube, we won’t interrupt you with cringe ads. Just HODL and enjoy the ride! 🚀📈</p>
-            <p>✔️ <strong>Passive Income? More Like Passive Clout!</strong> – Every transaction rewards holders. The more you HODL, the more subs you flex! 💸🔥</p>
-            <p>✔️ <strong>The More Subs, The More Power</strong> – Our community is like a viral channel. The bigger it gets, the harder we pump! 📊📢</p>
-            <p>✔️ <strong>No Unsubbing Allowed!</strong> – Once you're in, you’re part of the coolest crypto fanbase ever. No rage quits! 😤💀</p>
-            <p>✔️ <strong>Backed by the Meme Gods</strong> – You can’t fight the algorithm, and you can’t fight the memes. 🤡📡</p>
-        </div>
-
-        <div class="box">
-            <h2>How It Works?</h2>
-            <p>🔹 <strong>Step 1:</strong> Buy $SUBSCRIBE 📈</p>
-            <p>🔹 <strong>Step 2:</strong> HODL like you hold onto your childhood dreams ✨</p>
-            <p>🔹 <strong>Step 3:</strong> Shill it everywhere, tell your grandma, tell your ex, tell your dog! 🗣️🐕</p>
-            <p>🔹 <strong>Step 4:</strong> Watch it moon while normies FOMO in 🚀🌕</p>
-        </div>
-
-        <div class="box">
-            <h2>The Future of Subscriptions is Here!</h2>
-            <p>Forget monthly payments! No PayPal, no credit card needed! <br>
-            Just <strong>BUY & HODL</strong> and be part of the most exclusive subscriber club in crypto history! 🏆🏆🏆</p>
-        </div>
-
-        <a href="https://dexscreener.com/solana/gpkj8buw8wuvptfyyzlgegepuakyrkudswxekedhpump" class="subscribe-button">🔴 SUBSCRIBE NOW!</a>
-
     </div>
-
+    
+    <div class="form-container">
+        <input type="text" id="name" placeholder="Enter your name" pattern="[A-Za-z]+" required>
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <button class="btn" onclick="joinWaitlist()">Join Waitlist</button>
+        <p id="confirmationMessage" style="display:none; color: cyan; font-size: 1.2rem;">You have been added to the waitlist!</p>
+    </div>
+    
+    <a href="https://shop.tesla.com/nl_nl/product/tesla-bot-actiefiguur?sku=2080682-00-A" id="buyLink" class="btn">BUY</a>
+    
+    <script>
+        function startCountdown(duration) {
+            const targetDate = new Date().getTime() + duration * 1000;
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const difference = targetDate - now;
+                if (difference < 0) {
+                    document.getElementById("countdown").innerHTML = "Launch Time!";
+                    return;
+                }
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                document.getElementById("days").innerText = days;
+                document.getElementById("hours").innerText = hours;
+                document.getElementById("minutes").innerText = minutes;
+                document.getElementById("seconds").innerText = seconds;
+            }
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+        }
+        startCountdown(12 * 24 * 60 * 60);
+		function joinWaitlist() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const namePattern = /^[A-Za-z]+$/;
+            if (!namePattern.test(name) || email === "") {
+                alert("Please enter a valid name and email.");
+                return;
+            }
+            document.getElementById("confirmationMessage").style.display = "block";
+        }
+        function setBuyLink(url) {
+            document.getElementById("buyLink").href = url;
+        }
+    </script>
 </body>
 </html>
