@@ -3,148 +3,270 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OPTIMUS2.0 - The Future of AI</title>
+    <title>$Recycled - Recycle Pool Game</title>
     <style>
         body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #2E8B57, #1E4D2B);
+            color: white;
+            text-align: center;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background: url('O1_upscaled.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #fff;
-            text-align: center;
-            overflow: hidden;
-            animation: fadeIn 2s ease-in-out;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        header {
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
         }
-        .countdown-container {
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        .recycle-btn {
+            background-color: #FFD700;
+            color: #1E4D2B;
+            font-size: 20px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .recycle-btn:hover {
+            background-color: #FFA500;
+        }
+        .game-container {
+            margin-top: 40px;
+            position: relative;
+            height: 700px;
+            background-color: #105030;
+            border-radius: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+       .coin {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, gold, orange);
+            border-radius: 100%;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%) rotateX(30deg) rotateY(30deg);
+            transition: top 1s ease-in-out, transform 1s ease-in-out;
+            box-shadow: 0px 6px 12px rgba(255, 215, 0, 0.8);
+            border: 3px solid #FFD700;
+        }
+        .pool {
+            width: 100%;
+            height: 160px;
+            background: radial-gradient(circle, #007700, #004d00);
+            position: absolute;
+            bottom: 0;
+            border-radius: 0 0 20px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px black;
+        }
+        .splash {
+            display: none;
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: radial-gradient(circle, rgba(0, 200, 255, 0.8), transparent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            animation: splash 0.5s ease-out;
+        }
+        @keyframes splash {
+            from { opacity: 1; transform: translateX(-50%) scale(1); }
+            to { opacity: 0; transform: translateX(-50%) scale(1.5); }
+        }
+        .gift-box {
+            display: none;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(to bottom, red, darkred);
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 3rem;
-            font-weight: bold;
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
-        }
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-        .countdown div {
-            background: rgba(0, 255, 255, 0.2);
-            padding: 20px;
+            transform: translate(-50%, -50%) rotate(5deg);
             border-radius: 10px;
-            box-shadow: 0 0 15px cyan;
-            transform: scale(1);
-            transition: transform 0.3s ease-in-out;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            border: 3px solid gold;
+            position: relative;
         }
-        .countdown div:hover {
-            transform: scale(1.1);
-        }
-        .title {
-            font-size: 4rem;
-            margin-top: 20px;
-            text-shadow: 0 0 20px cyan;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { text-shadow: 0 0 20px cyan; }
-            50% { text-shadow: 0 0 30px cyan; }
-            100% { text-shadow: 0 0 20px cyan; }
-      }
-	  .form-container {
-            margin-top: 50px;
-        }
-        input {
-            padding: 10px;
-            margin: 10px;
-            font-size: 1.2rem;
-            border: none;
+        .gift-box::before, .gift-box::after {
+            content: "";
+            width: 100%;
+            height: 15px;
+            background: gold;
+            position: absolute;
+            top: 40px;
+            left: 0;
             border-radius: 5px;
         }
-        .btn {
-            display: inline-block;
-            padding: 12px 25px;
-            font-size: 1.5rem;
-            background: cyan;
+        .gift-box::after {
+            width: 15px;
+            height: 100%;
+            left: 40px;
+            top: 0;
+        }
+        .link-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
             color: black;
-            border: none;
+            padding: 20px;
             border-radius: 10px;
-            cursor: pointer;
-            box-shadow: 0 0 15px cyan;
+            text-align: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .close-popup {
             margin-top: 10px;
-            text-decoration: none;
+            background: red;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+		.box {
+            background: linear-gradient(to bottom, #006400, #228B22);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 15px;
+            box-shadow: 0px 6px 15px rgba(0, 255, 0, 0.5);
+            text-shadow: 2px 2px 5px rgba(0, 255, 0, 0.8);
+            color: #ADFF2F;
             font-weight: bold;
+            font-size: 18px;
+            border: 2px solid #32CD32;
         }
-        .btn:hover {
+		.social-buttons {
+            position: fixed;
+            right: 10px;
+            top: 10%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .social-buttons a {
+            display: block;
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+            border-radius: 50%;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out;
+        }
+        .social-buttons a:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 25px cyan;
         }
+        .telegram {
+            background-image: url('app.png');
+        }
+        .twitter {
+            background-image: url('social-media.png');
+        }
+		
     </style>
 </head>
 <body>
-  <h1 class="title">OPTIMUS2.0 - The Future is Coming</h1>
-    <div class="countdown-container">
-        <div class="countdown" id="countdown">
-            <div><span id="days">12</span> Days</div>
-            <div><span id="hours">00</span> Hours</div>
-            <div><span id="minutes">00</span> Minutes</div>
-            <div><span id="seconds">00</span> Seconds</div>
-        </div>
+
+
+
+<div class="container">
+	<div class="box">$Recycled - The First 100% Recycled Crypto</div>
+    <div class="box">
+        <h2>♻️ Welcome to $Recycled - The First 100% Recycled Crypto ♻️</h2>
+        <p>In the world of crypto, countless tokens are created, abandoned, and left to rot on the blockchain—empty, forgotten, and without value. <strong>$Recycled</strong> changes that.</p>
     </div>
-    
-    <div class="form-container">
-        <input type="text" id="name" placeholder="Enter your name" pattern="[A-Za-z]+" required>
-        <input type="email" id="email" placeholder="Enter your email" required>
-        <button class="btn" onclick="joinWaitlist()">Join Waitlist</button>
-        <p id="confirmationMessage" style="display:none; color: cyan; font-size: 1.2rem;">You have been added to the waitlist!</p>
+
+    <div class="box">
+        <p><strong>$Recycled is the first cryptocurrency built entirely from abandoned and burnt tokens.</strong> Instead of letting these digital relics sit unused, we breathe new life into them, transforming them into a valuable and sustainable asset.</p>
     </div>
+
+    <div class="box">
+        <h2>🌍 How It Works:</h2>
+        <ul>
+            <li>♻️ <strong>Recycled Tokens</strong> – Instead of creating new supply, $Recycled is forged from existing abandoned and burned tokens, giving them a second chance.</li>
+            <li>🌍 <strong>Eco-Friendly Crypto</strong> – This is the <strong>greenest</strong> form of digital finance—nothing new is minted, only repurposed.</li>
+            <li>🔄 <strong>Turning Trash into Treasure</strong> – $Recycled proves that even "dead" tokens can be revived and have value again.</li>
+        </ul>
+    </div>
+
+    <div class="box">
+        <p><strong>Join the blockchain revolution that turns forgotten assets into the future of sustainable cryptocurrency.</strong></p>
+    </div>
+
+    <h3>#RecycledCrypto #SustainableCrypto #ReCycleToken</h3>
     
-    <a href="https://pump.fun/coin/BpdBxR5UsapTYmMT4JHSYwMHuPyuxYeTqf8mV2yrpump" id="buyLink" class="btn">BUY</a>
-    
-    <script>
-        function startCountdown(duration) {
-            const targetDate = new Date().getTime() + duration * 1000;
-            function updateCountdown() {
-                const now = new Date().getTime();
-                const difference = targetDate - now;
-                if (difference < 0) {
-                    document.getElementById("countdown").innerHTML = "Launch Time!";
-                    return;
-                }
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-                document.getElementById("days").innerText = days;
-                document.getElementById("hours").innerText = hours;
-                document.getElementById("minutes").innerText = minutes;
-                document.getElementById("seconds").innerText = seconds;
-            }
-            setInterval(updateCountdown, 1000);
-            updateCountdown();
-        }
-        startCountdown(12 * 24 * 60 * 60);
-		function joinWaitlist() {
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const namePattern = /^[A-Za-z]+$/;
-            if (!namePattern.test(name) || email === "") {
-                alert("Please enter a valid name and email.");
-                return;
-            }
-            document.getElementById("confirmationMessage").style.display = "block";
-        }
-        function setBuyLink(url) {
-            document.getElementById("buyLink").href = url;
-        }
-    </script>
+    <button class="recycle-btn" onclick="dropCoin()">Recycle a Coin</button>
+
+    <div class="game-container">
+        <div class="coin" id="coin"></div>
+        <div class="splash" id="splash"></div>
+        <div class="pool">Recycle Pool</div>
+        <div class="gift-box" id="giftBox" onclick="openGift()"></div>
+    </div>
+
+    <div class="link-popup" id="linkPopup">
+        <p>Congratulations! Your recycled token is ready:</p>
+        <a href="https://your-recycled-token-link.com" target="_blank">Click here to claim your $Recycled Token!</a>
+        <br>
+        <button class="close-popup" onclick="closePopup()">Close</button>
+    </div>
+</div>
+	<div class="social-buttons">
+		<a href="https://t.me/Recycled_Coin" target="_blank" class="telegram"></a>
+		<a href="https://x.com/Recycled_Coin" target="_blank" class="twitter"></a>
+	</div>
+<script>
+    function dropCoin() {
+        let coin = document.getElementById("coin");
+        let splash = document.getElementById("splash");
+        let giftBox = document.getElementById("giftBox");
+
+        coin.style.top = "85%";
+        coin.style.transform = "translateX(-50%) rotateX(0deg) rotateY(0deg)";
+        
+        setTimeout(() => {
+            splash.style.display = "block";
+            setTimeout(() => {
+                splash.style.display = "none";
+                coin.style.top = "10px";
+                coin.style.transform = "translateX(-50%) rotateX(30deg) rotateY(30deg)";
+                giftBox.style.display = "block";
+            }, 500);
+        }, 1000);
+    }
+
+    function openGift() {
+        let popup = document.getElementById("linkPopup");
+        popup.style.display = "block";
+    }
+
+    function closePopup() {
+        let popup = document.getElementById("linkPopup");
+        let giftBox = document.getElementById("giftBox");
+        popup.style.display = "none";
+        giftBox.style.display = "none";
+    }
+</script>
+
 </body>
 </html>
