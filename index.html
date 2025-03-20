@@ -3,270 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$Recycled - Recycle Pool Game</title>
+    <title>SERPENT LEGACY</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap');
+        
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #2E8B57, #1E4D2B);
-            color: white;
+            background-color: #121212; /* Black with subtle white touches */
+            color: #fff;
+            font-family: 'Cinzel Decorative', serif;
             text-align: center;
             margin: 0;
             padding: 0;
         }
-        header {
-            padding: 20px;
-            font-size: 24px;
+        .header {
+            font-size: 100px;
             font-weight: bold;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, #FFD700, #B8860B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+            margin-top: 50px;
         }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
+        .subtext {
+            font-size: 40px;
+            background: linear-gradient(180deg, #FFD700, #B8860B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
         }
-        .recycle-btn {
-            background-color: #FFD700;
-            color: #1E4D2B;
-            font-size: 20px;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
+        .button-container {
+            margin-top: 30px;
         }
-        .recycle-btn:hover {
-            background-color: #FFA500;
-        }
-        .game-container {
-            margin-top: 40px;
-            position: relative;
-            height: 700px;
-            background-color: #105030;
-            border-radius: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-       .coin {
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, gold, orange);
-            border-radius: 100%;
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%) rotateX(30deg) rotateY(30deg);
-            transition: top 1s ease-in-out, transform 1s ease-in-out;
-            box-shadow: 0px 6px 12px rgba(255, 215, 0, 0.8);
-            border: 3px solid #FFD700;
-        }
-        .pool {
-            width: 100%;
-            height: 160px;
-            background: radial-gradient(circle, #007700, #004d00);
-            position: absolute;
-            bottom: 0;
-            border-radius: 0 0 20px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: white;
-            text-shadow: 2px 2px 4px black;
-        }
-        .splash {
-            display: none;
-            width: 150px;
-            height: 150px;
-            position: absolute;
-            bottom: 70px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: radial-gradient(circle, rgba(0, 200, 255, 0.8), transparent);
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-            animation: splash 0.5s ease-out;
-        }
-        @keyframes splash {
-            from { opacity: 1; transform: translateX(-50%) scale(1); }
-            to { opacity: 0; transform: translateX(-50%) scale(1.5); }
-        }
-        .gift-box {
-            display: none;
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(to bottom, red, darkred);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(5deg);
-            border-radius: 10px;
-            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
-            cursor: pointer;
-            border: 3px solid gold;
-            position: relative;
-        }
-        .gift-box::before, .gift-box::after {
-            content: "";
-            width: 100%;
-            height: 15px;
-            background: gold;
-            position: absolute;
-            top: 40px;
-            left: 0;
-            border-radius: 5px;
-        }
-        .gift-box::after {
-            width: 15px;
-            height: 100%;
-            left: 40px;
-            top: 0;
-        }
-        .link-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
+        .button {
+            background: linear-gradient(180deg, #FFD700, #B8860B);
             color: black;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-        }
-        .close-popup {
-            margin-top: 10px;
-            background: red;
-            color: white;
-            padding: 5px 10px;
+            font-size: 24px;
+            padding: 15px 40px;
             border: none;
+            border-radius: 20px;
             cursor: pointer;
-        }
-		.box {
-            background: linear-gradient(to bottom, #006400, #228B22);
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 15px;
-            box-shadow: 0px 6px 15px rgba(0, 255, 0, 0.5);
-            text-shadow: 2px 2px 5px rgba(0, 255, 0, 0.8);
-            color: #ADFF2F;
+            margin: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
             font-weight: bold;
-            font-size: 18px;
-            border: 2px solid #32CD32;
+            box-shadow: 0px 5px 15px rgba(255, 215, 0, 0.7);
+            text-decoration: none;
+            display: inline-block;
         }
-		.social-buttons {
-            position: fixed;
-            right: 10px;
-            top: 10%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .social-buttons a {
-            display: block;
-            width: 50px;
-            height: 50px;
-            background-size: cover;
-            border-radius: 50%;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease-in-out;
-        }
-        .social-buttons a:hover {
+        .button:hover {
             transform: scale(1.1);
+            box-shadow: 0px 10px 20px rgba(255, 215, 0, 1);
         }
-        .telegram {
-            background-image: url('app.png');
+        .description-box {
+            background-color: rgba(255, 215, 0, 0.1);
+            border: 2px solid gold;
+            padding: 30px;
+            margin: 50px auto;
+            width: 70%;
+            font-size: 20px;
+            box-shadow: 0px 0px 20px gold;
+            border-radius: 15px;
         }
-        .twitter {
-            background-image: url('social-media.png');
+        .coin-image {
+            margin-top: 30px;
+            width: 300px;
         }
-		
+        .social-buttons {
+            margin-top: 30px;
+        }
+        .social-buttons .button {
+            font-size: 22px;
+        }
+        .buy-button {
+            font-size: 26px;
+            padding: 20px 50px;
+            margin-top: 30px;
+        }
+        .footer {
+            margin-top: 50px;
+            font-size: 16px;
+        }
+        a {
+            color: gold;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
+    <div class="header">SERPENT LEGACY</div>
+    <div class="subtext">The Coin of Legacy and Transformation</div>
 
-
-
-<div class="container">
-	<div class="box">$Recycled - The First 100% Recycled Crypto</div>
-    <div class="box">
-        <h2>♻️ Welcome to $Recycled - The First 100% Recycled Crypto ♻️</h2>
-        <p>In the world of crypto, countless tokens are created, abandoned, and left to rot on the blockchain—empty, forgotten, and without value. <strong>$Recycled</strong> changes that.</p>
+    <div class="button-container">
+        <a href="https://en.wikipedia.org/wiki/Staff_of_Moses" class="button">Judaism</a>
+        <a href="https://en.wikipedia.org/wiki/Moses_in_Christianity" class="button">Christianity</a>
+        <a href="https://en.wikipedia.org/wiki/Moses_in_Islam" class="button">Islam</a>
     </div>
 
-    <div class="box">
-        <p><strong>$Recycled is the first cryptocurrency built entirely from abandoned and burnt tokens.</strong> Instead of letting these digital relics sit unused, we breathe new life into them, transforming them into a valuable and sustainable asset.</p>
+    <div class="description-box">
+        <p><strong>$SERPENT – The Legacy of Divine Wisdom</strong></p>
+        <p>Across history and faith, one symbol has stood as a testament to power, transformation, and resilience—the Serpent Staff of Moses. Rooted in ancient traditions shared by Judaism, Christianity, and Islam, this legendary staff represents divine intervention, wisdom, and the ability to overcome adversity.</p>
+        <p>From the deserts of Sinai to the stories passed down for generations, the serpent on Moses' staff is a symbol of miracles, protection, and knowledge. In the Torah, it brought healing to the Israelites; in Christianity, it foreshadowed salvation; in Islam, it was a sign of divine strength against oppression.</p>
+        <p>Now, in the digital era, $SERPENT emerges as a universal currency that embodies the essence of this sacred symbol—resilience, renewal, and trust. It is more than just a token; it is a movement that bridges cultures, faiths, and generations.</p>
+        <p>📜 One Symbol. Three Faiths. Infinite Possibilities.</p>
+        <p>🔥 $SERPENT – The Coin of Legacy and Transformation. 🔥</p>
     </div>
 
-    <div class="box">
-        <h2>🌍 How It Works:</h2>
-        <ul>
-            <li>♻️ <strong>Recycled Tokens</strong> – Instead of creating new supply, $Recycled is forged from existing abandoned and burned tokens, giving them a second chance.</li>
-            <li>🌍 <strong>Eco-Friendly Crypto</strong> – This is the <strong>greenest</strong> form of digital finance—nothing new is minted, only repurposed.</li>
-            <li>🔄 <strong>Turning Trash into Treasure</strong> – $Recycled proves that even "dead" tokens can be revived and have value again.</li>
-        </ul>
+
+    <img class="coin-image" src="S.PNG" alt="Serpent Coin">
+
+    <div class="social-buttons">
+        <a href="https://t.me/SerpentLegacy" class="button">Telegram</a>
+        <a href="https://twitter.com/SerpentLegacy" class="button">Twitter</a>
     </div>
 
-    <div class="box">
-        <p><strong>Join the blockchain revolution that turns forgotten assets into the future of sustainable cryptocurrency.</strong></p>
+    <button class="button buy-button">BUY $SERPENT</button>
+
+    <div class="footer">
+        <a href="terms.html">Terms & Conditions | Legal | About</a>
     </div>
-
-    <h3>#RecycledCrypto #SustainableCrypto #ReCycleToken</h3>
-    
-    <button class="recycle-btn" onclick="dropCoin()">Recycle a Coin</button>
-
-    <div class="game-container">
-        <div class="coin" id="coin"></div>
-        <div class="splash" id="splash"></div>
-        <div class="pool">Recycle Pool</div>
-        <div class="gift-box" id="giftBox" onclick="openGift()"></div>
-    </div>
-
-    <div class="link-popup" id="linkPopup">
-        <p>Congratulations! Your recycled token is ready:</p>
-        <a href="https://pump.fun/coin/HhZm5PcuhKnKxN4w82o4zieaUPoxFtozrzfZCsvXpump" target="_blank">Click here to claim your $Recycled Token!</a>
-        <br>
-        <button class="close-popup" onclick="closePopup()">Close</button>
-    </div>
-</div>
-	<div class="social-buttons">
-		<a href="https://t.me/Recycled_Coin" target="_blank" class="telegram"></a>
-		<a href="https://x.com/Recycled_Coin" target="_blank" class="twitter"></a>
-	</div>
-<script>
-    function dropCoin() {
-        let coin = document.getElementById("coin");
-        let splash = document.getElementById("splash");
-        let giftBox = document.getElementById("giftBox");
-
-        coin.style.top = "85%";
-        coin.style.transform = "translateX(-50%) rotateX(0deg) rotateY(0deg)";
-        
-        setTimeout(() => {
-            splash.style.display = "block";
-            setTimeout(() => {
-                splash.style.display = "none";
-                coin.style.top = "10px";
-                coin.style.transform = "translateX(-50%) rotateX(30deg) rotateY(30deg)";
-                giftBox.style.display = "block";
-            }, 500);
-        }, 1000);
-    }
-
-    function openGift() {
-        let popup = document.getElementById("linkPopup");
-        popup.style.display = "block";
-    }
-
-    function closePopup() {
-        let popup = document.getElementById("linkPopup");
-        let giftBox = document.getElementById("giftBox");
-        popup.style.display = "none";
-        giftBox.style.display = "none";
-    }
-</script>
-
 </body>
 </html>
