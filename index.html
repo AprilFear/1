@@ -95,6 +95,27 @@
             width: 50%;
             height: auto;
         }
+	    .warning-box {
+    background-color: #ffcc00; /* צבע רקע בהיר כדי למשוך תשומת לב */
+    color: black;
+    padding: 20px;
+    border: 2px solid #ff9900;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 20px auto;
+    width: 80%;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    animation: pulse 2s infinite; /* אפקט פועם */
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 10px rgba(255, 204, 0, 0.8); }
+    50% { box-shadow: 0 0 20px rgba(255, 204, 0, 1); }
+    100% { box-shadow: 0 0 10px rgba(255, 204, 0, 0.8); }
+}
+
     </style>
 </head>
 <body>
@@ -107,6 +128,11 @@
 </header>
 	
 <div class="main-content" id="home">
+	<div class="warning-box">
+    <p>Just to clarify, this project is all about fairness and transparency, and the distribution is for the community. Crazy, but we're staying true to the mission! 🎪🚀</p>
+	 <p>I can't believe it, but 5 bots bought 17 SOL each of CCC! Just to be clear, it’s not me, and I don’t hold a large portion.</p>
+</div>
+
 	<div>
         <h1>Crypto Clown Coin <span>(CCC)</span></h1>
     </div>
