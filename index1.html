@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Clown Coin</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: #333; /* טקסט כהה לכותרות */
+        }
+        header {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background-color: #fff;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: top 0.3s;
+        }
+        header nav {
+            display: flex;
+            justify-content: center;
+        }
+        header nav a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            margin: 0 20px;
+        }
+        .main-content {
+            padding-top: 120px;
+            text-align: center;
+        }
+        .banner {
+            width: 70%;
+            margin: 20px 0;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+        }
+        .box {
+            width: 45%;
+            padding: 20px;
+            border: 2px solid black;
+            background-color: #fff;
+        }
+        .tokenomics {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+        }
+        .tokenomics .box {
+            width: 45%;
+            padding: 20px;
+            border: 2px solid black;
+            background-color: #fff;
+        }
+        .ca-box {
+            background: #000;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+            position: relative;
+            cursor: pointer;
+        }
+        .copy-feedback {
+            display: none;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .ca-box:hover .copy-feedback {
+            display: block;
+        }
+        .ca-box span {
+            font-size: 24px;
+        }
+        .ca-box span.copied {
+            display: none;
+        }
+        .ca-box.clicked span.copied {
+            display: inline;
+        }
+        .image-box {
+            width: 50%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <a href="index1.html">HOME</a>
+        <a href="whitepaper.html">Whitepaper</a>
+    </nav>
+</header>
+	
+<div class="main-content" id="home">
+	<div>
+        <h1>Crypto Clown Coin <span>(CCC)</span></h1>
+    </div>
+    <img src="C1.png" alt="Banner" class="banner">
+    <div class="container">
+        <div class="box">
+            <h2>About Crypto Clown Coin</h2>
+            <p>Crypto Clown Coin (CCC) is a meme coin that embraces the chaos and humor of the crypto world. </p>
+			<p>It satirizes the mistakes and mishaps in crypto investments, turning FOMO, pump-and-dump schemes, and other absurdities into an entertaining experience.</p>
+        </div>
+        <div class="box">
+            <img src="C2.png" alt="Clown with Rocket" class="image-box">
+        </div>
+    </div>
+    <div class="tokenomics">
+        <div class="box">
+            <h2>TOKENOMICS</h2>
+           <h4>Supply: 1,000,000,000 CCC (Fixed Supply, No Minting)</h4>
+           <h4>Distribution: 96% Public Fair Launch – Available to the community, burned for liquidity with only 4% to Developer Wallet</h4>
+           <h4>No Airdrops, No Presale, No insiders, No Private Sale – 100% transparent and community-first</h4>
+        </div>
+        <div class="box">
+            <img src="C.png" alt="Token Image" class="image-box">
+        </div>
+    </div>
+		
+    <div class="ca-box" onclick="copyCA()">
+        <span>The Only Official CCC CA</span>
+        <div id="ca-address">5Wcg8LSoUmNGqTzrW2AFX75SCY2sA15KYyNu7mqdW7gM</div>
+        <span class="copied">CA Copied!</span>
+    </div>
+</div>
+
+<script>
+    function copyCA() {
+        const caAddress = document.querySelector('#ca-address').textContent;
+        navigator.clipboard.writeText(caAddress).then(() => {
+            document.querySelector('.ca-box').classList.add('clicked');
+        });
+    }
+	
+	let prevScrollPos = window.pageYOffset;
+    window.onscroll = function() {
+        let currentScrollPos = window.pageYOffset;
+        if (prevScrollPos > currentScrollPos) {
+            document.getElementById("navbar").style.top = "0"; // הראה את הסרגל ניווט
+        } else {
+            document.getElementById("navbar").style.top = "-60px"; // החבא את הסרגל ניווט בעת גלילה למטה
+        }
+        prevScrollPos = currentScrollPos;
+    }
+</script>
+
+</body>
+</html>
+
+
