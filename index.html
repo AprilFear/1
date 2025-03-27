@@ -1,307 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contract Address - $CA</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Empty One ($TEO)</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Comic Sans MS', sans-serif;
-      background: linear-gradient(to bottom, #fffbea, #ffffff);
-      color: #222;
-      text-align: center;
-    }
-    header {
-      padding: 2em;
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: #ffffff;
+      color: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 20px;
     }
     h1 {
-      font-size: 3em;
+      font-size: 2.8rem;
+      font-weight: 300;
+      margin-bottom: 10px;
+	   color: #888;
     }
-    .logo {
-      width: 120px;
-      height: 120px;
-      margin-bottom: 1em;
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 40px;
+	   color: #888;
     }
-    .copy-btn {
-      background: gold;
-      padding: 10px 20px;
-      border: none;
-      font-weight: bold;
-      font-size: 1.2em;
-      cursor: pointer;
-      border-radius: 12px;
-      transition: transform 0.2s;
-    }
-    .copy-btn:hover {
-      transform: scale(1.1);
-    }
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-      display: none;
-    }
-    .modal-content {
-      background: #fff;
-      padding: 2em;
-      border-radius: 15px;
-      text-align: center;
-    }
-    .modal-content a {
-      display: inline-block;
-      margin-top: 1em;
-      padding: 0.5em 1em;
-      background: #222;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 10px;
-    }
-    .card-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1em;
-      margin: 2em auto;
-      max-width: 1000px;
-    }
-    .card {
-      background: #fff;
-      border: 2px dashed gold;
-      padding: 1em;
-      border-radius: 15px;
-      width: 280px;
-    }
-    .faq, .memes {
-      margin: 3em auto;
-      max-width: 800px;
-    }
-    .faq-item {
-      background: #fff8d0;
-      margin: 1em 0;
-      padding: 1em;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    .faq-answer {
-      display: none;
-      margin-top: 0.5em;
-    }
-    .meme-img {
-      width: 100%;
-      max-width: 400px;
-      margin: 1em auto;
-      border-radius: 12px;
-    }
-    #running-contract {
-      position: relative;
-      font-weight: bold;
-      color: red;
-      animation: runAway 6s infinite;
-    }
-    @keyframes runAway {
-      0% { left: 0; }
-      50% { left: 50%; }
-      100% { left: 0; }
-    }
-    #bouncing-contract {
-      width: 200px;
-      margin: 2em auto;
-      animation: bounceDisappear 3s infinite;
-    }
-    @keyframes bounceDisappear {
-      0%   { transform: translateY(0) scale(1); opacity: 1; }
-      50%  { transform: translateY(-100px) scale(1.1); }
-      100% { transform: translateY(200px) scale(0.3); opacity: 0; }
-    }
-    #chatbot {
-      margin: 4em auto;
-      background: #fff4cc;
-      padding: 1.5em;
-      border-radius: 15px;
+    p {
       max-width: 600px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      font-size: 1rem;
+      font-weight: 300;
+      text-align: center;
+      line-height: 1.6;
+	   color: #888;
     }
-    #chatbot-response {
-      margin-top: 1em;
-      font-weight: bold;
+    button {
+      margin-top: 40px;
+      padding: 12px 28px;
+      font-size: 1rem;
+      background-color: #000;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
     }
+    button:hover {
+      opacity: 0.85;
+    }
+    .spacer {
+      height: 80px;
+    }
+    img.character {
+      width: 300px;
+      margin: 40px 0;
+    }
+    a.link {
+      margin-top: 30px;
+      font-size: 2rem;
+      color: #888;
+      text-decoration: underline;
+    }
+	a.buy-btn {
+	  margin-top: 40px;
+	  padding: 12px 28px;
+	  font-size: 1rem;
+	  background-color: #888;
+	  color: #fff;
+	  border-radius: 6px;
+	  text-decoration: none;
+	  display: inline-block;
+	}
+	a.buy-btn:hover {
+	  opacity: 0.85;
+	}
   </style>
 </head>
 <body>
-  <audio id="copy-sound" src="1.mp3"></audio>
-  
- <div id="custom-modal" class="modal" onclick="hideModal(event)">
-    <div class="modal-content">
-      <h2>$CA Copied!</h2>
-      <p>Now paste it here:</p>
-      <a href="https://dexscreener.com/search" target="_blank">Go to DexScreener</a>
-    </div>
-  </div>
+  <h1>The Empty One ($TEO)</h1>
+  <h2>Still minimal. Still mindful. Now with a plan.</h2>
 
-  <header>
-    <img src="logoca.png" alt="$CA Logo" class="logo">
-    <h1>Contract Address</h1>
-    <p>$CA – The only Contract Address that *is* the Contract Address.</p>
-    <button class="copy-btn" onclick="copyCA()">Copy CA</button>
-    <p style="margin-top:10px; font-style: italic;">Stop asking. Start becoming.</p>
-    <p id="running-contract">Catch me if you can! 📄💨</p>
-  </header>
+  <p>
+    In a world full of noise, hype and empty promises... one coin dares to be clear.<br><br>
+    <strong>The Empty One ($TEO)</strong> began as a whisper in the void – a minimalist movement on the blockchain. But even the stillest waters can carry purpose.
+  </p>
 
-  <div id="bouncing-contract">
-    <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" alt="Jumping Contract" style="width:100%;">
-  </div>
+  <p>
+    We believe in <strong>clarity with calm</strong>, and <strong>direction without desperation</strong>.
+  </p>
 
-  <section class="card-container">
-    <div class="card">
-      <h3>"What’s the CA?"</h3>
-      <p>You’re looking at it. Literally. 🤯</p>
-    </div>
-    <div class="card">
-      <h3>"Send me the Contract Address!"</h3>
-      <p>Already did. It’s $CA. The one and only. 🧠</p>
-    </div>
-    <div class="card">
-      <h3>CAception</h3>
-      <p>A token named after the one thing everyone looks for. 🎭</p>
-    </div>
-  </section>
+  <p>
+    🗺️ <strong>Yes, we have a roadmap.</strong><br>
+    But it's not designed to impress – it's built to guide.<br>
+    A journey of growth, community, and quiet impact.
+  </p>
 
-  <section class="faq">
-    <h2>FAQ – Frequently Asked Confusions</h2>
-    <div class="faq-item" onclick="toggleAnswer(0)">
-      <strong>Where can I find the Contract Address?</strong>
-      <div class="faq-answer">Here. It’s $CA. Welcome to enlightenment. 🌟</div>
-    </div>
-    <div class="faq-item" onclick="toggleAnswer(1)">
-      <strong>Is this a real token?</strong>
-      <div class="faq-answer">As real as your neighbor’s dog who thinks he’s Batman. 🐶🦇</div>
-    </div>
-    <div class="faq-item" onclick="toggleAnswer(2)">
-      <strong>What’s the utility?</strong>
-      <div class="faq-answer">Confusion, chaos, and comedy. The holy trinity of crypto. 🤡</div>
-    </div>
-  </section>
+  <p>
+    📊 <strong>Yes, we have tokenomics.</strong><br>
+    But they're not designed to pump – they’re designed to sustain.<br>
+    Fair allocation. Transparent structure. No hidden traps.
+  </p>
 
-<section class="memes">
-  <h2>🔥 Meme Gallery</h2>
-  <div style="background: #222; padding: 2em 0; border-radius: 20px;">
-    <div style="position: relative; width: 500px; height: 500px; margin: auto; overflow: hidden;">
-      <img id="meme-display" class="meme-img" src="ca6.png" alt="Meme"
-           style="max-width: 100%; max-height: 100%; object-fit: contain; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 12px;">
+  <p>
+    🧘‍♂️ <strong>What we offer is peace with a purpose.</strong><br>
+    If you're tired of shouting coins and chaotic discords – welcome home.
+  </p>
 
-      <button onclick="prevMeme()"
-        style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); font-size: 2em; background: none; border: none; cursor: pointer; color: white;">
-        ⬅️
-      </button>
+  <p><em>“Maybe the real moon... is the simplicity we forgot along the way.”</em></p>
+ 
 
-      <button onclick="nextMeme()"
-        style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); font-size: 2em; background: none; border: none; cursor: pointer; color: white;">
-        ➡️
-      </button>
-    </div>
+  <a href="minimalistcoin_character.html" class="link">Meet The Empty One</a>
+  <a href="https://example.com/buy-min" class="buy-btn">Buy $TEO</a>
 
-    <p id="meme-counter" style="color: white; margin-top: 1em; font-weight: bold;">Meme 1 of 13</p>
-  </div>
-</section>
 
-  <section id="chatbot">
-    <h2>🤖 Ask the $CA ChatBot</h2>
-    <input type="text" id="chat-input" placeholder="Ask anything..." style="width: 80%; padding: 0.5em;">
-    <button onclick="askBot()" style="padding: 0.5em 1em; margin-left: 10px; font-weight: bold;">Send</button>
-    <div id="chatbot-response"></div>
-  </section>
 
-  <footer style="margin-top: 4em; padding: 1em; background: #fffbdb; font-size: 0.9em;">
-    © 2025 Contract Address. All Rights Reserved. No, we still won't send you the CA.
-  </footer>
-
-  <script>
- const memes = [
-  "ca1.webp ",
-  "ca2.webp ",
-  "ca3.webp ",
-  "ca4.webp ",
-  "ca5.webp ",
-  "ca6.webp ",
-  "ca7.webp ",
-  "ca8.webp ",
-  "ca9.webp ",
-  "ca10.webp ",
-  "ca11.webp ",
-  "ca12.webp ",
-  "ca13.webp "
-];
-
-let currentMeme = 0;
-
-function updateMeme() {
-  const img = document.getElementById("meme-display");
-  const counter = document.getElementById("meme-counter");
-  img.src = memes[currentMeme];
-  counter.textContent = `Meme ${currentMeme + 1} of ${memes.length}`;
-}
-
-function prevMeme() {
-  currentMeme = (currentMeme - 1 + memes.length) % memes.length;
-  updateMeme();
-}
-
-function nextMeme() {
-  currentMeme = (currentMeme + 1) % memes.length;
-  updateMeme();
-}
-
-// הפעלה ראשונית
-updateMeme();
-
-  function copyCA() {
-      navigator.clipboard.writeText("4je9hKTTtYEgm6vxUXnNHGVLkhxT16zAZTFJBh9Apump");
-      const sound = document.getElementById('copy-sound');
-      sound.currentTime = 0;
-      sound.play();
-      document.getElementById('custom-modal').style.display = 'flex';
-    }
-
-    function hideModal(event) {
-      const modal = document.getElementById('custom-modal');
-      if (event.target === modal) {
-        modal.style.display = 'none';
-      }
-    }
-
-    function toggleAnswer(index) {
-      const answers = document.querySelectorAll('.faq-answer');
-      const answer = answers[index];
-      answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
-    }
-
-function askBot() {
-  const input = document.getElementById('chat-input').value.toLowerCase();
-  const response = document.getElementById('chatbot-response');
-
-  if (input.includes('address') || input.includes('contract')) {
-    response.innerHTML = "You already have the CA. It's $CA. Stop overthinking it 🧠";
-  } else if (input.includes('scam')) {
-    response.innerHTML = "Scam? Bro... this is <strong>performance art</strong>. You just don't get it. 🎭💸";
-  } else if (input.includes('real')) {
-    response.innerHTML = "Define 'real'. Is the Matrix real? Is love real? $CA is real in your heart 💛";
-  } else {
-    response.innerHTML = "Good question. But have you tried asking it... to yourself? 🧘‍♂️";
-  }
-}
-    const memeImages = memes.map(src => {
-    const img = new Image();
-    img.src = src;
-    return img;
-  });
-  </script>
 </body>
 </html>
