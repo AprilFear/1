@@ -61,6 +61,53 @@
       border-top: 1px solid #30363d;
       color: #8b949e;
     }
+	  	.ca-box {
+  background-color: #161b22;
+  border: 6px solid #f2a900;
+  border-radius: 30px;
+  padding: 10px 40px;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  color: #f0f6fc;
+  position: relative;
+  margin: 30px auto;
+  max-width: 450px;
+}
+
+#copy-btn {
+  background-color: #f2a900;
+  color: #0d1117;
+  border: none;
+  padding: 8px 16px;
+  font-weight: bold;
+  margin-left: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#copy-btn:hover {
+  background-color: #e5c100;
+}
+
+#copied-msg {
+  display: none;
+  color: #00ff88;
+  font-weight: bold;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 10px;
+  animation: fadeOut 2s forwards;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; display: none; }
+}
+
   </style>
 </head>
 <body>
@@ -114,6 +161,11 @@
       </ul>
     </section>
   </main>
+	<div class="ca-box">
+  <span id="ca-text">7JMGkFhsvjg59mUqYBKXVVDJ3qy7CrD4kpjyr4itpump</span>
+  <button onclick="copyCA()" id="copy-btn">Copy The Official Contract Address</button>
+  <span id="copied-msg">Copied!</span>
+</div>
 	<div style="text-align: center; margin-top: 40px;">
 		<a href="https://x.com/TheBTCForce" target="_blank" style="
 			display: inline-block;
@@ -134,5 +186,17 @@
   <footer>
     &copy; 2025 BTC Army. All rights reserved.
   </footer>
+	  <script>
+  function copyCA() {
+    const caText = document.getElementById("ca-text").textContent.replace("CA: ", "");
+    navigator.clipboard.writeText(caText);
+    const msg = document.getElementById("copied-msg");
+    msg.style.display = "block";
+    setTimeout(() => {
+      msg.style.display = "none";
+    }, 2000);
+  }
+</script>
+
 </body>
 </html>
