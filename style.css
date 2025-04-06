@@ -815,3 +815,106 @@ code {
      color: var(--accent-color);
      box-shadow: 0 0 15px rgba(163, 230, 53, 0.5);
 }
+/* ======================== */
+/* Optional Shepherd Theme Customization */
+/* ======================== */
+/* הגדרת משתני צבע בפורמט RGB (אם משתמשים בשקיפות) */
+:root {
+    /* ... שאר המשתנים ... */
+    --secondary-color-rgb: 34, 211, 238; /* ציאן */
+    --text-color-rgb: 248, 250, 252;    /* לבן/אפור בהיר */
+}
+
+.shepherd-custom-theme {
+    /* התאמת מראה הבועה עצמה */
+    background-color: var(--background-color);
+    border: 1px solid var(--secondary-color);
+    border-radius: 0; /* פינות חדות כמו בשאר האתר */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    max-width: 350px; /* הגבלת רוחב הבועה */
+}
+.shepherd-custom-theme .shepherd-text {
+    /* התאמת הטקסט בבועה */
+    color: var(--text-color);
+    font-family: var(--body-font);
+    padding: 1.5em; /* ריווח פנימי */
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+.shepherd-custom-theme .shepherd-header {
+    /* התאמת הכותרת (אם יש) וכפתור הסגירה של הבועה */
+    background-color: rgba(var(--secondary-color-rgb), 0.1); /* רקע ציאן שקוף */
+    padding: 0.5em 1.5em;
+}
+ .shepherd-custom-theme .shepherd-header .shepherd-title {
+     /* התאמת טקסט הכותרת (לא השתמשנו בה בדוגמה) */
+     color: var(--secondary-color);
+     font-family: var(--heading-font);
+     font-weight: bold;
+ }
+ .shepherd-custom-theme .shepherd-header .shepherd-cancel-icon {
+      /* התאמת איקון הסגירה (X) */
+      color: var(--text-muted-color);
+      transition: color 0.2s ease;
+ }
+ .shepherd-custom-theme .shepherd-header .shepherd-cancel-icon:hover {
+      color: var(--primary-color); /* ורוד במעבר עכבר */
+  }
+ .shepherd-custom-theme .shepherd-footer {
+     /* אזור הכפתורים בתחתית הבועה */
+     padding: 0 1.5em 1.5em;
+     border-top: 1px dashed rgba(var(--text-color-rgb), 0.15); /* קו מקווקו עדין */
+     margin-top: 1em;
+     display: flex; /* לסדר כפתורים */
+     justify-content: flex-end; /* למקם כפתורים בצד ימין */
+ }
+ .shepherd-custom-theme .shepherd-button {
+     /* עיצוב כפתורי הניווט של הסיור (הבא, הקודם, סיום) */
+     background-color: var(--accent-color);
+     color: var(--background-color);
+     border: none;
+     padding: 0.6rem 1.5rem;
+     font-family: var(--heading-font);
+     text-transform: uppercase;
+     letter-spacing: 1px;
+     font-weight: 700;
+     border-radius: 0;
+     margin-left: 0.5em; /* רווח בין כפתורים */
+     transition: all 0.3s ease;
+     cursor: pointer;
+     font-size: 0.9rem;
+ }
+  .shepherd-custom-theme .shepherd-button:hover {
+      background-color: var(--primary-color); /* ורוד במעבר עכבר */
+      color: var(--text-color);
+      box-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+  }
+  .shepherd-custom-theme .shepherd-button.shepherd-button-secondary {
+      /* עיצוב כפתור משני (כמו 'הקודם') */
+      background-color: transparent;
+      color: var(--text-muted-color);
+      border: 1px solid var(--text-muted-color);
+   }
+   .shepherd-custom-theme .shepherd-button.shepherd-button-secondary:hover {
+       background-color: var(--text-muted-color);
+       color: var(--background-color);
+       border-color: var(--text-muted-color);
+       box-shadow: none;
+    }
+
+    /* צבע החץ של בועת ההסבר - תלוי בערכת העיצוב */
+    /* חץ מלמעלה (הבועה מתחת לאלמנט) */
+    .shepherd-element.shepherd-theme-arrows.shepherd-has-title[data-popper-placement^=bottom] > .shepherd-content::before {
+        border-bottom-color: rgba(var(--secondary-color-rgb), 0.1); /* צבע הרקע של הכותרת */
+     }
+     .shepherd-element.shepherd-theme-arrows[data-popper-placement^=bottom] > .shepherd-content::before {
+         border-bottom-color: var(--background-color); /* צבע הרקע של הבועה */
+     }
+    /* חץ מלמטה (הבועה מעל האלמנט) */
+     .shepherd-element.shepherd-theme-arrows.shepherd-has-title[data-popper-placement^=top] > .shepherd-content::before {
+        border-top-color: rgba(var(--secondary-color-rgb), 0.1);
+     }
+     .shepherd-element.shepherd-theme-arrows[data-popper-placement^=top] > .shepherd-content::before {
+         border-top-color: var(--background-color);
+     }
+     /* אפשר להוסיף כללים דומים ל-left ו-right אם צריך */
