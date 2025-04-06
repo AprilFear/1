@@ -1021,3 +1021,6 @@ code {
     margin: 0 auto;
 }
 */
+#integrated-terminal {
+    min-height: 550px; /* או כל גובה אחר שתרצה */
+}
