@@ -835,11 +835,12 @@ code {
 }
 .shepherd-custom-theme .shepherd-text {
     /* התאמת הטקסט בבועה */
-    color: var(--text-color);
+    color: var(--text-color); /* השאר טקסט בהיר */
     font-family: var(--body-font);
-    padding: 1.5em; /* ריווח פנימי */
+    padding: 1.5em;
     font-size: 0.95rem;
     line-height: 1.6;
+    background-color: transparent; /* <<< הוסף את השורה הזו */
 }
 .shepherd-custom-theme .shepherd-header {
     /* התאמת הכותרת (אם יש) וכפתור הסגירה של הבועה */
