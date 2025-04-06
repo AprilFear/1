@@ -117,11 +117,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // פונקציה להפעלת הסיור
+  // פונקציה להפעלת הסיור (גרסה עם טקסטים באנגלית)
     function startWebsiteTour() {
         // בדוק אם ספריית Shepherd נטענה
         if (typeof Shepherd === 'undefined') {
             console.error('Shepherd.js library not loaded.');
-            alert('Could not start the tour. Please try refreshing the page.'); // הודעה למשתמש
+            alert('Could not start the tour. Please try refreshing the page.');
             return;
         }
 
@@ -133,37 +134,37 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // הגדרת שלבי הסיור (שנה את הטקסטים והבוררים לפי הצורך)
+        // הגדרת שלבי הסיור (עם טקסטים באנגלית)
         tour.addStep({
             id: 'step-logo',
-            text: 'This is the logo and name of the project. Clicking here will always return you to the top of the page.',
+            text: 'This is our logo and name! Click it anytime to return to the top.', // טקסט הסבר באנגלית
             attachTo: {
-                element: '.logo-link', // בורר CSS שמצביע על הלינק של הלוגו ב-header
-                on: 'bottom' // איפה להציג את ההסבר ביחס לאלמנט
+                element: '.logo-link',
+                on: 'bottom'
             },
             buttons: [
                 {
-                    text: 'next', // טקסט כפתור
-                    action: tour.next // מה קורה בלחיצה
+                    text: 'Next', // טקסט כפתור באנגלית
+                    action: tour.next
                 }
             ]
         });
 
         tour.addStep({
             id: 'step-nav',
-            text: 'Here is the navigation menu. You can jump to the different sections of the site such as About, Tokenomics, How to Buy, and the Roadmap.',
+            text: 'Use the navigation bar to jump to different sections like About, Tokenomics, How to Buy, and our Roadmap.', // טקסט הסבר באנגלית
             attachTo: {
-                element: 'header nav ul.nav-links', // תפריט הניווט ב-header (חשוב שה-UL יהיה גלוי)
+                element: 'header nav ul.nav-links',
                 on: 'bottom'
             },
             buttons: [
                  {
-                    text: 'back',
-                    secondary: true, // עיצוב משני לכפתור 'הקודם'
+                    text: 'Back', // טקסט כפתור באנגלית
+                    secondary: true,
                     action: tour.back
                 },
                 {
-                    text: 'next',
+                    text: 'Next', // טקסט כפתור באנגלית
                     action: tour.next
                 }
             ]
@@ -171,19 +172,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
          tour.addStep({
             id: 'step-how-to-buy',
-            text: 'Want to join? Heres how to buy the $CGPTS coin through Pump.fun (during launch).',
+            text: 'Want to get some $CGPTS? This section explains exactly how to buy using Pump.fun (initially).', // טקסט הסבר באנגלית
             attachTo: {
-                element: '#how-to-buy h2', // כותרת הסקשן "How to Buy"
-                on: 'bottom' // נציג מתחת לכותרת
+                element: '#how-to-buy h2',
+                on: 'bottom'
             },
              buttons: [
                  {
-                    text: 'back',
+                    text: 'Back', // טקסט כפתור באנגלית
                     secondary: true,
                     action: tour.back
                 },
                 {
-                    text: 'next',
+                    text: 'Next', // טקסט כפתור באנגלית
                     action: tour.next
                 }
             ]
@@ -191,20 +192,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tour.addStep({
             id: 'step-socials',
-            text: "Don't forget to join our community on Twitter (X) and Telegram!",
+            text: "Don't forget to join our community on Twitter (X) and Telegram!", // טקסט הסבר באנגלית
             attachTo: {
-                element: '#socials .social-links', // אזור הקישורים לרשתות חברתיות
-                on: 'top' // נציג מעל הקישורים
+                element: '#socials .social-links',
+                on: 'top'
             },
              buttons: [
                  {
-                    text: 'back',
+                    text: 'Back', // טקסט כפתור באנגלית
                     secondary: true,
                     action: tour.back
                 },
                 {
-                    text: 'End!', // כפתור אחרון
-                    action: tour.complete // מסמן שהסיור הושלם
+                    text: 'End!', // טקסט כפתור באנגלית
+                    action: tour.complete
                 }
             ]
         });
@@ -212,7 +213,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // הפעל את הסיור
         tour.start();
     }
-
 
     // בדיקה והצגת המודאל (אם צריך)
     if (welcomeModal && closeModalBtn && startTourBtn) { // ודא שכל הכפתורים קיימים
