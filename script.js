@@ -282,7 +282,7 @@ if (document.getElementById('integrated-terminal')) {
             window.Jupiter.init({
                 displayMode: "integrated",
                 integratedTargetId: "integrated-terminal", // ה-ID של ה-div שהכנו
-                endpoint: "https://api.mainnet-beta.solana.com", // נקודת גישה לרשת סולנה (אפשר להחליף ב-RPC אישי אם יש)
+                endpoint: "https://wiser-skilled-layer.solana-mainnet.quiknode.pro/d6d3ae205e58c061f513482b1ede0eabbd8bca2a/", // נקודת גישה לרשת סולנה (אפשר להחליף ב-RPC אישי אם יש)
                 strictTokenList: false, // אפשר למשתמשים לבחור גם מטבעות אחרים, לא רק מרשימה קפדנית
 
                 // --- הגדרות חשובות ---
