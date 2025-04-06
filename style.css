@@ -1024,3 +1024,15 @@ code {
 #integrated-terminal {
     min-height: 550px; /* או כל גובה אחר שתרצה */
 }
+#integrated-terminal {
+    min-height: 550px; 
+    overflow: visible !important; /* נסה לכפות הצגת תוכן גולש */
+    /* אפשר גם לנסות להוסיף position: relative; אם הכל נכשל */
+    /* position: relative; */ 
+}
+
+/* אפשר לנסות גם על הקונטיינר החיצוני */
+.terminal-container {
+     overflow: visible !important;
+     /* ... שאר הסגנונות הקיימים ... */
+}
