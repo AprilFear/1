@@ -675,7 +675,7 @@ code {
 /* תיקון עבור הקישור/טקסט "I don't have a wallet" */
 #integrated-terminal span.css-16k5srk {
     color: var(--accent-color) !important; /* נסה צבע ירוק כמו הקישורים, או אולי --text-muted-color */
-    background-color: transparent !important; */ /* אם עדיין לא עובד, נסה להוסיף גם את זה */
+    background-color: transparent !important;  /* אם עדיין לא עובד, נסה להוסיף גם את זה */
 }
 /* Remove second #integrated-terminal rule and the .terminal-container overflow rule */
 
