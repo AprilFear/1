@@ -816,7 +816,7 @@ code {
      box-shadow: 0 0 15px rgba(163, 230, 53, 0.5);
 }
 /* ======================== */
-/* Optional Shepherd Theme Customization */
+/* Optional Shepherd Theme Customization (Attempt 2 - Stronger Override) */
 /* ======================== */
 /* הגדרת משתני צבע בפורמט RGB (אם משתמשים בשקיפות) */
 :root {
@@ -827,24 +827,39 @@ code {
 
 .shepherd-custom-theme {
     /* התאמת מראה הבועה עצמה */
-    background-color: var(--background-color);
+    background-color: var(--background-color) !important; /* נסה לכפות רקע כהה */
     border: 1px solid var(--secondary-color);
-    border-radius: 0; /* פינות חדות כמו בשאר האתר */
+    border-radius: 0;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    max-width: 350px; /* הגבלת רוחב הבועה */
+    max-width: 350px;
 }
-.shepherd-custom-theme .shepherd-text {
-    /* התאמת הטקסט בבועה */
-    color: var(--text-color); /* השאר טקסט בהיר */
+
+/* נסה לכפות רקע שקוף גם על אלמנט התוכן הפנימי */
+.shepherd-custom-theme .shepherd-content {
+    background-color: transparent !important;
+}
+
+
+/* הפוך את כלל הטקסט ליותר ספציפי והשתמש ב-!important */
+.shepherd-element.shepherd-custom-theme .shepherd-content .shepherd-text {
+    color: var(--text-color) !important; /* כפה צבע טקסט בהיר */
     font-family: var(--body-font);
     padding: 1.5em;
     font-size: 0.95rem;
     line-height: 1.6;
-    background-color: transparent; /* <<< הוסף את השורה הזו */
+    background-color: transparent !important; /* כפה רקע שקוף */
 }
+
+/* ודא שגם פסקאות בתוך הטקסט שקופות ויורשות צבע */
+.shepherd-element.shepherd-custom-theme .shepherd-content .shepherd-text p {
+    color: inherit !important;
+    background-color: transparent !important;
+}
+
+
 .shepherd-custom-theme .shepherd-header {
     /* התאמת הכותרת (אם יש) וכפתור הסגירה של הבועה */
-    background-color: rgba(var(--secondary-color-rgb), 0.1); /* רקע ציאן שקוף */
+    background-color: rgba(var(--secondary-color-rgb), 0.1);
     padding: 0.5em 1.5em;
 }
  .shepherd-custom-theme .shepherd-header .shepherd-title {
@@ -859,15 +874,15 @@ code {
       transition: color 0.2s ease;
  }
  .shepherd-custom-theme .shepherd-header .shepherd-cancel-icon:hover {
-      color: var(--primary-color); /* ורוד במעבר עכבר */
+      color: var(--primary-color);
   }
  .shepherd-custom-theme .shepherd-footer {
      /* אזור הכפתורים בתחתית הבועה */
      padding: 0 1.5em 1.5em;
-     border-top: 1px dashed rgba(var(--text-color-rgb), 0.15); /* קו מקווקו עדין */
+     border-top: 1px dashed rgba(var(--text-color-rgb), 0.15);
      margin-top: 1em;
-     display: flex; /* לסדר כפתורים */
-     justify-content: flex-end; /* למקם כפתורים בצד ימין */
+     display: flex;
+     justify-content: flex-end;
  }
  .shepherd-custom-theme .shepherd-button {
      /* עיצוב כפתורי הניווט של הסיור (הבא, הקודם, סיום) */
@@ -880,13 +895,14 @@ code {
      letter-spacing: 1px;
      font-weight: 700;
      border-radius: 0;
-     margin-left: 0.5em; /* רווח בין כפתורים */
+     margin-left: 0.5em;
      transition: all 0.3s ease;
      cursor: pointer;
      font-size: 0.9rem;
  }
   .shepherd-custom-theme .shepherd-button:hover {
-      background-color: var(--primary-color); /* ורוד במעבר עכבר */
+      /* עיצוב כפתורים במעבר עכבר */
+      background-color: var(--primary-color);
       color: var(--text-color);
       box-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
   }
@@ -897,6 +913,7 @@ code {
       border: 1px solid var(--text-muted-color);
    }
    .shepherd-custom-theme .shepherd-button.shepherd-button-secondary:hover {
+       /* עיצוב כפתור משני במעבר עכבר */
        background-color: var(--text-muted-color);
        color: var(--background-color);
        border-color: var(--text-muted-color);
