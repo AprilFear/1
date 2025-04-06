@@ -35,8 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
                  burgerMenu.classList.remove('active');
                  navLinks.classList.remove('active');
                  burgerMenu.setAttribute('aria-expanded', 'false');
-            }
-         });
+             }
+          });
 
     } else {
         console.error("Burger menu or nav links element not found!");
@@ -51,8 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
          const initialAddress = button.getAttribute('data-address');
          if (!initialAddress || initialAddress.startsWith('[')) { // Check if placeholder
              // Optionally disable or change text if address not ready
-              // button.disabled = true;
-              // button.textContent = 'Soon';
+             // button.disabled = true;
+             // button.textContent = 'Soon';
          }
 
         button.addEventListener('click', () => {
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }).catch(err => {
                     console.error('Failed to copy address: ', err);
                      button.textContent = 'Error!';
-                      setTimeout(() => { button.textContent = 'Copy'; }, 2000);
+                     setTimeout(() => { button.textContent = 'Copy'; }, 2000);
                 });
             } else {
                 // Indicate that the address is not available yet
@@ -141,18 +141,126 @@ document.addEventListener('DOMContentLoaded', () => {
              const hrefAttribute = this.getAttribute('href');
              // Make sure it's an internal link and not just "#"
              if (hrefAttribute.length > 1 && hrefAttribute.startsWith('#')) {
-                  const targetElement = document.querySelector(hrefAttribute);
-                  if (targetElement) {
-                      e.preventDefault(); // Prevent default jump ONLY if target exists
-                      targetElement.scrollIntoView({
-                          behavior: 'smooth',
-                          block: 'start'
-                      });
-                  }
+                 const targetElement = document.querySelector(hrefAttribute);
+                 if (targetElement) {
+                     e.preventDefault(); // Prevent default jump ONLY if target exists
+                     targetElement.scrollIntoView({
+                         behavior: 'smooth',
+                         block: 'start'
+                     });
+                 }
              }
          });
      });
      */
+
+    // ============================================
+    // ===== הוספת קוד המודאל והקונפטי מתחילה כאן =====
+    // ============================================
+
+    // --- 4. Welcome Modal & Confetti ---
+    const welcomeModal = document.getElementById('welcome-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    // const modalCtaBtn = document.getElementById('modal-cta-btn'); // אם הוספת כפתור CTA
+
+    if (welcomeModal && closeModalBtn) {
+        // בדוק אם הודעת הברוכים הבאים כבר הוצגה בסשן הנוכחי
+        if (!sessionStorage.getItem('welcomeShown')) {
+            // הצג את המודאל אחרי השהייה קצרה (אופציונלי, לאפקט נחמד)
+            setTimeout(() => {
+                welcomeModal.style.display = 'flex'; // הצג את הרקע (כי הוא display: none בהתחלה)
+                setTimeout(() => { // תן לרקע להופיע לפני שהתוכן 'קופץ'
+                     welcomeModal.classList.add('visible'); // הפעל את אנימציית הכניסה
+                }, 50); // השהייה קטנה מאוד
+
+                // הפעל אפקט קונפטי
+                if (typeof confetti === 'function') { // ודא שהספרייה נטענה
+                   // ירייה בסיסית
+                   confetti({
+                       particleCount: 150, // כמות חלקיקים
+                       spread: 90,        // זווית פיזור
+                       origin: { y: 0.6 }, // מיקום התחלה (0.6 = קצת מתחת לאמצע המסך)
+                       zIndex: 2001       // ודא שהקונפטי מעל המודאל
+                   });
+
+                   // דוגמה לאפקט מתקדם יותר (לא חובה):
+                   /*
+                   var end = Date.now() + (3 * 1000); // משך האנימציה (3 שניות)
+                   var colors = ['#ec4899', '#22d3ee', '#a3e635', '#f8fafc']; // צבעים מהערכה שלך
+
+                   (function frame() {
+                     confetti({
+                       particleCount: 4,
+                       angle: 60,
+                       spread: 55,
+                       origin: { x: 0 },
+                       colors: colors,
+                       zIndex: 2001
+                     });
+                     confetti({
+                       particleCount: 4,
+                       angle: 120,
+                       spread: 55,
+                       origin: { x: 1 },
+                       colors: colors,
+                       zIndex: 2001
+                     });
+
+                     if (Date.now() < end) {
+                       requestAnimationFrame(frame);
+                     }
+                   }());
+                   */
+
+                } else {
+                    console.warn("Confetti library (canvas-confetti) not loaded.");
+                }
+
+                // סמן שההודעה הוצגה בסשן זה
+                sessionStorage.setItem('welcomeShown', 'true');
+            }, 700); // השהייה של 700ms לפני שהמודאל מופיע
+        }
+
+        // פונקציה לסגירת המודאל
+        const closeModal = () => {
+            welcomeModal.classList.remove('visible'); // הפעל אנימציית יציאה
+            // המתן לסיום האנימציה לפני הסתרה מלאה (display: none)
+            setTimeout(() => {
+                 welcomeModal.style.display = 'none';
+            }, 400); // זמן זהה למשך האנימציה ב-CSS
+        };
+
+        // הוספת אירועי לחיצה לסגירה
+        closeModalBtn.addEventListener('click', closeModal);
+
+        // אופציונלי: סגירה בלחיצה על הרקע השקוף מחוץ לחלון
+        welcomeModal.addEventListener('click', (event) => {
+            // event.target הוא האלמנט שעליו לחצו
+            if (event.target === welcomeModal) {
+                closeModal();
+            }
+        });
+
+        // אופציונלי: סגירה בלחיצה על כפתור ה-CTA
+        // if (modalCtaBtn) {
+        //     modalCtaBtn.addEventListener('click', closeModal); // סוגר את המודאל ומוביל ללינק
+        // }
+
+         // אופציונלי: סגירה בלחיצה על מקש Escape
+         document.addEventListener('keydown', (event) => {
+             if (event.key === 'Escape' && welcomeModal.classList.contains('visible')) {
+                 closeModal();
+             }
+         });
+
+    } else {
+        console.error("Could not find Welcome modal elements (welcome-modal or close-modal-btn).");
+    }
+    // --- End of Welcome Modal ---
+
+    // ==========================================
+    // ===== סוף קוד המודאל והקונפטי =====
+    // ==========================================
 
 
 }); // End of DOMContentLoaded
