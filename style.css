@@ -991,3 +991,33 @@ code {
     width: 80%; /* שלא יהיה רחב מדי */
     margin: 0;
 }
+/* ======================== */
+/* Jupiter Swap Terminal Styles */
+/* ======================== */
+.swap-section {
+    text-align: center;
+    padding-top: 2rem; 
+}
+.swap-section h2 {
+    margin-bottom: 1rem; 
+}
+.swap-section p {
+    margin-bottom: 2rem; 
+    margin-left: auto; 
+    margin-right: auto; 
+}
+.terminal-container {
+    margin-top: 2rem; /* רווח מעל הטרמינל */
+    margin-bottom: 2rem; /* רווח מתחת לטרמינל */
+    /* אפשר להוסיף כאן עיצוב נוסף אם רוצים */
+}
+
+/* אם אתה מעדיף להגדיר את הגודל של הטרמינל ב-CSS ולא ב-style ב-HTML */
+/*
+#integrated-terminal {
+    width: 100%;
+    max-width: 420px; 
+    height: 600px; 
+    margin: 0 auto;
+}
+*/
