@@ -136,14 +136,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // הגדרת שלבי הסיור (שנה את הטקסטים והבוררים לפי הצורך)
         tour.addStep({
             id: 'step-logo',
-            text: 'זה הלוגו ושם הפרויקט. לחיצה כאן תחזיר אותך תמיד לחלק העליון של העמוד.',
+            text: 'This is the logo and name of the project. Clicking here will always return you to the top of the page.',
             attachTo: {
                 element: '.logo-link', // בורר CSS שמצביע על הלינק של הלוגו ב-header
                 on: 'bottom' // איפה להציג את ההסבר ביחס לאלמנט
             },
             buttons: [
                 {
-                    text: 'הבא', // טקסט כפתור
+                    text: 'next', // טקסט כפתור
                     action: tour.next // מה קורה בלחיצה
                 }
             ]
@@ -151,19 +151,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tour.addStep({
             id: 'step-nav',
-            text: 'כאן נמצא תפריט הניווט. אפשר לקפוץ לחלקים השונים באתר כמו אודות, טוקנומיקס, איך לקנות ומפת הדרכים.',
+            text: 'Here is the navigation menu. You can jump to the different sections of the site such as About, Tokenomics, How to Buy, and the Roadmap.',
             attachTo: {
                 element: 'header nav ul.nav-links', // תפריט הניווט ב-header (חשוב שה-UL יהיה גלוי)
                 on: 'bottom'
             },
             buttons: [
                  {
-                    text: 'הקודם',
+                    text: 'back',
                     secondary: true, // עיצוב משני לכפתור 'הקודם'
                     action: tour.back
                 },
                 {
-                    text: 'הבא',
+                    text: 'next',
                     action: tour.next
                 }
             ]
@@ -171,19 +171,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
          tour.addStep({
             id: 'step-how-to-buy',
-            text: 'רוצה להצטרף? כאן מוסבר איך קונים את המטבע $CGPTS דרך Pump.fun (בשלב ההשקה).',
+            text: 'Want to join? Heres how to buy the $CGPTS coin through Pump.fun (during launch).',
             attachTo: {
                 element: '#how-to-buy h2', // כותרת הסקשן "How to Buy"
                 on: 'bottom' // נציג מתחת לכותרת
             },
              buttons: [
                  {
-                    text: 'הקודם',
+                    text: 'back',
                     secondary: true,
                     action: tour.back
                 },
                 {
-                    text: 'הבא',
+                    text: 'next',
                     action: tour.next
                 }
             ]
@@ -191,19 +191,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tour.addStep({
             id: 'step-socials',
-            text: "אל תשכח להצטרף לקהילה שלנו בטוויטר (X) ובטלגרם!",
+            text: "Don't forget to join our community on Twitter (X) and Telegram!",
             attachTo: {
                 element: '#socials .social-links', // אזור הקישורים לרשתות חברתיות
                 on: 'top' // נציג מעל הקישורים
             },
              buttons: [
                  {
-                    text: 'הקודם',
+                    text: 'back',
                     secondary: true,
                     action: tour.back
                 },
                 {
-                    text: 'סיום!', // כפתור אחרון
+                    text: 'End!', // כפתור אחרון
                     action: tour.complete // מסמן שהסיור הושלם
                 }
             ]
