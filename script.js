@@ -269,5 +269,46 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // ===== סוף קוד המודאל, הקונפטי והסיור =====
     // ==========================================
+// בסוף הקובץ script.js, לפני הסוגר });
 
+// --- 5. Initialize Jupiter Terminal ---
+// ודא שהקוד הזה רץ רק אחרי שה-DOM טעון במלואו
+if (document.getElementById('integrated-terminal')) {
+    // המתן שהסקריפט של Jupiter ייטען (אופציונלי, אבל יכול למנוע שגיאות)
+    const intervalId = setInterval(() => {
+        if (window.Jupiter) {
+            clearInterval(intervalId); // הפסק לבדוק ברגע שנמצא
+
+            window.Jupiter.init({
+                displayMode: "integrated",
+                integratedTargetId: "integrated-terminal", // ה-ID של ה-div שהכנו
+                endpoint: "https://api.mainnet-beta.solana.com", // נקודת גישה לרשת סולנה (אפשר להחליף ב-RPC אישי אם יש)
+                strictTokenList: false, // אפשר למשתמשים לבחור גם מטבעות אחרים, לא רק מרשימה קפדנית
+
+                // --- הגדרות חשובות ---
+                formProps: {
+                    // הגדר את המטבעות ההתחלתיים שיוצגו למשתמש
+                    initialInputMint: "So11111111111111111111111111111111111111112", // כתובת של SOL (WRAPPED SOL)
+                    initialOutputMint: "YOUR_CGPTS_TOKEN_MINT_ADDRESS", // <<< !!! החלף בכתובת החוזה (Mint Address) של $CGPTS !!!
+                },
+                // --- אפשרויות נוספות (אופציונלי) ---
+                // לדוגמה, אפשר לשנות את ברירת המחדל של ה-slippage:
+                // defaultSlippage: 0.5, // חצי אחוז החלקה
+
+                // קריאה לפונקציה כאשר משתמש מחבר ארנק (אם רוצים לעשות משהו נוסף)
+                // onWalletConnected: (wallet) => {
+                //    console.log("Wallet connected:", wallet.adapter.name);
+                // },
+
+                // קריאה לפונקציה אחרי החלפה מוצלחת
+                // onSuccess: ({ txid, swapResult }) => {
+                //    console.log("Swap successful:", txid, "Amount out:", swapResult.outputAmount);
+                // }
+            });
+        }
+    }, 100); // בדוק כל 100 אלפיות שנייה אם Jupiter נטען
+} else {
+    console.error("Jupiter Terminal target element 'integrated-terminal' not found.");
+}
+// --- End of Jupiter Terminal Init ---
 }); // End of DOMContentLoaded
