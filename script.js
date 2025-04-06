@@ -8,16 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (burgerMenu && navLinks) {
         burgerMenu.addEventListener('click', () => {
-            // Toggle 'active' class on both burger and nav links list
             burgerMenu.classList.toggle('active');
             navLinks.classList.toggle('active');
-
-            // Accessibility: Update aria-expanded attribute
             const isExpanded = burgerMenu.getAttribute('aria-expanded') === 'true';
             burgerMenu.setAttribute('aria-expanded', !isExpanded);
         });
-
-        // Close mobile menu when a link is clicked (optional but good UX)
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 if (navLinks.classList.contains('active')) {
@@ -27,53 +22,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
-
-        // Close mobile menu if clicked outside of it (optional)
         document.addEventListener('click', (event) => {
-             // Check if the click is outside the navLinks AND outside the burgerMenu
              if (!navLinks.contains(event.target) && !burgerMenu.contains(event.target) && navLinks.classList.contains('active')) {
                  burgerMenu.classList.remove('active');
                  navLinks.classList.remove('active');
                  burgerMenu.setAttribute('aria-expanded', 'false');
              }
           });
-
     } else {
         console.error("Burger menu or nav links element not found!");
     }
 
-
     // --- 2. Copy Contract Address ---
     const copyButtons = document.querySelectorAll('.copy-ca-button');
-
     copyButtons.forEach(button => {
-         // Set the initial text based on the address availability during load
          const initialAddress = button.getAttribute('data-address');
-         if (!initialAddress || initialAddress.startsWith('[')) { // Check if placeholder
-             // Optionally disable or change text if address not ready
-             // button.disabled = true;
-             // button.textContent = 'Soon';
-         }
-
+         if (!initialAddress || initialAddress.startsWith('[')) { /* Placeholder check */ }
         button.addEventListener('click', () => {
             const address = button.getAttribute('data-address');
             const placeholderTexts = [
                 '[TBA - To Be Announced at Launch]',
                 '[PASTE CONTRACT ADDRESS HERE WHEN AVAILABLE - Triple check this!]'
              ];
-
-            // Check if the address is valid and not a placeholder
             if (address && !placeholderTexts.includes(address)) {
                 navigator.clipboard.writeText(address).then(() => {
-                    const originalText = button.textContent; // Use textContent
-                    button.textContent = 'Copied!'; // Change text
-                    button.style.backgroundColor = 'var(--secondary-color)'; // Cyan feedback
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    button.style.backgroundColor = 'var(--secondary-color)';
                     button.style.borderColor = 'var(--secondary-color)';
                     button.style.color = 'var(--background-color)';
-
                     setTimeout(() => {
-                        button.textContent = originalText; // Restore text
-                        // Restore original styles (or rely on CSS :hover/:active states)
+                        button.textContent = originalText;
                          button.style.backgroundColor = '';
                          button.style.borderColor = '';
                          button.style.color = '';
@@ -84,183 +63,211 @@ document.addEventListener('DOMContentLoaded', () => {
                      setTimeout(() => { button.textContent = 'Copy'; }, 2000);
                 });
             } else {
-                // Indicate that the address is not available yet
                 const originalText = button.textContent;
                 button.textContent = 'Not Yet!';
-                 button.disabled = true; // Temporarily disable
+                 button.disabled = true;
                 setTimeout(() => {
                      button.textContent = originalText;
-                     button.disabled = false; // Re-enable
+                     button.disabled = false;
                  }, 2000);
                 console.warn('Contract address is not available yet or is a placeholder.');
             }
         });
     });
 
-
     // --- 3. Fade-in Animation on Scroll ---
-    const sections = document.querySelectorAll('main section'); // Target sections inside main
-
-    if ("IntersectionObserver" in window) { // Check if browser supports it
-        const observerOptions = {
-            root: null, // relative to the viewport
-            rootMargin: '0px',
-            threshold: 0.15 // Trigger when 15% of the section is visible
-        };
-
+    const sections = document.querySelectorAll('main section');
+    if ("IntersectionObserver" in window) {
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
         const observerCallback = (entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); // Stop observing once visible (optional)
+                    observer.unobserve(entry.target);
                 }
-                // No 'else' needed if we only want fade-in once
             });
         };
-
         const sectionObserver = new IntersectionObserver(observerCallback, observerOptions);
-
         sections.forEach(section => {
-            section.classList.add('fade-in-section'); // Add base class for initial state
+            section.classList.add('fade-in-section');
             sectionObserver.observe(section);
         });
-
     } else {
-        // Fallback for older browsers (optional): just make sections visible
          console.warn("Intersection Observer not supported. Animations disabled.");
-         sections.forEach(section => section.classList.add('visible')); // Make all visible immediately
+         sections.forEach(section => section.classList.add('visible'));
     }
 
-     // --- Optional: Smooth scroll replacement (if CSS version isn't sufficient) ---
-     // NOTE: Your CSS already has html { scroll-behavior: smooth; }, so this might be redundant.
-     // If you want more control or compatibility, uncomment this block.
-     /*
-     const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
-     smoothScrollLinks.forEach(link => {
-         link.addEventListener('click', function (e) {
-             const hrefAttribute = this.getAttribute('href');
-             // Make sure it's an internal link and not just "#"
-             if (hrefAttribute.length > 1 && hrefAttribute.startsWith('#')) {
-                 const targetElement = document.querySelector(hrefAttribute);
-                 if (targetElement) {
-                     e.preventDefault(); // Prevent default jump ONLY if target exists
-                     targetElement.scrollIntoView({
-                         behavior: 'smooth',
-                         block: 'start'
-                     });
-                 }
-             }
-         });
-     });
-     */
-
     // ============================================
-    // ===== הוספת קוד המודאל והקונפטי מתחילה כאן =====
+    // ===== קוד המודאל, הקונפטי והסיור מתחיל כאן =====
     // ============================================
 
-    // --- 4. Welcome Modal & Confetti ---
+    // --- 4. Welcome Modal, Confetti & Tour ---
     const welcomeModal = document.getElementById('welcome-modal');
     const closeModalBtn = document.getElementById('close-modal-btn');
-    // const modalCtaBtn = document.getElementById('modal-cta-btn'); // אם הוספת כפתור CTA
+    const startTourBtn = document.getElementById('start-tour-btn'); // <<< הכפתור החדש
 
-    if (welcomeModal && closeModalBtn) {
-        // בדוק אם הודעת הברוכים הבאים כבר הוצגה בסשן הנוכחי
-        if (!sessionStorage.getItem('welcomeShown')) {
-            // הצג את המודאל אחרי השהייה קצרה (אופציונלי, לאפקט נחמד)
-            setTimeout(() => {
-                welcomeModal.style.display = 'flex'; // הצג את הרקע (כי הוא display: none בהתחלה)
-                setTimeout(() => { // תן לרקע להופיע לפני שהתוכן 'קופץ'
-                     welcomeModal.classList.add('visible'); // הפעל את אנימציית הכניסה
-                }, 50); // השהייה קטנה מאוד
-
-                // הפעל אפקט קונפטי
-                if (typeof confetti === 'function') { // ודא שהספרייה נטענה
-                   // ירייה בסיסית
-                   confetti({
-                       particleCount: 150, // כמות חלקיקים
-                       spread: 90,        // זווית פיזור
-                       origin: { y: 0.6 }, // מיקום התחלה (0.6 = קצת מתחת לאמצע המסך)
-                       zIndex: 2001       // ודא שהקונפטי מעל המודאל
-                   });
-
-                   // דוגמה לאפקט מתקדם יותר (לא חובה):
-                   /*
-                   var end = Date.now() + (3 * 1000); // משך האנימציה (3 שניות)
-                   var colors = ['#ec4899', '#22d3ee', '#a3e635', '#f8fafc']; // צבעים מהערכה שלך
-
-                   (function frame() {
-                     confetti({
-                       particleCount: 4,
-                       angle: 60,
-                       spread: 55,
-                       origin: { x: 0 },
-                       colors: colors,
-                       zIndex: 2001
-                     });
-                     confetti({
-                       particleCount: 4,
-                       angle: 120,
-                       spread: 55,
-                       origin: { x: 1 },
-                       colors: colors,
-                       zIndex: 2001
-                     });
-
-                     if (Date.now() < end) {
-                       requestAnimationFrame(frame);
-                     }
-                   }());
-                   */
-
-                } else {
-                    console.warn("Confetti library (canvas-confetti) not loaded.");
-                }
-
-                // סמן שההודעה הוצגה בסשן זה
-                sessionStorage.setItem('welcomeShown', 'true');
-            }, 700); // השהייה של 700ms לפני שהמודאל מופיע
-        }
-
-        // פונקציה לסגירת המודאל
-        const closeModal = () => {
-            welcomeModal.classList.remove('visible'); // הפעל אנימציית יציאה
-            // המתן לסיום האנימציה לפני הסתרה מלאה (display: none)
+    // פונקציה לסגירת המודאל (נצטרך אותה גם לכפתור הסיור)
+    const closeModal = () => {
+        if (welcomeModal) {
+            welcomeModal.classList.remove('visible');
             setTimeout(() => {
                  welcomeModal.style.display = 'none';
-            }, 400); // זמן זהה למשך האנימציה ב-CSS
-        };
+            }, 400);
+        }
+    };
 
-        // הוספת אירועי לחיצה לסגירה
-        closeModalBtn.addEventListener('click', closeModal);
+    // פונקציה להפעלת הסיור
+    function startWebsiteTour() {
+        // בדוק אם ספריית Shepherd נטענה
+        if (typeof Shepherd === 'undefined') {
+            console.error('Shepherd.js library not loaded.');
+            alert('Could not start the tour. Please try refreshing the page.'); // הודעה למשתמש
+            return;
+        }
 
-        // אופציונלי: סגירה בלחיצה על הרקע השקוף מחוץ לחלון
-        welcomeModal.addEventListener('click', (event) => {
-            // event.target הוא האלמנט שעליו לחצו
-            if (event.target === welcomeModal) {
-                closeModal();
+        const tour = new Shepherd.Tour({
+            useModalOverlay: true, // מחשיך את הרקע בזמן הסיור
+            defaultStepOptions: {
+                classes: 'shepherd-theme-arrows shepherd-custom-theme', // עיצוב בסיסי + קלאס לעיצוב מותאם
+                scrollTo: { behavior: 'smooth', block: 'center' } // גלילה חלקה לאלמנטים
             }
         });
 
-        // אופציונלי: סגירה בלחיצה על כפתור ה-CTA
-        // if (modalCtaBtn) {
-        //     modalCtaBtn.addEventListener('click', closeModal); // סוגר את המודאל ומוביל ללינק
-        // }
+        // הגדרת שלבי הסיור (שנה את הטקסטים והבוררים לפי הצורך)
+        tour.addStep({
+            id: 'step-logo',
+            text: 'זה הלוגו ושם הפרויקט. לחיצה כאן תחזיר אותך תמיד לחלק העליון של העמוד.',
+            attachTo: {
+                element: '.logo-link', // בורר CSS שמצביע על הלינק של הלוגו ב-header
+                on: 'bottom' // איפה להציג את ההסבר ביחס לאלמנט
+            },
+            buttons: [
+                {
+                    text: 'הבא', // טקסט כפתור
+                    action: tour.next // מה קורה בלחיצה
+                }
+            ]
+        });
 
-         // אופציונלי: סגירה בלחיצה על מקש Escape
+        tour.addStep({
+            id: 'step-nav',
+            text: 'כאן נמצא תפריט הניווט. אפשר לקפוץ לחלקים השונים באתר כמו אודות, טוקנומיקס, איך לקנות ומפת הדרכים.',
+            attachTo: {
+                element: 'header nav ul.nav-links', // תפריט הניווט ב-header (חשוב שה-UL יהיה גלוי)
+                on: 'bottom'
+            },
+            buttons: [
+                 {
+                    text: 'הקודם',
+                    secondary: true, // עיצוב משני לכפתור 'הקודם'
+                    action: tour.back
+                },
+                {
+                    text: 'הבא',
+                    action: tour.next
+                }
+            ]
+        });
+
+         tour.addStep({
+            id: 'step-how-to-buy',
+            text: 'רוצה להצטרף? כאן מוסבר איך קונים את המטבע $CGPTS דרך Pump.fun (בשלב ההשקה).',
+            attachTo: {
+                element: '#how-to-buy h2', // כותרת הסקשן "How to Buy"
+                on: 'bottom' // נציג מתחת לכותרת
+            },
+             buttons: [
+                 {
+                    text: 'הקודם',
+                    secondary: true,
+                    action: tour.back
+                },
+                {
+                    text: 'הבא',
+                    action: tour.next
+                }
+            ]
+        });
+
+        tour.addStep({
+            id: 'step-socials',
+            text: "אל תשכח להצטרף לקהילה שלנו בטוויטר (X) ובטלגרם!",
+            attachTo: {
+                element: '#socials .social-links', // אזור הקישורים לרשתות חברתיות
+                on: 'top' // נציג מעל הקישורים
+            },
+             buttons: [
+                 {
+                    text: 'הקודם',
+                    secondary: true,
+                    action: tour.back
+                },
+                {
+                    text: 'סיום!', // כפתור אחרון
+                    action: tour.complete // מסמן שהסיור הושלם
+                }
+            ]
+        });
+
+        // הפעל את הסיור
+        tour.start();
+    }
+
+
+    // בדיקה והצגת המודאל (אם צריך)
+    if (welcomeModal && closeModalBtn && startTourBtn) { // ודא שכל הכפתורים קיימים
+
+        // בדוק אם הודעת הברוכים הבאים כבר הוצגה בסשן הנוכחי
+        if (!sessionStorage.getItem('welcomeShown')) {
+            // הצג את המודאל אחרי השהייה קצרה
+            setTimeout(() => {
+                welcomeModal.style.display = 'flex';
+                setTimeout(() => {
+                     welcomeModal.classList.add('visible');
+                }, 50);
+
+                // הפעל אפקט קונפטי
+                if (typeof confetti === 'function') {
+                   confetti({
+                       particleCount: 150,
+                       spread: 90,
+                       origin: { y: 0.6 },
+                       zIndex: 2001
+                   });
+                } else {
+                    console.warn("Confetti library (canvas-confetti) not loaded.");
+                }
+                // סמן שההודעה הוצגה בסשן זה
+                sessionStorage.setItem('welcomeShown', 'true');
+            }, 700);
+        }
+
+        // --- Event Listeners ---
+        // סגירה רגילה
+        closeModalBtn.addEventListener('click', closeModal);
+        // סגירה בלחיצה על הרקע
+        welcomeModal.addEventListener('click', (event) => {
+            if (event.target === welcomeModal) { closeModal(); }
+        });
+        // סגירה במקש Escape
          document.addEventListener('keydown', (event) => {
-             if (event.key === 'Escape' && welcomeModal.classList.contains('visible')) {
-                 closeModal();
-             }
-         });
+             if (event.key === 'Escape' && welcomeModal.classList.contains('visible')) { closeModal(); }
+        });
+
+        // <<<< חדש: הפעלת הסיור בלחיצה על הכפתור במודאל >>>>
+        startTourBtn.addEventListener('click', () => {
+            closeModal(); // קודם כל סגור את חלון הברוכים הבאים
+            // תן אנימציית הסגירה להסתיים לפני שמתחילים את הסיור
+            setTimeout(startWebsiteTour, 450); // התחל את הסיור אחרי כ-450 אלפיות שנייה
+        });
 
     } else {
-        console.error("Could not find Welcome modal elements (welcome-modal or close-modal-btn).");
+        console.error("Could not find Welcome modal elements (welcome-modal, close-modal-btn, or start-tour-btn).");
     }
-    // --- End of Welcome Modal ---
+    // --- End of Welcome Modal Logic ---
 
     // ==========================================
-    // ===== סוף קוד המודאל והקונפטי =====
+    // ===== סוף קוד המודאל, הקונפטי והסיור =====
     // ==========================================
-
 
 }); // End of DOMContentLoaded
