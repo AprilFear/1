@@ -936,3 +936,58 @@ code {
          border-top-color: var(--background-color);
      }
      /* אפשר להוסיף כללים דומים ל-left ו-right אם צריך */
+/* ======================== */
+/* Live Chart Section Styles */
+/* ======================== */
+.chart-section {
+    text-align: center; /* ממורכז */
+    padding-top: 2rem; 
+}
+
+.chart-section h2 {
+    margin-bottom: 1rem; /* הקטנת רווח מתחת לכותרת */
+}
+.chart-section p {
+    margin-bottom: 2rem; /* רווח מתחת לפסקה */
+    margin-left: auto; /* ממורכז */
+    margin-right: auto; /* ממורכז */
+}
+
+/* מיכל שישמור על יחס גובה-רוחב של הגרף */
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 950px; /* רוחב מקסימלי לגרף */
+    margin: 0 auto; /* ממורכז */
+    /* השתמש באחד הבאים ליחס גובה-רוחב, או שנה לפי הצורך */
+    /* padding-top: 75%; /* יחס 4:3 */
+    padding-top: 56.25%; /* יחס 16:9 */
+    /* padding-top: 60%; */ /* יחס 5:3 (בערך כמו DexScreener הרבה פעמים) */
+    height: 0;
+    overflow: hidden;
+    border: 1px solid rgba(var(--text-color-rgb, 248, 250, 252), 0.1); /* מסגרת עדינה */
+    background-color: rgba(var(--text-color-rgb, 248, 250, 252), 0.03); /* רקע עדין מאוד */
+    border-radius: 4px; /* פינות מעוגלות קלות */
+}
+
+.chart-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0; /* הסרת מסגרת ברירת מחדל של iframe */
+}
+
+/* עיצוב לטקסט הזמני שיוחלף בגרף */
+.chart-container p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--text-muted-color);
+    font-size: 1rem;
+    padding: 1rem; /* ריווח פנימי אם הטקסט ארוך */
+    width: 80%; /* שלא יהיה רחב מדי */
+    margin: 0;
+}
