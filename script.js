@@ -289,7 +289,7 @@ if (document.getElementById('integrated-terminal')) {
                 formProps: {
                     // הגדר את המטבעות ההתחלתיים שיוצגו למשתמש
                     initialInputMint: "So11111111111111111111111111111111111111112", // כתובת של SOL (WRAPPED SOL)
-                    initialOutputMint: "YOUR_CGPTS_TOKEN_MINT_ADDRESS", // <<< !!! החלף בכתובת החוזה (Mint Address) של $CGPTS !!!
+                    initialOutputMint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", // <<< !!! החלף בכתובת החוזה (Mint Address) של $CGPTS !!!
                 },
                 // --- אפשרויות נוספות (אופציונלי) ---
                 // לדוגמה, אפשר לשנות את ברירת המחדל של ה-slippage:
