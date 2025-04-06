@@ -820,37 +820,37 @@ code {
 /* ======================== */
 /* הגדרת משתני צבע בפורמט RGB (אם משתמשים בשקיפות) */
 :root {
-    /* ... שאר המשתנים ... */
-    --secondary-color-rgb: 34, 211, 238; /* ציאן */
-    --text-color-rgb: 248, 250, 252;    /* לבן/אפור בהיר */
+    /* ... Existing :root variables ... */
+    --secondary-color-rgb: 34, 211, 238; /* Add this */
+    --text-color-rgb: 248, 250, 252;    /* Add this */
 }
 
 .shepherd-custom-theme {
     /* התאמת מראה הבועה עצמה */
-    background-color: var(--background-color) !important; /* נסה לכפות רקע כהה */
+    background-color: var(--background-color) !important; /* Force dark background */
     border: 1px solid var(--secondary-color);
     border-radius: 0;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     max-width: 350px;
 }
 
-/* נסה לכפות רקע שקוף גם על אלמנט התוכן הפנימי */
+/* Force content area background to be transparent */
 .shepherd-custom-theme .shepherd-content {
     background-color: transparent !important;
 }
 
 
-/* הפוך את כלל הטקסט ליותר ספציפי והשתמש ב-!important */
+/* Force text color AND background transparency */
 .shepherd-element.shepherd-custom-theme .shepherd-content .shepherd-text {
-    color: var(--text-color) !important; /* כפה צבע טקסט בהיר */
+    color: var(--text-color) !important; /* Force light text color */
     font-family: var(--body-font);
     padding: 1.5em;
     font-size: 0.95rem;
     line-height: 1.6;
-    background-color: transparent !important; /* כפה רקע שקוף */
+    background-color: transparent !important; /* Force transparent background */
 }
 
-/* ודא שגם פסקאות בתוך הטקסט שקופות ויורשות צבע */
+/* Ensure paragraphs inside inherit color and have transparent background */
 .shepherd-element.shepherd-custom-theme .shepherd-content .shepherd-text p {
     color: inherit !important;
     background-color: transparent !important;
