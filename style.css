@@ -242,6 +242,7 @@ header nav ul li a {
     position: relative;
     letter-spacing: 1px; /* More spacing */
     transition: color 0.3s ease;
+    white-space: nowrap; /* <<< הוסף את השורה הזו */
 }
 
 header nav ul li a::after {
