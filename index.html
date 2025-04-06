@@ -76,13 +76,7 @@
                       <p style="color: var(--text-muted-color); padding: 2rem;">(Chart embed will appear here soon)</p> 
                     </div>
             </section>
-          <section id="swap-terminal" class="swap-section">
-            <h2>Swap $CGPTS</h2>
-            <p>Buy or sell $CGPTS directly here using the Jupiter Terminal.</p>
-            <div class="terminal-container"> 
-                 <div id="integrated-terminal" style="width: 100%; max-width: 420px; height: 600px; margin: 0 auto;"></div> 
-            </div>
-        </section>
+          <div id="integrated-terminal" style="width: 400px; height: 568px;"></div>
         <section id="how-to-buy" class="how-to-buy-section">
             <h2>How to Buy $CGPTS</h2>
             <p>Ready to join the AI fever dream? Here’s the simple guide (even simpler than explaining your prompts to ChatGPT):</p>
@@ -163,7 +157,12 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@11.2.0/dist/css/shepherd.css"/>
 <script src="https://cdn.jsdelivr.net/npm/shepherd.js@11.2.0/dist/js/shepherd.min.js"></script>
+<!-- Attach the loading script in your <head /> -->
 <script src='https://terminal.jup.ag/main-v4.js'></script>
+
+<!-- Prepare a div in your <body> for Terminal to render -->
+<!-- Adjust the width and height to suit your requirements -->
+
 
 <script src="script.js" defer></script>
 </body>
