@@ -672,6 +672,11 @@ code {
 .swap-section p { margin-bottom: 2rem; margin-left: auto; margin-right: auto; }
 .terminal-container { margin-top: 2rem; margin-bottom: 2rem; }
 #integrated-terminal { min-height: 550px; /* Keep min-height */ /* overflow: visible !important; */ /* Removed ineffective overflow rule */ }
+/* תיקון עבור הקישור/טקסט "I don't have a wallet" */
+#integrated-terminal span.css-16k5srk {
+    color: var(--accent-color) !important; /* נסה צבע ירוק כמו הקישורים, או אולי --text-muted-color */
+    /* background-color: transparent !important; */ /* אם עדיין לא עובד, נסה להוסיף גם את זה */
+}
 /* Remove second #integrated-terminal rule and the .terminal-container overflow rule */
 
 זה הקובץ המעודכן של הCSS.
