@@ -443,15 +443,16 @@ footer p {
 
 /* --- Burger Menu Activation --- */
 /* This now handles everything below 900px */
-@media (max-width: 900px) {
+@media (max-width: 900px) { 
 
-    /* Hide Desktop Nav & Show Burger */
-    header nav ul.nav-links {
-        display: none;
+    header nav ul.nav-links { 
+       display: none !important; /* הוסף !important */
     }
     .burger-menu {
-        display: block; /* Show burger icon */
+       display: block !important; /* הוסף !important */
     }
+    .nav-links.active {
+         display: flex !important; /* הוסף !important */
 
     /* Mobile Nav Panel Styles (when active) */
      .nav-links.active {
