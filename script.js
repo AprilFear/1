@@ -1,6 +1,7 @@
 // script.js for $CGPTS - Glitchy Edition
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM Fully Loaded"); // Debug log: Verify DOMContentLoaded fires
 
     // --- 1. Mobile Navigation (Burger Menu) ---
     const burgerMenu = document.querySelector('.burger-menu');
@@ -15,7 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
-                if (navLinks.classList.contains('active')) {
+                // Only close if mobile menu is active
+                if (window.innerWidth <= 900 && navLinks.classList.contains('active')) {
                     burgerMenu.classList.remove('active');
                     navLinks.classList.remove('active');
                     burgerMenu.setAttribute('aria-expanded', 'false');
@@ -23,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
         document.addEventListener('click', (event) => {
+             // Close if clicked outside nav and burger, only if mobile menu is active
              if (!navLinks.contains(event.target) && !burgerMenu.contains(event.target) && navLinks.classList.contains('active')) {
                  burgerMenu.classList.remove('active');
                  navLinks.classList.remove('active');
@@ -37,43 +40,60 @@ document.addEventListener('DOMContentLoaded', () => {
     const copyButtons = document.querySelectorAll('.copy-ca-button');
     copyButtons.forEach(button => {
          const initialAddress = button.getAttribute('data-address');
-         if (!initialAddress || initialAddress.startsWith('[')) { /* Placeholder check */ }
+         // Set initial state based on placeholder text
+         if (!initialAddress || initialAddress.startsWith('[')) {
+              button.textContent = 'Soon'; // Indicate address is not ready yet
+              button.disabled = true;
+         } else {
+             button.textContent = 'Copy'; // Ensure correct text if address is present
+             button.disabled = false;
+         }
+
         button.addEventListener('click', () => {
             const address = button.getAttribute('data-address');
+            // Re-check placeholders in case they change
             const placeholderTexts = [
                 '[TBA - To Be Announced at Launch]',
-                '[PASTE CONTRACT ADDRESS HERE WHEN AVAILABLE - Triple check this!]'
+                '[PASTE CONTRACT ADDRESS HERE WHEN AVAILABLE - Triple check this!]',
+                '[TBA SOON!]',
+                '[CONTRACT ADDRESS DROP SOON!]' // Add all possible placeholders
              ];
+
             if (address && !placeholderTexts.includes(address)) {
                 navigator.clipboard.writeText(address).then(() => {
-                    const originalText = button.textContent;
+                    const originalText = 'Copy'; // Set original text explicitly
                     button.textContent = 'Copied!';
                     button.style.backgroundColor = 'var(--secondary-color)';
                     button.style.borderColor = 'var(--secondary-color)';
                     button.style.color = 'var(--background-color)';
+                    button.disabled = true; // Disable briefly after copy
                     setTimeout(() => {
                         button.textContent = originalText;
                          button.style.backgroundColor = '';
                          button.style.borderColor = '';
                          button.style.color = '';
+                         button.disabled = false; // Re-enable
                     }, 2000);
                 }).catch(err => {
                     console.error('Failed to copy address: ', err);
                      button.textContent = 'Error!';
-                     setTimeout(() => { button.textContent = 'Copy'; }, 2000);
+                     setTimeout(() => { button.textContent = 'Copy'; button.disabled = false; }, 2000); // Restore text and enable
                 });
             } else {
-                const originalText = button.textContent;
+                // If button still shows "Soon" or placeholder text
+                const originalText = button.textContent; // Should be 'Soon' or placeholder
                 button.textContent = 'Not Yet!';
-                 button.disabled = true;
+                button.disabled = true; // Keep disabled
                 setTimeout(() => {
-                     button.textContent = originalText;
-                     button.disabled = false;
+                    // Restore original placeholder text if needed, keep disabled
+                     button.textContent = initialAddress.startsWith('[') ? 'Soon' : originalText; 
+                     button.disabled = true; // Keep disabled if no address
                  }, 2000);
-                console.warn('Contract address is not available yet or is a placeholder.');
+                console.warn('Attempted to copy placeholder address.');
             }
         });
     });
+
 
     // --- 3. Fade-in Animation on Scroll ---
     const sections = document.querySelectorAll('main section');
@@ -89,226 +109,247 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         const sectionObserver = new IntersectionObserver(observerCallback, observerOptions);
         sections.forEach(section => {
-            section.classList.add('fade-in-section');
+            section.classList.add('fade-in-section'); // Apply initial state for animation
             sectionObserver.observe(section);
         });
     } else {
          console.warn("Intersection Observer not supported. Animations disabled.");
-         sections.forEach(section => section.classList.add('visible'));
+         sections.forEach(section => section.classList.add('visible')); // Show all immediately
     }
 
     // ============================================
-    // ===== קוד המודאל, הקונפטי והסיור מתחיל כאן =====
+    // ===== Welcome Modal, Confetti & Tour =====
     // ============================================
 
     // --- 4. Welcome Modal, Confetti & Tour ---
     const welcomeModal = document.getElementById('welcome-modal');
     const closeModalBtn = document.getElementById('close-modal-btn');
-    const startTourBtn = document.getElementById('start-tour-btn'); // <<< הכפתור החדש
+    const startTourBtn = document.getElementById('start-tour-btn');
 
-    // פונקציה לסגירת המודאל (נצטרך אותה גם לכפתור הסיור)
+    // Function to close the modal
     const closeModal = () => {
-        if (welcomeModal) {
+        if (welcomeModal && welcomeModal.classList.contains('visible')) { // Check if actually visible before trying to close
             welcomeModal.classList.remove('visible');
-            setTimeout(() => {
-                 welcomeModal.style.display = 'none';
-            }, 400);
+            // Use transition end event for smoother hiding
+            welcomeModal.addEventListener('transitionend', function handler() {
+                 // Only set display none if it's still not visible (prevents issues if opened again quickly)
+                 if (!welcomeModal.classList.contains('visible')) {
+                     welcomeModal.style.display = 'none';
+                 }
+                 welcomeModal.removeEventListener('transitionend', handler); // Clean up listener
+             });
         }
     };
 
-    // פונקציה להפעלת הסיור
-  // פונקציה להפעלת הסיור (גרסה עם טקסטים באנגלית)
+    // Function to start the website tour
     function startWebsiteTour() {
-        // בדוק אם ספריית Shepherd נטענה
+        console.log("Attempting to start website tour..."); // Debug log 1
         if (typeof Shepherd === 'undefined') {
             console.error('Shepherd.js library not loaded.');
             alert('Could not start the tour. Please try refreshing the page.');
             return;
         }
+        console.log("Shepherd object found:", Shepherd); // Debug log 2
 
-        const tour = new Shepherd.Tour({
-            useModalOverlay: true, // מחשיך את הרקע בזמן הסיור
-            defaultStepOptions: {
-                classes: 'shepherd-theme-arrows shepherd-custom-theme', // עיצוב בסיסי + קלאס לעיצוב מותאם
-                scrollTo: { behavior: 'smooth', block: 'center' } // גלילה חלקה לאלמנטים
+        // Prevent starting a new tour if one is already active
+        if (Shepherd.activeTour) {
+            console.log("Tour is already active.");
+            return;
+        }
+
+        try {
+            const tour = new Shepherd.Tour({
+                useModalOverlay: true,
+                defaultStepOptions: {
+                    classes: 'shepherd-theme-arrows shepherd-custom-theme',
+                    scrollTo: { behavior: 'smooth', block: 'center' }
+                }
+            });
+            console.log("Shepherd tour initialized"); // Debug log 3
+
+            // Define Tour Steps
+            tour.addStep({
+                id: 'step-logo',
+                text: 'This is our logo and name! Click it anytime to return to the top.',
+                attachTo: { element: '.logo-link', on: 'bottom' },
+                buttons: [ { text: 'Next', action: tour.next } ]
+            });
+            console.log("Added step: step-logo"); 
+
+            // Only add nav step if the nav links are visible (desktop)
+             if (window.getComputedStyle(navLinks).display !== 'none') {
+                 tour.addStep({
+                     id: 'step-nav',
+                     text: 'Use the navigation bar to jump to different sections like About, Tokenomics, How to Buy, and our Roadmap.',
+                     attachTo: { element: 'header nav ul.nav-links', on: 'bottom' },
+                     buttons: [
+                          { text: 'Back', secondary: true, action: tour.back },
+                          { text: 'Next', action: tour.next }
+                     ]
+                 });
+                 console.log("Added step: step-nav (Desktop)"); 
+             } else {
+                  console.log("Skipped step: step-nav (Mobile)");
+             }
+
+
+             tour.addStep({
+                id: 'step-how-to-buy',
+                text: 'Want to get some $CGPTS? This section explains exactly how to buy.',
+                attachTo: { element: '#how-to-buy h2', on: 'bottom' },
+                 buttons: [
+                     { text: 'Back', secondary: true, action: tour.back },
+                     { text: 'Next', action: tour.next }
+                ]
+            });
+            console.log("Added step: step-how-to-buy");
+
+            // Check if chart container exists before adding step
+            const chartContainer = document.querySelector('#live-chart .chart-container');
+            if (chartContainer) {
+                 tour.addStep({
+                    id: 'step-chart', 
+                    text: "Here you can see the live price chart (once it's available).",
+                    attachTo: { element: '#live-chart .chart-container', on: 'bottom' },
+                     buttons: [
+                         { text: 'Back', secondary: true, action: tour.back },
+                         { text: 'Next', action: tour.next }
+                    ]
+                });
+                console.log("Added step: step-chart"); 
+            } else {
+                console.log("Skipped step: step-chart (container not found)");
             }
-        });
 
-        // הגדרת שלבי הסיור (עם טקסטים באנגלית)
-        tour.addStep({
-            id: 'step-logo',
-            text: 'This is our logo and name! Click it anytime to return to the top.', // טקסט הסבר באנגלית
-            attachTo: {
-                element: '.logo-link',
-                on: 'bottom'
-            },
-            buttons: [
-                {
-                    text: 'Next', // טקסט כפתור באנגלית
-                    action: tour.next
-                }
-            ]
-        });
+            // Check if swap terminal container exists before adding step
+             const swapContainer = document.querySelector('#swap-terminal .terminal-container');
+             if (swapContainer) {
+                 tour.addStep({
+                    id: 'step-swap', 
+                    text: "Use this terminal to swap SOL for $CGPTS directly on the site!",
+                    attachTo: { element: '#swap-terminal .terminal-container', on: 'top' },
+                     buttons: [
+                         { text: 'Back', secondary: true, action: tour.back },
+                         { text: 'Next', action: tour.next }
+                    ]
+                });
+                console.log("Added step: step-swap"); 
+            } else {
+                 console.log("Skipped step: step-swap (container not found)");
+            }
 
-        tour.addStep({
-            id: 'step-nav',
-            text: 'Use the navigation bar to jump to different sections like About, Tokenomics, How to Buy, and our Roadmap.', // טקסט הסבר באנגלית
-            attachTo: {
-                element: 'header nav ul.nav-links',
-                on: 'bottom'
-            },
-            buttons: [
-                 {
-                    text: 'Back', // טקסט כפתור באנגלית
-                    secondary: true,
-                    action: tour.back
-                },
-                {
-                    text: 'Next', // טקסט כפתור באנגלית
-                    action: tour.next
-                }
-            ]
-        });
 
-         tour.addStep({
-            id: 'step-how-to-buy',
-            text: 'Want to get some $CGPTS? This section explains exactly how to buy using Pump.fun (initially).', // טקסט הסבר באנגלית
-            attachTo: {
-                element: '#how-to-buy h2',
-                on: 'bottom'
-            },
-             buttons: [
-                 {
-                    text: 'Back', // טקסט כפתור באנגלית
-                    secondary: true,
-                    action: tour.back
-                },
-                {
-                    text: 'Next', // טקסט כפתור באנגלית
-                    action: tour.next
-                }
-            ]
-        });
+            tour.addStep({
+                id: 'step-socials',
+                text: "Don't forget to join our community on Twitter (X) and Telegram!",
+                attachTo: { element: '#socials .social-links', on: 'top' },
+                 buttons: [
+                     { text: 'Back', secondary: true, action: tour.back },
+                     { text: 'End!', action: tour.complete }
+                ]
+            });
+            console.log("Added step: step-socials"); 
 
-        tour.addStep({
-            id: 'step-socials',
-            text: "Don't forget to join our community on Twitter (X) and Telegram!", // טקסט הסבר באנגלית
-            attachTo: {
-                element: '#socials .social-links',
-                on: 'top'
-            },
-             buttons: [
-                 {
-                    text: 'Back', // טקסט כפתור באנגלית
-                    secondary: true,
-                    action: tour.back
-                },
-                {
-                    text: 'End!', // טקסט כפתור באנגלית
-                    action: tour.complete
-                }
-            ]
-        });
+            tour.start();
+            console.log("Shepherd tour started successfully"); // Debug log after start
 
-        // הפעל את הסיור
-        tour.start();
+        } catch (error) {
+             console.error("Error initializing or running Shepherd tour:", error); 
+             alert("An error occurred while trying to start the tour.");
+        }
     }
 
-    // בדיקה והצגת המודאל (אם צריך)
-    if (welcomeModal && closeModalBtn && startTourBtn) { // ודא שכל הכפתורים קיימים
-
-        // בדוק אם הודעת הברוכים הבאים כבר הוצגה בסשן הנוכחי
+    // Show Welcome Modal Logic
+    if (welcomeModal && closeModalBtn && startTourBtn) {
         if (!sessionStorage.getItem('welcomeShown')) {
-            // הצג את המודאל אחרי השהייה קצרה
             setTimeout(() => {
-                welcomeModal.style.display = 'flex';
-                setTimeout(() => {
-                     welcomeModal.classList.add('visible');
-                }, 50);
+                welcomeModal.style.display = 'flex'; 
+                // Use double requestAnimationFrame for better browser compatibility ensuring display:flex is applied before transition starts
+                 requestAnimationFrame(() => {
+                      requestAnimationFrame(() => { 
+                          welcomeModal.classList.add('visible'); 
+                      });
+                 });
 
-                // הפעל אפקט קונפטי
                 if (typeof confetti === 'function') {
-                   confetti({
-                       particleCount: 150,
-                       spread: 90,
-                       origin: { y: 0.6 },
-                       zIndex: 2001
-                   });
-                } else {
-                    console.warn("Confetti library (canvas-confetti) not loaded.");
-                }
-                // סמן שההודעה הוצגה בסשן זה
+                   try { // Add try-catch around confetti too
+                        confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 }, zIndex: 2001 });
+                   } catch(confettiError){
+                        console.error("Error running confetti:", confettiError);
+                   }
+                } else { console.warn("Confetti library not loaded."); }
                 sessionStorage.setItem('welcomeShown', 'true');
-            }, 700);
+            }, 700); // Delay before showing modal
         }
 
         // --- Event Listeners ---
-        // סגירה רגילה
         closeModalBtn.addEventListener('click', closeModal);
-        // סגירה בלחיצה על הרקע
         welcomeModal.addEventListener('click', (event) => {
             if (event.target === welcomeModal) { closeModal(); }
         });
-        // סגירה במקש Escape
          document.addEventListener('keydown', (event) => {
              if (event.key === 'Escape' && welcomeModal.classList.contains('visible')) { closeModal(); }
         });
 
-        // <<<< חדש: הפעלת הסיור בלחיצה על הכפתור במודאל >>>>
         startTourBtn.addEventListener('click', () => {
-            closeModal(); // קודם כל סגור את חלון הברוכים הבאים
-            // תן אנימציית הסגירה להסתיים לפני שמתחילים את הסיור
-            setTimeout(startWebsiteTour, 450); // התחל את הסיור אחרי כ-450 אלפיות שנייה
+            console.log("Start tour button clicked"); // Debug log
+            closeModal();
+            // Use a delay that accounts for the modal close transition (400ms) + buffer
+            setTimeout(startWebsiteTour, 450);
         });
 
     } else {
-        console.error("Could not find Welcome modal elements (welcome-modal, close-modal-btn, or start-tour-btn).");
+        // Log which specific element is missing
+        if (!welcomeModal) console.error("Welcome modal element (#welcome-modal) not found.");
+        if (!closeModalBtn) console.error("Close modal button (#close-modal-btn) not found.");
+        if (!startTourBtn) console.error("Start tour button (#start-tour-btn) not found.");
     }
     // --- End of Welcome Modal Logic ---
 
     // ==========================================
-    // ===== סוף קוד המודאל, הקונפטי והסיור =====
+    // ===== Jupiter Terminal Init ==========
     // ==========================================
-// בסוף הקובץ script.js, לפני הסוגר });
 
-// --- 5. Initialize Jupiter Terminal ---
-// ודא שהקוד הזה רץ רק אחרי שה-DOM טעון במלואו
-if (document.getElementById('integrated-terminal')) {
-    // המתן שהסקריפט של Jupiter ייטען (אופציונלי, אבל יכול למנוע שגיאות)
-    const intervalId = setInterval(() => {
-        if (window.Jupiter) {
-            clearInterval(intervalId); // הפסק לבדוק ברגע שנמצא
+    // --- 5. Initialize Jupiter Terminal ---
+    if (document.getElementById('integrated-terminal')) {
+        const intervalId = setInterval(() => {
+            // Check more robustly if Jupiter is ready
+            if (window.Jupiter && typeof window.Jupiter.init === 'function') {
+                clearInterval(intervalId);
+                console.log("Jupiter object found, initializing terminal..."); // Log before init
+                try {
+                    window.Jupiter.init({
+                        displayMode: "integrated",
+                        integratedTargetId: "integrated-terminal",
+                        endpoint: "https://wiser-skilled-layer.solana-mainnet.quiknode.pro/d6d3ae205e58c061f513482b1ede0eabbd8bca2a/", // User's QuickNode endpoint
+                        strictTokenList: false,
+                        formProps: {
+                            initialInputMint: "So11111111111111111111111111111111111111112", // SOL
+                            // !!! ================================================== !!!
+                            // !!! IMPORTANT: REPLACE WITH YOUR ACTUAL TOKEN MINT ADDRESS !!!
+                            // !!! Using USDC as temporary placeholder               !!!
+                            // !!! ================================================== !!!
+                            initialOutputMint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", // REPLACE ME
+                        },
+                        // Example callbacks (uncomment to use)
+                        // onWalletConnected: (wallet) => { console.log("Wallet connected via Jupiter:", wallet.adapter.name); },
+                        // onSuccess: ({ txid, swapResult }) => { 
+                        //    const outputAmount = swapResult.outputAmount / (10**(swapResult.outputTokenInfo.decimals || 0)); // Adjust for decimals
+                        //    console.log("Swap successful via Jupiter:", txid, "Amount out:", outputAmount); 
+                        // }
+                    });
+                    console.log("Jupiter Terminal Initialized successfully."); // Log success
+                } catch (error) {
+                     console.error("Error initializing Jupiter Terminal:", error);
+                }
+            } else {
+                // Optional: Log if Jupiter object not yet ready
+                 // console.log("Waiting for Jupiter object...");
+            }
+        }, 100); // Check every 100ms
+    } else {
+        console.error("Jupiter Terminal target element 'integrated-terminal' not found.");
+    }
+    // --- End of Jupiter Terminal Init ---
 
-            window.Jupiter.init({
-                displayMode: "integrated",
-                integratedTargetId: "integrated-terminal", // ה-ID של ה-div שהכנו
-                endpoint: "https://wiser-skilled-layer.solana-mainnet.quiknode.pro/d6d3ae205e58c061f513482b1ede0eabbd8bca2a/", // נקודת גישה לרשת סולנה (אפשר להחליף ב-RPC אישי אם יש)
-                strictTokenList: false, // אפשר למשתמשים לבחור גם מטבעות אחרים, לא רק מרשימה קפדנית
-
-                // --- הגדרות חשובות ---
-                formProps: {
-                    // הגדר את המטבעות ההתחלתיים שיוצגו למשתמש
-                    initialInputMint: "So11111111111111111111111111111111111111112", // כתובת של SOL (WRAPPED SOL)
-                    initialOutputMint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", // <<< !!! החלף בכתובת החוזה (Mint Address) של $CGPTS !!!
-                },
-                // --- אפשרויות נוספות (אופציונלי) ---
-                // לדוגמה, אפשר לשנות את ברירת המחדל של ה-slippage:
-                // defaultSlippage: 0.5, // חצי אחוז החלקה
-
-                // קריאה לפונקציה כאשר משתמש מחבר ארנק (אם רוצים לעשות משהו נוסף)
-                // onWalletConnected: (wallet) => {
-                //    console.log("Wallet connected:", wallet.adapter.name);
-                // },
-
-                // קריאה לפונקציה אחרי החלפה מוצלחת
-                // onSuccess: ({ txid, swapResult }) => {
-                //    console.log("Swap successful:", txid, "Amount out:", swapResult.outputAmount);
-                // }
-            });
-        }
-    }, 100); // בדוק כל 100 אלפיות שנייה אם Jupiter נטען
-} else {
-    console.error("Jupiter Terminal target element 'integrated-terminal' not found.");
-}
-// --- End of Jupiter Terminal Init ---
 }); // End of DOMContentLoaded
