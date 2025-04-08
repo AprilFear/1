@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', () => {
             const address = button.getAttribute('data-address');
             const placeholderTexts = [
-                '[TBA - To Be Announced at Launch]',
-                '[PASTE CONTRACT ADDRESS HERE WHEN AVAILABLE - Triple check this!]'
+                '7tJSy9wP5H2WjoSBxQ2hh9uR3AuGn9JWLTN6uLdjpump',
+                '7tJSy9wP5H2WjoSBxQ2hh9uR3AuGn9JWLTN6uLdjpump'
              ];
             if (address && !placeholderTexts.includes(address)) {
                 navigator.clipboard.writeText(address).then(() => {
@@ -289,7 +289,7 @@ if (document.getElementById('integrated-terminal')) {
                 formProps: {
                     // הגדר את המטבעות ההתחלתיים שיוצגו למשתמש
                     initialInputMint: "So11111111111111111111111111111111111111112", // כתובת של SOL (WRAPPED SOL)
-                    initialOutputMint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", // <<< !!! החלף בכתובת החוזה (Mint Address) של $CGPTS !!!
+                    initialOutputMint: "7tJSy9wP5H2WjoSBxQ2hh9uR3AuGn9JWLTN6uLdjpump", // <<< !!! החלף בכתובת החוזה (Mint Address) של $CGPTS !!!
                 },
                 // --- אפשרויות נוספות (אופציונלי) ---
                 // לדוגמה, אפשר לשנות את ברירת המחדל של ה-slippage:
