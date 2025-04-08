@@ -127,11 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const initialAddress = button.getAttribute('data-address');
              const placeholderTexts = [
                  '[TBA - To Be Announced at Launch]',
-                 '[PASTE CONTRACT ADDRESS HERE WHEN AVAILABLE - Triple check this!]',
+                 '7tJSy9wP5H2WjoSBxQ2hh9uR3AuGn9JWLTN6uLdjpump',
                  '[TBA SOON!]',
-                 '[CONTRACT ADDRESS DROP SOON!]',
-                 // Also check for the actual address if it was accidentally included as placeholder
-                 '7tJSy9wP5H2WjoSBxQ2hh9uR3AuGn9JWLTN6uLdjpump' 
+                 '7tJSy9wP5H2WjoSBxQ2hh9uR3AuGn9JWLTN6uLdjpump',
               ];
 
              // Set initial state based on placeholder text OR if it contains the actual address (treat as not ready to copy yet maybe?)
@@ -246,5 +244,77 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch(e) { console.error("Error setting up Simulated Ticker:", e); }
 
     console.log("All scripts in DOMContentLoaded finished initializing attempt.");
+ if (document.getElementById('integrated-terminal')) {
 
+        const jupiterIntervalId = setInterval(() => {
+
+            if (window.Jupiter && typeof window.Jupiter.init === 'function') {
+
+                clearInterval(jupiterIntervalId);
+
+                console.log("Jupiter object found, initializing terminal...");
+
+                try {
+
+                    window.Jupiter.init({
+
+                        displayMode: "integrated",
+
+                        integratedTargetId: "integrated-terminal",
+
+                        endpoint: "https://wiser-skilled-layer.solana-mainnet.quiknode.pro/d6d3ae205e58c061f513482b1ede0eabbd8bca2a/", // User's QuickNode endpoint
+
+                        strictTokenList: false,
+
+                        formProps: {
+
+                            initialInputMint: "So11111111111111111111111111111111111111112", // SOL
+
+                            // !!! ================================================== !!!
+
+                            // !!! IMPORTANT: REPLACE WITH YOUR ACTUAL TOKEN MINT ADDRESS !!!
+
+                             initialOutputMint: "7tJSy9wP5H2WjoSBxQ2hh9uR3AuGn9JWLTN6uLdjpump", // REPLACE ME - Using user provided address from HTML
+
+                            // !!! ================================================== !!!
+
+                        },
+
+                          Optional Callbacks (Uncomment to add logging)
+
+                          onWalletConnected: (wallet) => { console.log("Wallet connected via Jupiter:", wallet?.adapter?.name); },
+
+                          onSuccess: ({ txid, swapResult }) => { 
+
+                              // Use outputTokenInfo for decimals if available, otherwise guess or omit decimals
+
+                              const decimals = swapResult?.outputTokenInfo?.decimals;
+
+                              const amount = decimals !== undefined ? swapResult.outputAmount / (10**decimals) : swapResult.outputAmount;
+
+                             console.log(`Swap successful via Jupiter: ${txid}, Amount out: ${amount} ${swapResult?.outputTokenInfo?.symbol || ''}`); 
+
+                          },
+
+                          onError: (error) => { console.error("Jupiter Swap Error:", error); }
+
+                    });
+
+                    console.log("Jupiter Terminal Initialized successfully.");
+
+                } catch (error) {
+
+                     console.error("Error initializing Jupiter Terminal:", error);
+
+                }
+
+            }
+
+        }, 100); // Check every 100ms
+
+    } else {
+
+        console.error("Jupiter Terminal target element 'integrated-terminal' not found.");
+
+    }
 }); // End of DOMContentLoaded
