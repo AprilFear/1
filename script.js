@@ -436,6 +436,77 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error("Jupiter Terminal target element 'integrated-terminal' not found.");
     }
+    // --- 6. Simulated Buy Ticker ---
+const tickerBar = document.getElementById('simulated-ticker');
+const tickerContent = document.getElementById('ticker-content');
+
+if (tickerBar && tickerContent) {
+    console.log("Initializing simulated ticker..."); // Debug
+
+    // הודעות קנייה פיקטיביות (שנה/הוסף לפי הצורך)
+    const fakeBuys = [
+        "AI detected BUY! 0.5 SOL >> 450K $CGPTS by 7aX...k9P",
+        "Executing purchase... 1.2 SOL >> 1.1M $CGPTS by FgT...w3c",
+        "Confirmed $CGPTS Acquisition! 0.8 SOL >> 720K $CGPTS by LnM...zTq",
+        "Someone aped! Analyzing... 2.5 SOL >> 2.2M $CGPTS by 9bR...vY2",
+        "Processing buy order... 0.3 SOL >> 270K $CGPTS by PqZ...m8a",
+        "Neural network reports BUY: 1.0 SOL >> 900K $CGPTS by 3dV...hJ6",
+        "$CGPTS secured! 0.6 SOL >> 540K $CGPTS by RrS...e4W",
+        "Anomaly detected! Large BUY: 3.1 SOL >> 2.8M $CGPTS by Xy1...bN7"
+    ];
+
+    let currentBuyIndex = -1; 
+    const flashDuration = 800; // משך האנימציה ב-CSS (0.8s) במ"ש
+    const updateInterval = 6500; // זמן בין עדכונים (6.5 שניות) במ"ש
+
+    function showRandomBuy() {
+        // אל תעדכן אם הטאב לא פעיל
+        if (document.hidden) return; 
+
+        let randomIndex;
+        // ודא שההודעה הבאה שונה מהקודמת
+        do {
+            randomIndex = Math.floor(Math.random() * fakeBuys.length);
+        } while (randomIndex === currentBuyIndex && fakeBuys.length > 1);
+
+        currentBuyIndex = randomIndex;
+        const newMessage = fakeBuys[currentBuyIndex];
+
+        // אפקט Fade Out -> עדכון טקסט -> Fade In
+        tickerContent.style.opacity = '0'; 
+
+        setTimeout(() => {
+            tickerContent.textContent = newMessage;
+            tickerContent.style.opacity = '1';
+
+            // הפעל אנימציית הבהוב
+            tickerBar.classList.add('flash');
+
+            // הסר את קלאס ההבהוב אחרי שהאנימציה מסתיימת
+            // כדי שיהיה אפשר להפעיל אותה שוב בפעם הבאה
+            setTimeout(() => {
+                tickerBar.classList.remove('flash');
+            }, flashDuration);
+
+        }, 300); // זמן ל-Fade Out לפני העדכון (0.3 שניות)
+    }
+
+    // הצג את הפס אחרי השהייה קלה (לתת לאתר להיטען)
+    setTimeout(() => {
+        if (tickerBar) {
+            tickerBar.style.display = 'block'; // הצג את הפס
+            console.log("Ticker bar displayed."); // Debug
+            showRandomBuy(); // הצג הודעה ראשונה מייד
+            // התחל את האינטרוול להודעות הבאות
+            setInterval(showRandomBuy, updateInterval); 
+            console.log("Ticker interval started."); // Debug
+        }
+    }, 2500); // השהייה של 2.5 שניות
+
+} else {
+    console.error("Ticker elements not found (#simulated-ticker or #ticker-content)");
+}
+// --- End Simulated Buy Ticker ---
     // --- End of Jupiter Terminal Init ---
 
 }); // End of DOMContentLoaded
