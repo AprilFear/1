@@ -1,12 +1,281 @@
 // script.js for $CGPTS - Glitchy Edition
 
+// ======================== //
+// Helper Functions         //
+// ======================== //
+function randomInRange(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+// ======================== //
+// Countdown Timer Function //
+// ======================== //
+function startCountdown() {
+    console.log("Initializing countdown..."); 
+    const countdownElement = document.getElementById('countdown-timer');
+    const daysEl = document.getElementById('countdown-days');
+    const hoursEl = document.getElementById('countdown-hours');
+    const minutesEl = document.getElementById('countdown-minutes');
+    const secondsEl = document.getElementById('countdown-seconds');
+    const countdownMessageEl = document.getElementById('countdown-message');
+
+    let fireworksLaunched = false; // Flag to prevent multiple launches
+
+    // Ensure all elements exist before proceeding
+    if (!countdownElement || !daysEl || !hoursEl || !minutesEl || !secondsEl || !countdownMessageEl) {
+        console.error("One or more countdown elements not found!");
+        if(countdownMessageEl) { 
+             countdownMessageEl.innerHTML = "Countdown Error: Elements missing.";
+             countdownMessageEl.style.display = 'block';
+        }
+        return; 
+    }
+
+    // --- SET YOUR TARGET DATE AND TIME HERE ---
+    // Target: April 8, 2025 18:00:00 Israel Daylight Time (UTC+3)
+    const targetDateString = "2025-04-08T18:00:00+03:00"; // ISO 8601 format
+    // ------------------------------------
+
+    const targetTime = new Date(targetDateString).getTime();
+
+    if (isNaN(targetTime)) {
+         console.error("Invalid target date string for countdown:", targetDateString);
+         countdownMessageEl.innerHTML = "Countdown target date is invalid!";
+         countdownMessageEl.style.display = 'block';
+         countdownElement.style.display = 'none'; 
+         return;
+    }
+     console.log(`Countdown target set to: ${new Date(targetTime).toLocaleString('en-IL', { timeZone: 'Asia/Jerusalem' })}`); 
+
+    const updateTimer = () => {
+        const now = new Date().getTime();
+        const distance = targetTime - now;
+
+        // If the countdown is finished
+        if (distance < 0) {
+            clearInterval(intervalId); 
+            daysEl.innerHTML = '00';
+            hoursEl.innerHTML = '00';
+            minutesEl.innerHTML = '00';
+            secondsEl.innerHTML = '00';
+            countdownElement.classList.add('finished');
+            countdownElement.classList.remove('hide-days'); 
+            countdownMessageEl.style.display = 'block'; 
+            countdownMessageEl.classList.add('visible'); 
+            console.log("Countdown finished!"); 
+
+            // Launch fireworks ONLY ONCE
+            if (!fireworksLaunched) { 
+                if (typeof confetti === 'function') {
+                    launchFireworks(); // Call fireworks function (defined below)
+                } else {
+                     console.warn("Confetti library not loaded, cannot launch fireworks.");
+                }
+                fireworksLaunched = true; 
+            }
+            return; 
+        }
+
+        // Calculate time
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        const format = (num) => (num < 10 ? '0' + num : num);
+
+        // Update HTML
+        daysEl.innerHTML = format(days);
+        hoursEl.innerHTML = format(hours);
+        minutesEl.innerHTML = format(minutes);
+        secondsEl.innerHTML = format(seconds);
+
+         // Hide days if less than 1 day left and timer not finished
+         if (days <= 0 && distance > 0) {
+             countdownElement.classList.add('hide-days');
+         } else if (days > 0) { // Ensure days are shown if they exist
+             countdownElement.classList.remove('hide-days');
+         }
+    };
+
+    const intervalId = setInterval(updateTimer, 1000);
+    updateTimer(); // Initial call
+}
+
+// ======================== //
+// Fireworks Function     //
+// ======================== //
+function launchFireworks() {
+    console.log("Launching fireworks!"); // Debug log
+
+    if (typeof confetti !== 'function') {
+        console.warn("Confetti function not found. Cannot launch fireworks.");
+        return;
+    }
+
+    const duration = 5 * 1000; // Fireworks duration (5 seconds)
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 70, zIndex: 2001 }; // Ensure zIndex is high
+
+    const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+            return clearInterval(interval); // Stop after duration
+        }
+
+        const particleCount = 50 * (timeLeft / duration); // Decreasing particles
+
+        // Launch bursts from random points near the bottom
+        confetti(Object.assign({}, defaults, { 
+            particleCount, 
+            origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } 
+        }));
+        confetti(Object.assign({}, defaults, { 
+            particleCount, 
+            origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } 
+        }));
+    }, 250); // Launch every 250ms
+}
+
+
+// ======================== //
+// Shepherd Tour Function   //
+// ======================== //
+function startWebsiteTour() {
+    console.log("Attempting to start website tour..."); // Debug log 1
+    if (typeof Shepherd === 'undefined') {
+        console.error('Shepherd.js library not loaded.');
+        alert('Could not start the tour. Please try refreshing the page.');
+        return;
+    }
+    console.log("Shepherd object found:", Shepherd); // Debug log 2
+
+    if (Shepherd.activeTour) {
+        console.log("Tour is already active, exiting.");
+        return; // Don't start if already active
+    }
+
+    try {
+        const tour = new Shepherd.Tour({
+            useModalOverlay: true,
+            defaultStepOptions: {
+                classes: 'shepherd-theme-arrows shepherd-custom-theme',
+                scrollTo: { behavior: 'smooth', block: 'center' }
+            }
+        });
+        console.log("Shepherd tour initialized"); // Debug log 3
+
+        // Define Tour Steps
+        tour.addStep({
+            id: 'step-logo',
+            text: 'This is our logo and name! Click it anytime to return to the top.',
+            attachTo: { element: '.logo-link', on: 'bottom' },
+            buttons: [ { text: 'Next', action: tour.next } ]
+        });
+        console.log("Added step: step-logo");
+
+         // Conditionally add nav step for desktop
+         const navLinksElement = document.querySelector('header nav ul.nav-links'); // Re-check element here
+         if (navLinksElement && window.getComputedStyle(navLinksElement).display !== 'none') {
+             tour.addStep({
+                 id: 'step-nav',
+                 text: 'Use the navigation bar to jump to different sections like About, Tokenomics, How to Buy, and our Roadmap.',
+                 attachTo: { element: 'header nav ul.nav-links', on: 'bottom' },
+                 buttons: [
+                      { text: 'Back', secondary: true, action: tour.back },
+                      { text: 'Next', action: tour.next }
+                 ]
+             });
+             console.log("Added step: step-nav (Desktop)");
+         } else {
+              console.log("Skipped step: step-nav (Mobile or element not found)");
+         }
+
+
+         tour.addStep({
+            id: 'step-how-to-buy',
+            text: 'Want to get some $CGPTS? This section explains exactly how to buy.',
+            attachTo: { element: '#how-to-buy h2', on: 'bottom' },
+             buttons: [
+                 { text: 'Back', secondary: true, action: tour.back },
+                 { text: 'Next', action: tour.next }
+            ]
+        });
+        console.log("Added step: step-how-to-buy");
+
+        // Check if chart container exists before adding step
+        const chartContainer = document.querySelector('#live-chart .chart-container');
+        if (chartContainer) {
+             tour.addStep({
+                id: 'step-chart',
+                text: "Here you can see the live price chart (once it's available).",
+                attachTo: { element: '#live-chart .chart-container', on: 'bottom' },
+                 buttons: [
+                     { text: 'Back', secondary: true, action: tour.back },
+                     { text: 'Next', action: tour.next }
+                ]
+            });
+            console.log("Added step: step-chart");
+        } else {
+            console.log("Skipped step: step-chart (container not found)");
+        }
+
+        // Check if swap terminal container exists before adding step
+         const swapContainer = document.querySelector('#swap-terminal #integrated-terminal'); // Target inner div
+         if (swapContainer) {
+             tour.addStep({
+                id: 'step-swap',
+                text: "Use this terminal to swap SOL for $CGPTS directly on the site!",
+                attachTo: { element: '#swap-terminal #integrated-terminal', on: 'top' }, // Attach to the terminal div itself
+                 buttons: [
+                     { text: 'Back', secondary: true, action: tour.back },
+                     { text: 'Next', action: tour.next }
+                ]
+            });
+            console.log("Added step: step-swap");
+        } else {
+             console.log("Skipped step: step-swap (container not found)");
+        }
+
+        tour.addStep({
+            id: 'step-socials',
+            text: "Don't forget to join our community on Twitter (X) and Telegram!",
+            attachTo: { element: '#socials .social-links', on: 'top' },
+             buttons: [
+                 { text: 'Back', secondary: true, action: tour.back },
+                 { text: 'End!', action: tour.complete }
+            ]
+        });
+        console.log("Added step: step-socials");
+
+        // Handle tour completion or cancellation
+        tour.on('complete', () => console.log("Tour completed!"));
+        tour.on('cancel', () => console.log("Tour cancelled!"));
+
+        tour.start();
+        console.log("Shepherd tour started successfully"); // Debug log after start
+
+    } catch (error) {
+         console.error("Error initializing or running Shepherd tour:", error);
+         // Optionally provide user feedback if tour fails to start
+         // alert("Sorry, the site tour couldn't start right now.");
+    }
+}
+
+
+// ======================== //
+// Main Execution           //
+// ======================== //
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("DOM Fully Loaded"); // Debug log: Verify DOMContentLoaded fires
-    startCountdown();
-    // --- 1. Mobile Navigation (Burger Menu) ---
+    console.log("DOM Fully Loaded");
+
+    // --- Initialize Components ---
+    startCountdown(); // Start the countdown timer
+
+    // --- Mobile Navigation (Burger Menu) ---
     const burgerMenu = document.querySelector('.burger-menu');
     const navLinks = document.querySelector('.nav-links'); // The UL element
-
     if (burgerMenu && navLinks) {
         burgerMenu.addEventListener('click', () => {
             burgerMenu.classList.toggle('active');
@@ -16,7 +285,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
-                // Only close if mobile menu is active
                 if (window.innerWidth <= 900 && navLinks.classList.contains('active')) {
                     burgerMenu.classList.remove('active');
                     navLinks.classList.remove('active');
@@ -25,69 +293,65 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
         document.addEventListener('click', (event) => {
-             // Close if clicked outside nav and burger, only if mobile menu is active
              if (!navLinks.contains(event.target) && !burgerMenu.contains(event.target) && navLinks.classList.contains('active')) {
                  burgerMenu.classList.remove('active');
                  navLinks.classList.remove('active');
                  burgerMenu.setAttribute('aria-expanded', 'false');
              }
           });
-    } else {
-        console.error("Burger menu or nav links element not found!");
-    }
+    } else { console.error("Burger menu or nav links element not found!"); }
 
-    // --- 2. Copy Contract Address ---
+    // --- Copy Contract Address ---
     const copyButtons = document.querySelectorAll('.copy-ca-button');
     copyButtons.forEach(button => {
-         const initialAddress = button.getAttribute('data-address');
-         // Set initial state based on placeholder text
-         if (!initialAddress || initialAddress.startsWith('[')) {
-              button.textContent = 'Soon'; // Indicate address is not ready yet
-              button.disabled = true;
-         } else {
-             button.textContent = 'Copy'; // Ensure correct text if address is present
+        const initialAddress = button.getAttribute('data-address');
+        const placeholderTexts = [
+            '[TBA - To Be Announced at Launch]',
+            '[PASTE CONTRACT ADDRESS HERE WHEN AVAILABLE - Triple check this!]',
+            '[TBA SOON!]',
+            '[CONTRACT ADDRESS DROP SOON!]'
+         ];
+
+        // Set initial state based on placeholder text
+        if (!initialAddress || placeholderTexts.includes(initialAddress)) {
+             button.textContent = 'Soon';
+             button.disabled = true;
+        } else {
+             button.textContent = 'Copy';
              button.disabled = false;
-         }
+        }
 
         button.addEventListener('click', () => {
             const address = button.getAttribute('data-address');
-            // Re-check placeholders in case they change
-            const placeholderTexts = [
-                '[TBA - To Be Announced at Launch]',
-                '7tJSy9wP5H2WjoSBxQ2hh9uR3AuGn9JWLTN6uLdjpump',
-                '[TBA SOON!]',
-                '[CONTRACT ADDRESS DROP SOON!]' // Add all possible placeholders
-             ];
-
+            // Re-check if it's NOT a placeholder before copying
             if (address && !placeholderTexts.includes(address)) {
                 navigator.clipboard.writeText(address).then(() => {
-                    const originalText = 'Copy'; // Set original text explicitly
+                    const originalText = 'Copy'; // Keep original as 'Copy'
                     button.textContent = 'Copied!';
                     button.style.backgroundColor = 'var(--secondary-color)';
                     button.style.borderColor = 'var(--secondary-color)';
                     button.style.color = 'var(--background-color)';
-                    button.disabled = true; // Disable briefly after copy
+                    button.disabled = true;
                     setTimeout(() => {
                         button.textContent = originalText;
                          button.style.backgroundColor = '';
                          button.style.borderColor = '';
                          button.style.color = '';
-                         button.disabled = false; // Re-enable
+                         button.disabled = false;
                     }, 2000);
                 }).catch(err => {
                     console.error('Failed to copy address: ', err);
                      button.textContent = 'Error!';
-                     setTimeout(() => { button.textContent = 'Copy'; button.disabled = false; }, 2000); // Restore text and enable
+                     setTimeout(() => { button.textContent = 'Copy'; button.disabled = false; }, 2000);
                 });
             } else {
-                // If button still shows "Soon" or placeholder text
-                const originalText = button.textContent; // Should be 'Soon' or placeholder
+                // Feedback if trying to copy placeholder
+                const originalText = button.textContent;
                 button.textContent = 'Not Yet!';
-                button.disabled = true; // Keep disabled
+                button.disabled = true;
                 setTimeout(() => {
-                    // Restore original placeholder text if needed, keep disabled
-                     button.textContent = initialAddress.startsWith('[') ? 'Soon' : originalText; 
-                     button.disabled = true; // Keep disabled if no address
+                    button.textContent = initialAddress.startsWith('[') ? 'Soon' : originalText;
+                    button.disabled = true;
                  }, 2000);
                 console.warn('Attempted to copy placeholder address.');
             }
@@ -95,7 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // --- 3. Fade-in Animation on Scroll ---
+    // --- Fade-in Animation on Scroll ---
     const sections = document.querySelectorAll('main section');
     if ("IntersectionObserver" in window) {
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
@@ -109,214 +373,61 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         const sectionObserver = new IntersectionObserver(observerCallback, observerOptions);
         sections.forEach(section => {
-            section.classList.add('fade-in-section'); // Apply initial state for animation
+            section.classList.add('fade-in-section');
             sectionObserver.observe(section);
         });
     } else {
          console.warn("Intersection Observer not supported. Animations disabled.");
-         sections.forEach(section => section.classList.add('visible')); // Show all immediately
+         sections.forEach(section => section.classList.add('visible'));
     }
 
-    // ============================================
-    // ===== Welcome Modal, Confetti & Tour =====
-    // ============================================
-
-    // --- 4. Welcome Modal, Confetti & Tour ---
+    // --- Welcome Modal & Tour Trigger ---
     const welcomeModal = document.getElementById('welcome-modal');
     const closeModalBtn = document.getElementById('close-modal-btn');
     const startTourBtn = document.getElementById('start-tour-btn');
 
-    // Function to close the modal
-    const closeModal = () => {
-        if (welcomeModal && welcomeModal.classList.contains('visible')) { // Check if actually visible before trying to close
-            welcomeModal.classList.remove('visible');
-            // Use transition end event for smoother hiding
-            welcomeModal.addEventListener('transitionend', function handler() {
-                 // Only set display none if it's still not visible (prevents issues if opened again quickly)
-                 if (!welcomeModal.classList.contains('visible')) {
-                     welcomeModal.style.display = 'none';
-                 }
-                 welcomeModal.removeEventListener('transitionend', handler); // Clean up listener
-             });
-        }
-    };
-
-    // Function to start the website tour
-    function startWebsiteTour() {
-        console.log("Attempting to start website tour..."); // Debug log 1
-        if (typeof Shepherd === 'undefined') {
-            console.error('Shepherd.js library not loaded.');
-            alert('Could not start the tour. Please try refreshing the page.');
-            return;
-        }
-        console.log("Shepherd object found:", Shepherd); // Debug log 2
-
-        // Prevent starting a new tour if one is already active
-        if (Shepherd.activeTour) {
-            console.log("Tour is already active.");
-            return;
-        }
-
-        try {
-            const tour = new Shepherd.Tour({
-                useModalOverlay: true,
-                defaultStepOptions: {
-                    classes: 'shepherd-theme-arrows shepherd-custom-theme',
-                    scrollTo: { behavior: 'smooth', block: 'center' }
-                }
-            });
-            console.log("Shepherd tour initialized"); // Debug log 3
-
-            // Define Tour Steps
-            tour.addStep({
-                id: 'step-logo',
-                text: 'This is our logo and name! Click it anytime to return to the top.',
-                attachTo: { element: '.logo-link', on: 'bottom' },
-                buttons: [ { text: 'Next', action: tour.next } ]
-            });
-            console.log("Added step: step-logo"); 
-
-            // Only add nav step if the nav links are visible (desktop)
-             if (window.getComputedStyle(navLinks).display !== 'none') {
-                 tour.addStep({
-                     id: 'step-nav',
-                     text: 'Use the navigation bar to jump to different sections like About, Tokenomics, How to Buy, and our Roadmap.',
-                     attachTo: { element: 'header nav ul.nav-links', on: 'bottom' },
-                     buttons: [
-                          { text: 'Back', secondary: true, action: tour.back },
-                          { text: 'Next', action: tour.next }
-                     ]
-                 });
-                 console.log("Added step: step-nav (Desktop)"); 
-             } else {
-                  console.log("Skipped step: step-nav (Mobile)");
-             }
-
-
-             tour.addStep({
-                id: 'step-how-to-buy',
-                text: 'Want to get some $CGPTS? This section explains exactly how to buy.',
-                attachTo: { element: '#how-to-buy h2', on: 'bottom' },
-                 buttons: [
-                     { text: 'Back', secondary: true, action: tour.back },
-                     { text: 'Next', action: tour.next }
-                ]
-            });
-            console.log("Added step: step-how-to-buy");
-
-            // Check if chart container exists before adding step
-            const chartContainer = document.querySelector('#live-chart .chart-container');
-            if (chartContainer) {
-                 tour.addStep({
-                    id: 'step-chart', 
-                    text: "Here you can see the live price chart (once it's available).",
-                    attachTo: { element: '#live-chart .chart-container', on: 'bottom' },
-                     buttons: [
-                         { text: 'Back', secondary: true, action: tour.back },
-                         { text: 'Next', action: tour.next }
-                    ]
-                });
-                console.log("Added step: step-chart"); 
-            } else {
-                console.log("Skipped step: step-chart (container not found)");
-            }
-
-            // Check if swap terminal container exists before adding step
-             const swapContainer = document.querySelector('#swap-terminal .terminal-container');
-             if (swapContainer) {
-                 tour.addStep({
-                    id: 'step-swap', 
-                    text: "Use this terminal to swap SOL for $CGPTS directly on the site!",
-                    attachTo: { element: '#swap-terminal .terminal-container', on: 'top' },
-                     buttons: [
-                         { text: 'Back', secondary: true, action: tour.back },
-                         { text: 'Next', action: tour.next }
-                    ]
-                });
-                console.log("Added step: step-swap"); 
-            } else {
-                 console.log("Skipped step: step-swap (container not found)");
-            }
-
-
-            tour.addStep({
-                id: 'step-socials',
-                text: "Don't forget to join our community on Twitter (X) and Telegram!",
-                attachTo: { element: '#socials .social-links', on: 'top' },
-                 buttons: [
-                     { text: 'Back', secondary: true, action: tour.back },
-                     { text: 'End!', action: tour.complete }
-                ]
-            });
-            console.log("Added step: step-socials"); 
-
-            tour.start();
-            console.log("Shepherd tour started successfully"); // Debug log after start
-
-        } catch (error) {
-             console.error("Error initializing or running Shepherd tour:", error); 
-             alert("An error occurred while trying to start the tour.");
-        }
-    }
-
-    // Show Welcome Modal Logic
     if (welcomeModal && closeModalBtn && startTourBtn) {
         if (!sessionStorage.getItem('welcomeShown')) {
+            // Show the modal after initial delay
             setTimeout(() => {
-                welcomeModal.style.display = 'flex'; 
-                // Use double requestAnimationFrame for better browser compatibility ensuring display:flex is applied before transition starts
-                 requestAnimationFrame(() => {
-                      requestAnimationFrame(() => { 
-                          welcomeModal.classList.add('visible'); 
-                      });
-                 });
+                welcomeModal.style.display = 'flex';
+                 requestAnimationFrame(() => { requestAnimationFrame(() => { welcomeModal.classList.add('visible'); }); });
 
+                // Trigger confetti
                 if (typeof confetti === 'function') {
-                   try { // Add try-catch around confetti too
-                        confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 }, zIndex: 2001 });
-                   } catch(confettiError){
-                        console.error("Error running confetti:", confettiError);
-                   }
+                   try { confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 }, zIndex: 2001 }); } 
+                   catch(confettiError){ console.error("Error running confetti:", confettiError); }
                 } else { console.warn("Confetti library not loaded."); }
+                
                 sessionStorage.setItem('welcomeShown', 'true');
-            }, 700); // Delay before showing modal
+            }, 700); 
         }
 
-        // --- Event Listeners ---
+        // Event Listeners for Modal
         closeModalBtn.addEventListener('click', closeModal);
-        welcomeModal.addEventListener('click', (event) => {
-            if (event.target === welcomeModal) { closeModal(); }
-        });
-         document.addEventListener('keydown', (event) => {
-             if (event.key === 'Escape' && welcomeModal.classList.contains('visible')) { closeModal(); }
-        });
-
+        welcomeModal.addEventListener('click', (event) => { if (event.target === welcomeModal) { closeModal(); } });
+        document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && welcomeModal.classList.contains('visible')) { closeModal(); } });
+        
+        // Start Tour Button Listener
         startTourBtn.addEventListener('click', () => {
-            console.log("Start tour button clicked"); // Debug log
+            console.log("Start tour button clicked"); 
             closeModal();
-            // Use a delay that accounts for the modal close transition (400ms) + buffer
-            setTimeout(startWebsiteTour, 450);
+            setTimeout(startWebsiteTour, 450); // Delay allows modal to close first
         });
 
     } else {
-        // Log which specific element is missing
         if (!welcomeModal) console.error("Welcome modal element (#welcome-modal) not found.");
         if (!closeModalBtn) console.error("Close modal button (#close-modal-btn) not found.");
         if (!startTourBtn) console.error("Start tour button (#start-tour-btn) not found.");
     }
-    // --- End of Welcome Modal Logic ---
 
-    // ==========================================
-    // ===== Jupiter Terminal Init ==========
-    // ==========================================
 
-    // --- 5. Initialize Jupiter Terminal ---
+    // --- Initialize Jupiter Terminal ---
     if (document.getElementById('integrated-terminal')) {
-        const intervalId = setInterval(() => {
-            // Check more robustly if Jupiter is ready
+        const jupiterIntervalId = setInterval(() => {
             if (window.Jupiter && typeof window.Jupiter.init === 'function') {
-                clearInterval(intervalId);
-                console.log("Jupiter object found, initializing terminal..."); // Log before init
+                clearInterval(jupiterIntervalId);
+                console.log("Jupiter object found, initializing terminal...");
                 try {
                     window.Jupiter.init({
                         displayMode: "integrated",
@@ -327,133 +438,55 @@ document.addEventListener('DOMContentLoaded', () => {
                             initialInputMint: "So11111111111111111111111111111111111111112", // SOL
                             // !!! ================================================== !!!
                             // !!! IMPORTANT: REPLACE WITH YOUR ACTUAL TOKEN MINT ADDRESS !!!
-                            // !!! Using USDC as temporary placeholder               !!!
+                             initialOutputMint: "7tJSy9wP5H2WjoSBxQ2hh9uR3AuGn9JWLTN6uLdjpump", // REPLACE ME - Using user provided address from HTML
                             // !!! ================================================== !!!
-                            initialOutputMint: "7tJSy9wP5H2WjoSBxQ2hh9uR3AuGn9JWLTN6uLdjpump", // REPLACE ME
                         },
-                        // Example callbacks (uncomment to use)
-                        // onWalletConnected: (wallet) => { console.log("Wallet connected via Jupiter:", wallet.adapter.name); },
-                        // onSuccess: ({ txid, swapResult }) => { 
-                        //    const outputAmount = swapResult.outputAmount / (10**(swapResult.outputTokenInfo.decimals || 0)); // Adjust for decimals
-                        //    console.log("Swap successful via Jupiter:", txid, "Amount out:", outputAmount); 
-                        // }
+                         // Optional Callbacks (Uncomment to add logging)
+                         // onWalletConnected: (wallet) => { console.log("Wallet connected via Jupiter:", wallet?.adapter?.name); },
+                         // onSuccess: ({ txid, swapResult }) => { 
+                         //     // Use outputTokenInfo for decimals if available, otherwise guess or omit decimals
+                         //     const decimals = swapResult?.outputTokenInfo?.decimals;
+                         //     const amount = decimals !== undefined ? swapResult.outputAmount / (10**decimals) : swapResult.outputAmount;
+                         //     console.log(`Swap successful via Jupiter: ${txid}, Amount out: ${amount} ${swapResult?.outputTokenInfo?.symbol || ''}`); 
+                         // },
+                         // onError: (error) => { console.error("Jupiter Swap Error:", error); }
                     });
-                    console.log("Jupiter Terminal Initialized successfully."); // Log success
+                    console.log("Jupiter Terminal Initialized successfully.");
                 } catch (error) {
                      console.error("Error initializing Jupiter Terminal:", error);
                 }
-            } else {
-                // Optional: Log if Jupiter object not yet ready
-                 // console.log("Waiting for Jupiter object...");
             }
         }, 100); // Check every 100ms
     } else {
         console.error("Jupiter Terminal target element 'integrated-terminal' not found.");
     }
-// --- 6. Simulated Transaction Ticker ---
-const tickerBar = document.getElementById('simulated-ticker');
-const tickerContent = document.getElementById('ticker-content');
 
-if (tickerBar && tickerContent) {
-    console.log("Initializing simulated transaction ticker..."); // Debug
 
-    // מערך של עסקאות פיקטיביות (קנייה ומכירה)
-    const fakeTransactions = [
-   { type: 'buy', sol: 0.781, tokens: 515000, addr: 'rT4...uVw' },
-            { type: 'sell', sol: 1.45, tokens: 980000, addr: 'xY9...aBc' },
-            { type: 'buy', sol: 3.112, tokens: 2450000, addr: 'dEf...gHi' },
-            { type: 'buy', sol: 0.250, tokens: 155000, addr: 'JkL...mNo' },
-            { type: 'sell', sol: 0.90, tokens: 610000, addr: 'pQr...sTu' },
-            { type: 'buy', sol: 4.505, tokens: 3800000, addr: 'VwX...yZa' },
-            { type: 'buy', sol: 0.915, tokens: 642000, addr: 'StU...hGf' },
-            { type: 'sell', sol: 2.80, tokens: 1980000, addr: 'vWx...EdC' },
-            { type: 'buy', sol: 1.750, tokens: 1280000, addr: 'yZa...bA9' },
-            { type: 'sell', sol: 0.25, tokens: 145000, addr: 'bCd...8Y7' },
-            { type: 'buy', sol: 3.333, tokens: 2490000, addr: 'eFg...6X5' },
-            { type: 'sell', sol: 1.90, tokens: 1410000, addr: 'hIj...4W3' },
-            { type: 'buy', sol: 0.682, tokens: 485000, addr: 'kLm...2V1' },
-            { type: 'sell', sol: 0.95, tokens: 690000, addr: 'nOp...0U9' },
-            { type: 'buy', sol: 2.041, tokens: 1605000, addr: 'QrS...8T7' },
-            { type: 'buy', sol: 0.330, tokens: 215000, addr: 'UvW...6S5' },
-            { type: 'sell', sol: 1.62, tokens: 1150000, addr: 'XyZ...4R3' },
-            { type: 'buy', sol: 3.999, tokens: 3100000, addr: 'aBc...2Q1' },
-            { type: 'sell', sol: 0.55, tokens: 380000, addr: 'DeF...0P9' },
-            { type: 'buy', sol: 1.001, tokens: 750000, addr: 'gHi...8O7' },
-            { type: 'buy', sol: 0.195, tokens: 120000, addr: 'jKl...6N5' },
-            { type: 'sell', sol: 2.15, tokens: 1650000, addr: 'MnP...4M3' },
-            { type: 'buy', sol: 4.123, tokens: 3300000, addr: 'qRs...2L1' },
-            { type: 'sell', sol: 1.30, tokens: 950000, addr: 'TuV...0K9' },
-            { type: 'buy', sol: 0.808, tokens: 590000, addr: 'wXy...8J7' },
-            { type: 'sell', sol: 0.40, tokens: 280000, addr: 'ZaB...6I5' },
-            { type: 'buy', sol: 2.760, tokens: 2100000, addr: 'cDe...4H3' },
-            { type: 'sell', sol: 3.05, tokens: 2300000, addr: 'FgH...2G1' },
-            { type: 'buy', sol: 1.490, tokens: 1150000, addr: 'iJk...0F9' },
-            { type: 'buy', sol: 0.555, tokens: 390000, addr: 'LmN...8E7' }
-        // אפשר להוסיף עוד עסקאות מגוונות
-    ];
+ 
 
-    let currentTxIndex = -1;
-    const flashDuration = 700; // צריך להתאים למשך האנימציה ב-CSS (0.7s)
-    const updateInterval = 5500; // זמן בין עדכונים (5.5 שניות)
-
-    function showRandomTransaction() {
-        if (document.hidden) return; // אל תעדכן אם הטאב לא פעיל
-
-        let randomIndex;
-        do {
-            randomIndex = Math.floor(Math.random() * fakeTransactions.length);
-        } while (randomIndex === currentTxIndex && fakeTransactions.length > 1);
-        
-        currentTxIndex = randomIndex;
-        const tx = fakeTransactions[currentTxIndex];
-
-        // פורמט הודעה חדש: Address | SOL Amount | Token Amount
-        const formattedTokens = tx.tokens.toLocaleString('en-US'); // הוספת פסיקים למספר גדול
-        const newMessage = `${tx.addr} | ${tx.sol} SOL | ${formattedTokens} $CGPTS`;
-        
-        // קלאס האנימציה המתאים (קנייה או מכירה)
-        const flashClass = tx.type === 'buy' ? 'flash-buy' : 'flash-sell';
-        // צבע טקסט מתאים (אופציונלי, כרגע נשאר ציאן)
-        // tickerContent.style.color = tx.type === 'buy' ? 'var(--accent-color)' : 'var(--primary-color)';
-
-        // אפקט החלפת טקסט
-        tickerContent.style.opacity = '0'; 
-
-        setTimeout(() => {
-            tickerContent.textContent = newMessage;
-            tickerContent.style.opacity = '1';
-
-            // הפעל אנימציית הבהוב
-            // הסר קודם קלאס ישן אם קיים במקרה
-            tickerBar.classList.remove('flash-buy', 'flash-sell'); 
-            // הוסף קלאס חדש (ייתכן שצריך השהייה קלה כדי שהסרה תסתיים לפני הוספה)
-             requestAnimationFrame(() => {
-                 requestAnimationFrame(() => {
-                    tickerBar.classList.add(flashClass);
-                 });
-            });
-            
-            // הסר את קלאס ההבהוב אחרי שהאנימציה מסתיימת
+            // Fade out, update text, fade in, apply flash
+            tickerContent.style.opacity = '0'; 
             setTimeout(() => {
-                tickerBar.classList.remove(flashClass);
-            }, flashDuration);
-
-        }, 300); // זמן ל-Fade Out
-    }
-
-    // הצג את הפס אחרי השהייה קלה
-    setTimeout(() => {
-        if (tickerBar) {
-            tickerBar.style.display = 'flex'; // שונה ל-flex כדי ליישר עם הלוגואים
-            console.log("Ticker bar displayed."); 
-            showRandomTransaction(); // הצג הודעה ראשונה מייד
-            setInterval(showRandomTransaction, updateInterval); // התחל אינטרוול
-            console.log("Ticker interval started."); 
+                tickerContent.textContent = newMessage;
+                tickerContent.style.opacity = '1';
+                tickerBar.classList.remove('flash-buy', 'flash-sell'); 
+                 requestAnimationFrame(() => { requestAnimationFrame(() => { tickerBar.classList.add(flashClass); }); });
+                setTimeout(() => { tickerBar.classList.remove(flashClass); }, flashDuration);
+            }, 300); // Fade out time
         }
-    }, 2500); 
 
-} else {
-    console.error("Ticker elements not found (#simulated-ticker or #ticker-content)");
-}
-// --- End Simulated Transaction Ticker ---
+        // Initial delay
+        setTimeout(() => {
+            if (tickerBar) {
+                tickerBar.style.display = 'flex'; 
+                console.log("Ticker bar displayed."); 
+                showRandomTransaction(); 
+                setInterval(showRandomTransaction, updateInterval); 
+                console.log("Ticker interval started."); 
+            }
+        }, 2500); 
+
+    } else { console.error("Ticker elements not found (#simulated-ticker or #ticker-content)"); }
+    // --- End Simulated Transaction Ticker ---
+
 }); // End of DOMContentLoaded
