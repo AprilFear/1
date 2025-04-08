@@ -436,43 +436,51 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error("Jupiter Terminal target element 'integrated-terminal' not found.");
     }
-    // --- 6. Simulated Buy Ticker ---
+// --- 6. Simulated Transaction Ticker ---
 const tickerBar = document.getElementById('simulated-ticker');
 const tickerContent = document.getElementById('ticker-content');
 
 if (tickerBar && tickerContent) {
-    console.log("Initializing simulated ticker..."); // Debug
+    console.log("Initializing simulated transaction ticker..."); // Debug
 
-    // הודעות קנייה פיקטיביות (שנה/הוסף לפי הצורך)
-    const fakeBuys = [
-        "AI detected BUY! 0.5 SOL >> 450K $CGPTS by 7aX...k9P",
-        "Executing purchase... 1.2 SOL >> 1.1M $CGPTS by FgT...w3c",
-        "Confirmed $CGPTS Acquisition! 0.8 SOL >> 720K $CGPTS by LnM...zTq",
-        "Someone aped! Analyzing... 2.5 SOL >> 2.2M $CGPTS by 9bR...vY2",
-        "Processing buy order... 0.3 SOL >> 270K $CGPTS by PqZ...m8a",
-        "Neural network reports BUY: 1.0 SOL >> 900K $CGPTS by 3dV...hJ6",
-        "$CGPTS secured! 0.6 SOL >> 540K $CGPTS by RrS...e4W",
-        "Anomaly detected! Large BUY: 3.1 SOL >> 2.8M $CGPTS by Xy1...bN7"
+    // מערך של עסקאות פיקטיביות (קנייה ומכירה)
+    const fakeTransactions = [
+        { type: 'buy', sol: 0.5, tokens: 450000, addr: '7aX...k9P' },
+        { type: 'sell', sol: 0.3, tokens: 270000, addr: 'FgT...w3c' },
+        { type: 'buy', sol: 1.2, tokens: 1100000, addr: 'LnM...zTq' },
+        { type: 'buy', sol: 2.5, tokens: 2250000, addr: '9bR...vY2' },
+        { type: 'sell', sol: 1.0, tokens: 900000, addr: 'PqZ...m8a' },
+        { type: 'buy', sol: 0.8, tokens: 720000, addr: '3dV...hJ6' },
+        { type: 'sell', sol: 1.5, tokens: 1350000, addr: 'RrS...e4W' },
+        { type: 'buy', sol: 3.1, tokens: 2800000, addr: 'Xy1...bN7' }
+        // אפשר להוסיף עוד עסקאות מגוונות
     ];
 
-    let currentBuyIndex = -1; 
-    const flashDuration = 800; // משך האנימציה ב-CSS (0.8s) במ"ש
-    const updateInterval = 6500; // זמן בין עדכונים (6.5 שניות) במ"ש
+    let currentTxIndex = -1;
+    const flashDuration = 700; // צריך להתאים למשך האנימציה ב-CSS (0.7s)
+    const updateInterval = 5500; // זמן בין עדכונים (5.5 שניות)
 
-    function showRandomBuy() {
-        // אל תעדכן אם הטאב לא פעיל
-        if (document.hidden) return; 
+    function showRandomTransaction() {
+        if (document.hidden) return; // אל תעדכן אם הטאב לא פעיל
 
         let randomIndex;
-        // ודא שההודעה הבאה שונה מהקודמת
         do {
-            randomIndex = Math.floor(Math.random() * fakeBuys.length);
-        } while (randomIndex === currentBuyIndex && fakeBuys.length > 1);
+            randomIndex = Math.floor(Math.random() * fakeTransactions.length);
+        } while (randomIndex === currentTxIndex && fakeTransactions.length > 1);
+        
+        currentTxIndex = randomIndex;
+        const tx = fakeTransactions[currentTxIndex];
 
-        currentBuyIndex = randomIndex;
-        const newMessage = fakeBuys[currentBuyIndex];
+        // פורמט הודעה חדש: Address | SOL Amount | Token Amount
+        const formattedTokens = tx.tokens.toLocaleString('en-US'); // הוספת פסיקים למספר גדול
+        const newMessage = `${tx.addr} | ${tx.sol} SOL | ${formattedTokens} $CGPTS`;
+        
+        // קלאס האנימציה המתאים (קנייה או מכירה)
+        const flashClass = tx.type === 'buy' ? 'flash-buy' : 'flash-sell';
+        // צבע טקסט מתאים (אופציונלי, כרגע נשאר ציאן)
+        // tickerContent.style.color = tx.type === 'buy' ? 'var(--accent-color)' : 'var(--primary-color)';
 
-        // אפקט Fade Out -> עדכון טקסט -> Fade In
+        // אפקט החלפת טקסט
         tickerContent.style.opacity = '0'; 
 
         setTimeout(() => {
@@ -480,33 +488,36 @@ if (tickerBar && tickerContent) {
             tickerContent.style.opacity = '1';
 
             // הפעל אנימציית הבהוב
-            tickerBar.classList.add('flash');
-
+            // הסר קודם קלאס ישן אם קיים במקרה
+            tickerBar.classList.remove('flash-buy', 'flash-sell'); 
+            // הוסף קלאס חדש (ייתכן שצריך השהייה קלה כדי שהסרה תסתיים לפני הוספה)
+             requestAnimationFrame(() => {
+                 requestAnimationFrame(() => {
+                    tickerBar.classList.add(flashClass);
+                 });
+            });
+            
             // הסר את קלאס ההבהוב אחרי שהאנימציה מסתיימת
-            // כדי שיהיה אפשר להפעיל אותה שוב בפעם הבאה
             setTimeout(() => {
-                tickerBar.classList.remove('flash');
+                tickerBar.classList.remove(flashClass);
             }, flashDuration);
 
-        }, 300); // זמן ל-Fade Out לפני העדכון (0.3 שניות)
+        }, 300); // זמן ל-Fade Out
     }
 
-    // הצג את הפס אחרי השהייה קלה (לתת לאתר להיטען)
+    // הצג את הפס אחרי השהייה קלה
     setTimeout(() => {
         if (tickerBar) {
-            tickerBar.style.display = 'block'; // הצג את הפס
-            console.log("Ticker bar displayed."); // Debug
-            showRandomBuy(); // הצג הודעה ראשונה מייד
-            // התחל את האינטרוול להודעות הבאות
-            setInterval(showRandomBuy, updateInterval); 
-            console.log("Ticker interval started."); // Debug
+            tickerBar.style.display = 'flex'; // שונה ל-flex כדי ליישר עם הלוגואים
+            console.log("Ticker bar displayed."); 
+            showRandomTransaction(); // הצג הודעה ראשונה מייד
+            setInterval(showRandomTransaction, updateInterval); // התחל אינטרוול
+            console.log("Ticker interval started."); 
         }
-    }, 2500); // השהייה של 2.5 שניות
+    }, 2500); 
 
 } else {
     console.error("Ticker elements not found (#simulated-ticker or #ticker-content)");
 }
-// --- End Simulated Buy Ticker ---
-    // --- End of Jupiter Terminal Init ---
-
+// --- End Simulated Transaction Ticker ---
 }); // End of DOMContentLoaded
