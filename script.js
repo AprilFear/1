@@ -1,7 +1,4 @@
 // script.js for $CGPTS - Glitchy Edition
-// ======================== //
-// Countdown Timer Function //
-// ======================== //
 function startCountdown() {
     console.log("Initializing countdown..."); 
     const countdownElement = document.getElementById('countdown-timer');
@@ -11,81 +8,95 @@ function startCountdown() {
     const secondsEl = document.getElementById('countdown-seconds');
     const countdownMessageEl = document.getElementById('countdown-message');
 
-    // ודא שכל האלמנטים קיימים
+    let fireworksLaunched = false; // <<< הוסף משתנה דגל
+
     if (!countdownElement || !daysEl || !hoursEl || !minutesEl || !secondsEl || !countdownMessageEl) {
         console.error("One or more countdown elements not found!");
-        if(countdownMessageEl) { // נסה להציג שגיאה אם אפשר
-             countdownMessageEl.innerHTML = "Countdown Error: Elements missing.";
-             countdownMessageEl.style.display = 'block';
-        }
-        return; // עצור אם אלמנטים חסרים
+        // ... (שאר בדיקות השגיאה) ...
+        return; 
     }
 
-    // --- הגדר את תאריך ושעת היעד כאן ---
-    // שים לב: הזמן הוא לפי שעון ישראל (IDT = UTC+3)
-    const targetDateString = "2025-04-08T18:00:00+03:00"; // תאריך: 8 באפריל 2025, שעה: 18:00, אזור זמן: ישראל (IDT)
-    // ------------------------------------
-
+    const targetDateString = "2025-04-08T18:00:00+03:00"; 
     const targetTime = new Date(targetDateString).getTime();
 
-    // בדיקה אם התאריך תקין
     if (isNaN(targetTime)) {
-         console.error("Invalid target date string for countdown:", targetDateString);
-         countdownMessageEl.innerHTML = "Countdown target date is invalid!";
-         countdownMessageEl.style.display = 'block';
-         countdownElement.style.display = 'none'; // הסתר את הטיימר השגוי
+         // ... (טיפול בשגיאת תאריך) ...
          return;
     }
-     console.log(`Countdown target set to: ${new Date(targetTime).toLocaleString('en-IL', { timeZone: 'Asia/Jerusalem' })}`); // Debug log target time
+     console.log(`Countdown target set to: ${new Date(targetTime).toLocaleString('en-IL', { timeZone: 'Asia/Jerusalem' })}`); 
 
-    // פונקציה שמתעדכנת כל שנייה
     const updateTimer = () => {
         const now = new Date().getTime();
         const distance = targetTime - now;
 
-        // אם הספירה הסתיימה
         if (distance < 0) {
-            clearInterval(intervalId); // הפסק את העדכון
+            clearInterval(intervalId); 
             daysEl.innerHTML = '00';
             hoursEl.innerHTML = '00';
             minutesEl.innerHTML = '00';
             secondsEl.innerHTML = '00';
             countdownElement.classList.add('finished');
-            countdownElement.classList.remove('hide-days'); 
-            countdownMessageEl.style.display = 'block'; // הצג הודעת סיום
-            countdownMessageEl.classList.add('visible'); // Add class for potential animation trigger
+            countdownMessageEl.style.display = 'block'; 
+            countdownMessageEl.classList.add('visible'); 
             console.log("Countdown finished!"); 
-            return; // אין צורך להמשיך לחשב
+
+            // הפעל זיקוקים רק פעם אחת!
+            if (!fireworksLaunched) { // <<< בדוק אם כבר הופעלו
+                launchFireworks();     // <<< קרא לפונקציית הזיקוקים
+                fireworksLaunched = true; // <<< סמן שהופעלו
+            }
+            return; 
         }
 
-        // חישוב זמן
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        // פונקציה להוספת 0 מוביל
-        const format = (num) => (num < 10 ? '0' + num : num);
-
-        // עדכון ה-HTML
-        daysEl.innerHTML = format(days);
-        hoursEl.innerHTML = format(hours);
-        minutesEl.innerHTML = format(minutes);
-        secondsEl.innerHTML = format(seconds);
-
-         // הסתרת הימים אם נשאר פחות מיום אחד
-         if (days <= 0) {
-             countdownElement.classList.add('hide-days');
-         } else {
-             countdownElement.classList.remove('hide-days');
-         }
+        // ... (שאר קוד עדכון הטיימר) ...
     };
 
-    // הפעל את הטיימר מיידית וכל שנייה
     const intervalId = setInterval(updateTimer, 1000);
-    updateTimer(); // קריאה ראשונית כדי להציג מיד ולא לחכות שנייה
+    updateTimer(); 
 }
+// ======================== //
+// Fireworks Function     //
+// ======================== //
+function launchFireworks() {
+    console.log("Launching fireworks!"); // Debug log
 
+    // בדוק אם פונקציית הקונפטי קיימת
+    if (typeof confetti !== 'function') {
+        console.warn("Confetti function not found. Cannot launch fireworks.");
+        return;
+    }
+
+    const duration = 5 * 1000; // משך הזיקוקים (5 שניות)
+    const animationEnd = Date.now() + duration;
+    // הגדרות ברירת מחדל לכל "ירייה"
+    const defaults = { startVelocity: 30, spread: 360, ticks: 70, zIndex: 2000 }; // ודא שה-zIndex גבוה מספיק
+
+    function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    // הפעל יריות מרובות במרווחי זמן
+    const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+            return clearInterval(interval); // עצור אחרי 5 שניות
+        }
+
+        const particleCount = 50 * (timeLeft / duration); // כמות חלקיקים פוחתת
+
+        // ירייה מצד שמאל למטה
+        confetti(Object.assign({}, defaults, { 
+            particleCount, 
+            origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } // יורה קצת מלמטה
+        }));
+        // ירייה מצד ימין למטה
+        confetti(Object.assign({}, defaults, { 
+            particleCount, 
+            origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } 
+        }));
+    }, 250); // ירייה חדשה כל 250 מילישניות
+}
 document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM Fully Loaded"); // Debug log: Verify DOMContentLoaded fires
     startCountdown();
