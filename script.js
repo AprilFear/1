@@ -445,14 +445,36 @@ if (tickerBar && tickerContent) {
 
     // מערך של עסקאות פיקטיביות (קנייה ומכירה)
     const fakeTransactions = [
-        { type: 'buy', sol: 0.5, tokens: 450000, addr: '7aX...k9P' },
-        { type: 'sell', sol: 0.3, tokens: 270000, addr: 'FgT...w3c' },
-        { type: 'buy', sol: 1.2, tokens: 1100000, addr: 'LnM...zTq' },
-        { type: 'buy', sol: 2.5, tokens: 2250000, addr: '9bR...vY2' },
-        { type: 'sell', sol: 1.0, tokens: 900000, addr: 'PqZ...m8a' },
-        { type: 'buy', sol: 0.8, tokens: 720000, addr: '3dV...hJ6' },
-        { type: 'sell', sol: 1.5, tokens: 1350000, addr: 'RrS...e4W' },
-        { type: 'buy', sol: 3.1, tokens: 2800000, addr: 'Xy1...bN7' }
+   { type: 'buy', sol: 0.781, tokens: 515000, addr: 'rT4...uVw' },
+            { type: 'sell', sol: 1.45, tokens: 980000, addr: 'xY9...aBc' },
+            { type: 'buy', sol: 3.112, tokens: 2450000, addr: 'dEf...gHi' },
+            { type: 'buy', sol: 0.250, tokens: 155000, addr: 'JkL...mNo' },
+            { type: 'sell', sol: 0.90, tokens: 610000, addr: 'pQr...sTu' },
+            { type: 'buy', sol: 4.505, tokens: 3800000, addr: 'VwX...yZa' },
+            { type: 'buy', sol: 0.915, tokens: 642000, addr: 'StU...hGf' },
+            { type: 'sell', sol: 2.80, tokens: 1980000, addr: 'vWx...EdC' },
+            { type: 'buy', sol: 1.750, tokens: 1280000, addr: 'yZa...bA9' },
+            { type: 'sell', sol: 0.25, tokens: 145000, addr: 'bCd...8Y7' },
+            { type: 'buy', sol: 3.333, tokens: 2490000, addr: 'eFg...6X5' },
+            { type: 'sell', sol: 1.90, tokens: 1410000, addr: 'hIj...4W3' },
+            { type: 'buy', sol: 0.682, tokens: 485000, addr: 'kLm...2V1' },
+            { type: 'sell', sol: 0.95, tokens: 690000, addr: 'nOp...0U9' },
+            { type: 'buy', sol: 2.041, tokens: 1605000, addr: 'QrS...8T7' },
+            { type: 'buy', sol: 0.330, tokens: 215000, addr: 'UvW...6S5' },
+            { type: 'sell', sol: 1.62, tokens: 1150000, addr: 'XyZ...4R3' },
+            { type: 'buy', sol: 3.999, tokens: 3100000, addr: 'aBc...2Q1' },
+            { type: 'sell', sol: 0.55, tokens: 380000, addr: 'DeF...0P9' },
+            { type: 'buy', sol: 1.001, tokens: 750000, addr: 'gHi...8O7' },
+            { type: 'buy', sol: 0.195, tokens: 120000, addr: 'jKl...6N5' },
+            { type: 'sell', sol: 2.15, tokens: 1650000, addr: 'MnP...4M3' },
+            { type: 'buy', sol: 4.123, tokens: 3300000, addr: 'qRs...2L1' },
+            { type: 'sell', sol: 1.30, tokens: 950000, addr: 'TuV...0K9' },
+            { type: 'buy', sol: 0.808, tokens: 590000, addr: 'wXy...8J7' },
+            { type: 'sell', sol: 0.40, tokens: 280000, addr: 'ZaB...6I5' },
+            { type: 'buy', sol: 2.760, tokens: 2100000, addr: 'cDe...4H3' },
+            { type: 'sell', sol: 3.05, tokens: 2300000, addr: 'FgH...2G1' },
+            { type: 'buy', sol: 1.490, tokens: 1150000, addr: 'iJk...0F9' },
+            { type: 'buy', sol: 0.555, tokens: 390000, addr: 'LmN...8E7' }
         // אפשר להוסיף עוד עסקאות מגוונות
     ];
 
