@@ -1,8 +1,94 @@
 // script.js for $CGPTS - Glitchy Edition
+// ======================== //
+// Countdown Timer Function //
+// ======================== //
+function startCountdown() {
+    console.log("Initializing countdown..."); 
+    const countdownElement = document.getElementById('countdown-timer');
+    const daysEl = document.getElementById('countdown-days');
+    const hoursEl = document.getElementById('countdown-hours');
+    const minutesEl = document.getElementById('countdown-minutes');
+    const secondsEl = document.getElementById('countdown-seconds');
+    const countdownMessageEl = document.getElementById('countdown-message');
+
+    // ודא שכל האלמנטים קיימים
+    if (!countdownElement || !daysEl || !hoursEl || !minutesEl || !secondsEl || !countdownMessageEl) {
+        console.error("One or more countdown elements not found!");
+        if(countdownMessageEl) { // נסה להציג שגיאה אם אפשר
+             countdownMessageEl.innerHTML = "Countdown Error: Elements missing.";
+             countdownMessageEl.style.display = 'block';
+        }
+        return; // עצור אם אלמנטים חסרים
+    }
+
+    // --- הגדר את תאריך ושעת היעד כאן ---
+    // שים לב: הזמן הוא לפי שעון ישראל (IDT = UTC+3)
+    const targetDateString = "2025-04-08T18:00:00+03:00"; // תאריך: 8 באפריל 2025, שעה: 18:00, אזור זמן: ישראל (IDT)
+    // ------------------------------------
+
+    const targetTime = new Date(targetDateString).getTime();
+
+    // בדיקה אם התאריך תקין
+    if (isNaN(targetTime)) {
+         console.error("Invalid target date string for countdown:", targetDateString);
+         countdownMessageEl.innerHTML = "Countdown target date is invalid!";
+         countdownMessageEl.style.display = 'block';
+         countdownElement.style.display = 'none'; // הסתר את הטיימר השגוי
+         return;
+    }
+     console.log(`Countdown target set to: ${new Date(targetTime).toLocaleString('en-IL', { timeZone: 'Asia/Jerusalem' })}`); // Debug log target time
+
+    // פונקציה שמתעדכנת כל שנייה
+    const updateTimer = () => {
+        const now = new Date().getTime();
+        const distance = targetTime - now;
+
+        // אם הספירה הסתיימה
+        if (distance < 0) {
+            clearInterval(intervalId); // הפסק את העדכון
+            daysEl.innerHTML = '00';
+            hoursEl.innerHTML = '00';
+            minutesEl.innerHTML = '00';
+            secondsEl.innerHTML = '00';
+            countdownElement.classList.add('finished');
+            countdownElement.classList.remove('hide-days'); 
+            countdownMessageEl.style.display = 'block'; // הצג הודעת סיום
+            countdownMessageEl.classList.add('visible'); // Add class for potential animation trigger
+            console.log("Countdown finished!"); 
+            return; // אין צורך להמשיך לחשב
+        }
+
+        // חישוב זמן
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // פונקציה להוספת 0 מוביל
+        const format = (num) => (num < 10 ? '0' + num : num);
+
+        // עדכון ה-HTML
+        daysEl.innerHTML = format(days);
+        hoursEl.innerHTML = format(hours);
+        minutesEl.innerHTML = format(minutes);
+        secondsEl.innerHTML = format(seconds);
+
+         // הסתרת הימים אם נשאר פחות מיום אחד
+         if (days <= 0) {
+             countdownElement.classList.add('hide-days');
+         } else {
+             countdownElement.classList.remove('hide-days');
+         }
+    };
+
+    // הפעל את הטיימר מיידית וכל שנייה
+    const intervalId = setInterval(updateTimer, 1000);
+    updateTimer(); // קריאה ראשונית כדי להציג מיד ולא לחכות שנייה
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM Fully Loaded"); // Debug log: Verify DOMContentLoaded fires
-
+    startCountdown();
     // --- 1. Mobile Navigation (Burger Menu) ---
     const burgerMenu = document.querySelector('.burger-menu');
     const navLinks = document.querySelector('.nav-links'); // The UL element
