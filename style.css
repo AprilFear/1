@@ -12,6 +12,10 @@
     --text-color: #f8fafc;      /* Very Light Gray / White */
     --text-muted-color: #9ca3af; /* Gray for less important text */
 
+	--secondary-color-rgb: 34, 211, 238; /* Cyan RGB */
+    --text-color-rgb: 248, 250, 252;    /* White/Light Gray RGB */
+    --accent-color-rgb: 163, 230, 53;   /* Lime Green RGB */ 
+	
     /* Using Monospace Font as chosen */
     --heading-font: 'Courier New', Courier, monospace;
     --body-font: 'Courier New', Courier, monospace;
@@ -1127,3 +1131,48 @@ code {
   #countdown-message.visible {
       display: block; /* הצג את ההודעה */
   }
+/* ======================== */
+/* Simulated Buy Ticker Styles */
+/* ======================== */
+.ticker-bar {
+    position: sticky; /* נדבק לחלק העליון בגלילה */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(var(--secondary-color-rgb), 0.1); /* רקע ציאן שקוף עדין */
+    border-bottom: 1px solid rgba(var(--secondary-color-rgb), 0.3);
+    padding: 0.4rem 1rem;
+    text-align: center;
+    z-index: 999; /* מתחת ל-header הראשי (שלו יש 1000) */
+    overflow: hidden; 
+    display: none; /* מוסתר בהתחלה - JS יציג אותו */
+    font-family: var(--body-font); /* גופן מונוספייס */
+}
+
+#ticker-content {
+    display: inline-block; 
+    color: var(--accent-color); /* טקסט ירוק-ליים */
+    font-size: 0.9rem;
+    font-weight: 600; /* מעט מודגש */
+    white-space: nowrap; 
+    transition: opacity 0.3s ease; /* מעבר חלק בהחלפת טקסט */
+}
+
+/* אנימציית הבהוב (Flash) */
+@keyframes ticker-flash-kf {
+    0%, 100% { 
+        background-color: rgba(var(--secondary-color-rgb), 0.1); /* חזרה לרקע הרגיל */
+        box-shadow: none;
+        color: var(--accent-color); /* חזרה לצבע הרגיל */
+    }
+    25%, 75% { 
+        background-color: var(--accent-color); /* רקע ירוק-ליים בהבהוב */
+        box-shadow: 0 0 18px 7px rgba(var(--accent-color-rgb), 0.5); /* זוהר ירוק */
+        color: var(--background-color); /* טקסט כהה על רקע בהיר */
+    }
+}
+
+/* קלאס שמפעיל את האנימציה */
+.ticker-bar.flash {
+    animation: ticker-flash-kf 0.8s ease-in-out 1; /* מריץ את האנימציה פעם אחת */
+}
