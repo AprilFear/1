@@ -12,7 +12,8 @@
     --text-color: #f8fafc;      /* Very Light Gray / White */
     --text-muted-color: #9ca3af; /* Gray for less important text */
 
-	--secondary-color-rgb: 34, 211, 238; /* Cyan RGB */
+    --primary-color-rgb: 236, 72, 153; 
+    --secondary-color-rgb: 34, 211, 238; /* Cyan RGB */
     --text-color-rgb: 248, 250, 252;    /* White/Light Gray RGB */
     --accent-color-rgb: 163, 230, 53;   /* Lime Green RGB */ 
 	
