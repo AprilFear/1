@@ -12,10 +12,10 @@
     --text-color: #f8fafc;      /* Very Light Gray / White */
     --text-muted-color: #9ca3af; /* Gray for less important text */
 
-    --primary-color-rgb: 236, 72, 153; 
-    --secondary-color-rgb: 34, 211, 238; /* Cyan RGB */
-    --text-color-rgb: 248, 250, 252;    /* White/Light Gray RGB */
-    --accent-color-rgb: 163, 230, 53;   /* Lime Green RGB */ 
+    --flash-yellow: #ffdd00; /* או צהוב אחר שתבחר */
+    --flash-yellow-rgb: 255, 221, 0; /* וגרסת ה-RGB שלו */
+    --primary-color-rgb: 236, 72, 153; /* ודא שגם זה קיים */
+
 	
     /* Using Monospace Font as chosen */
     --heading-font: 'Courier New', Courier, monospace;
@@ -152,8 +152,8 @@ header {
     -webkit-backdrop-filter: blur(10px);
     padding: 0 2rem;
     height: var(--nav-height);
-    position: sticky;
-    top: 0;
+    /*position: sticky;/*
+    /*top: 0;*/
     left: 0;
     width: 100%;
     z-index: 1000;
@@ -1177,17 +1177,34 @@ code {
     text-overflow: ellipsis; /* הוספת ... אם הטקסט ארוך מדי */
 }
 
-/* אנימציית הבהוב לקנייה (ירוק) */
+
+/* אנימציית הבהוב לקנייה (צהוב) */
 @keyframes ticker-flash-buy-kf {
-    0%, 100% { box-shadow: none; }
-    50% { box-shadow: 0 0 15px 5px rgba(var(--accent-color-rgb, 163, 230, 53), 0.7); }
+    0%, 100% { 
+        background-color: rgba(var(--background-color-rgb, 2, 6, 23), 0.9); /* חזרה לרקע הכהה */
+        color: var(--secondary-color); /* צבע טקסט ציאן */
+    }
+    50% { /* שיא ההבהוב */
+        background-color: var(--flash-yellow); /* <<< רקע צהוב */
+        color: var(--background-color); /* טקסט כהה על רקע בהיר */
+    }
 }
 
 /* אנימציית הבהוב למכירה (ורוד/אדום) */
 @keyframes ticker-flash-sell-kf {
-    0%, 100% { box-shadow: none; }
-    50% { box-shadow: 0 0 15px 5px rgba(var(--primary-color-rgb, 236, 72, 153), 0.7); }
+    0%, 100% { 
+        background-color: rgba(var(--background-color-rgb, 2, 6, 23), 0.9); /* חזרה לרקע הכהה */
+        color: var(--secondary-color); /* צבע טקסט ציאן */
+     }
+    50% { /* שיא ההבהוב */
+        background-color: var(--primary-color); /* <<< רקע ורוד */
+        color: var(--background-color); /* טקסט כהה על רקע בהיר */
+    }
 }
+
+/* הקלאסים שמפעילים את האנימציה נשארים זהים */
+.ticker-bar.flash-buy { animation: ticker-flash-buy-kf 0.7s ease-in-out 1; }
+.ticker-bar.flash-sell { animation: ticker-flash-sell-kf 0.7s ease-in-out 1; }
 
 /* קלאסים שמפעילים את האנימציה */
 .ticker-bar.flash-buy {
