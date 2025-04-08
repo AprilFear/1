@@ -1131,48 +1131,66 @@ code {
   #countdown-message.visible {
       display: block; /* הצג את ההודעה */
   }
-/* ======================== */
-/* Simulated Buy Ticker Styles */
+/* Simulated Tx Ticker Styles */
 /* ======================== */
 .ticker-bar {
-    position: sticky; /* נדבק לחלק העליון בגלילה */
+    position: fixed; /* <<< שינוי ל-fixed */
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(var(--secondary-color-rgb), 0.1); /* רקע ציאן שקוף עדין */
-    border-bottom: 1px solid rgba(var(--secondary-color-rgb), 0.3);
-    padding: 0.4rem 1rem;
+    background-color: rgba(var(--background-color-rgb, 2, 6, 23), 0.85); /* רקע כהה שקוף */
+    backdrop-filter: blur(5px); /* אפקט טשטוש קל */
+    -webkit-backdrop-filter: blur(5px);
+    border-bottom: 1px solid rgba(var(--text-color-rgb, 248, 250, 252), 0.1);
+    padding: 0.5rem 1rem; /* ריווח פנימי מעט גדול יותר */
     text-align: center;
-    z-index: 999; /* מתחת ל-header הראשי (שלו יש 1000) */
+    z-index: 1001; /* <<< מעל ה-header (שיש לו 1000) */
     overflow: hidden; 
     display: none; /* מוסתר בהתחלה - JS יציג אותו */
-    font-family: var(--body-font); /* גופן מונוספייס */
+    font-family: var(--body-font); 
+    /* שימוש ב-Flexbox ליישור הלוגואים והטקסט */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem; /* רווח בין הלוגואים לטקסט */
+}
+
+.ticker-logo {
+    height: 1.1em; /* גובה יחסי לגודל הטקסט */
+    width: auto;
+    opacity: 0.7; /* מעט שקוף כברירת מחדל */
+    flex-shrink: 0; /* למנוע התכווצות */
 }
 
 #ticker-content {
     display: inline-block; 
-    color: var(--accent-color); /* טקסט ירוק-ליים */
+    color: var(--secondary-color); /* צבע טקסט ציאן כברירת מחדל */
     font-size: 0.9rem;
-    font-weight: 600; /* מעט מודגש */
+    font-weight: 600; 
     white-space: nowrap; 
-    transition: opacity 0.3s ease; /* מעבר חלק בהחלפת טקסט */
+    transition: opacity 0.3s ease; 
+    flex-grow: 0; /* לאפשר לטקסט לא לתפוס את כל הרווח */
+    flex-shrink: 1; /* לאפשר לטקסט להתכווץ אם צריך */
+    overflow: hidden;
+    text-overflow: ellipsis; /* הוספת ... אם הטקסט ארוך מדי */
 }
 
-/* אנימציית הבהוב (Flash) */
-@keyframes ticker-flash-kf {
-    0%, 100% { 
-        background-color: rgba(var(--secondary-color-rgb), 0.1); /* חזרה לרקע הרגיל */
-        box-shadow: none;
-        color: var(--accent-color); /* חזרה לצבע הרגיל */
-    }
-    25%, 75% { 
-        background-color: var(--accent-color); /* רקע ירוק-ליים בהבהוב */
-        box-shadow: 0 0 18px 7px rgba(var(--accent-color-rgb), 0.5); /* זוהר ירוק */
-        color: var(--background-color); /* טקסט כהה על רקע בהיר */
-    }
+/* אנימציית הבהוב לקנייה (ירוק) */
+@keyframes ticker-flash-buy-kf {
+    0%, 100% { box-shadow: none; }
+    50% { box-shadow: 0 0 15px 5px rgba(var(--accent-color-rgb, 163, 230, 53), 0.7); }
 }
 
-/* קלאס שמפעיל את האנימציה */
-.ticker-bar.flash {
-    animation: ticker-flash-kf 0.8s ease-in-out 1; /* מריץ את האנימציה פעם אחת */
+/* אנימציית הבהוב למכירה (ורוד/אדום) */
+@keyframes ticker-flash-sell-kf {
+    0%, 100% { box-shadow: none; }
+    50% { box-shadow: 0 0 15px 5px rgba(var(--primary-color-rgb, 236, 72, 153), 0.7); }
+}
+
+/* קלאסים שמפעילים את האנימציה */
+.ticker-bar.flash-buy {
+    animation: ticker-flash-buy-kf 0.7s ease-in-out 1; 
+}
+.ticker-bar.flash-sell {
+     animation: ticker-flash-sell-kf 0.7s ease-in-out 1; 
 }
