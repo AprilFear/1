@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Re-check placeholders in case they change
             const placeholderTexts = [
                 '[TBA - To Be Announced at Launch]',
-                '[PASTE CONTRACT ADDRESS HERE WHEN AVAILABLE - Triple check this!]',
+                '7tJSy9wP5H2WjoSBxQ2hh9uR3AuGn9JWLTN6uLdjpump',
                 '[TBA SOON!]',
                 '[CONTRACT ADDRESS DROP SOON!]' // Add all possible placeholders
              ];
@@ -426,7 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             // !!! IMPORTANT: REPLACE WITH YOUR ACTUAL TOKEN MINT ADDRESS !!!
                             // !!! Using USDC as temporary placeholder               !!!
                             // !!! ================================================== !!!
-                            initialOutputMint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", // REPLACE ME
+                            initialOutputMint: "7tJSy9wP5H2WjoSBxQ2hh9uR3AuGn9JWLTN6uLdjpump", // REPLACE ME
                         },
                         // Example callbacks (uncomment to use)
                         // onWalletConnected: (wallet) => { console.log("Wallet connected via Jupiter:", wallet.adapter.name); },
